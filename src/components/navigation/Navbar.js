@@ -10,10 +10,10 @@ const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [activeItem, setActiveItem] = useState('Home');
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [userRole, setUserRole] = useState(null); // To store user's role
-  const [showProfileMenu, setShowProfileMenu] = useState(false); // For dropdown menu
-  const [isLoginFormOpen, setIsLoginFormOpen] = useState(false); // To manage login form
-  const [isSignupFormOpen, setIsSignupFormOpen] = useState(false); // To manage signup form
+  const [userRole, setUserRole] = useState(null);
+  const [showProfileMenu, setShowProfileMenu] = useState(false);
+  const [isLoginFormOpen, setIsLoginFormOpen] = useState(false);
+  const [isSignupFormOpen, setIsSignupFormOpen] = useState(false);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
@@ -21,40 +21,36 @@ const Navbar = () => {
   const [loginError, setLoginError] = useState(null);
   const [signupError, setSignupError] = useState(null);
 
-  // Fetch user data from localStorage on component mount
   useEffect(() => {
     const token = localStorage.getItem('accessToken');
     const storedRole = localStorage.getItem('userRole');
     if (token && storedRole) {
       setIsLoggedIn(true);
-      setUserRole(storedRole);  // Set the stored user role (admin, user, etc.)
+      setUserRole(storedRole);
     }
   }, []);
 
-  // Toggle mobile menu
   const toggleMobileMenu = () => {
     setIsMobileMenuOpen(prevState => !prevState);
   };
 
-  // Close mobile menu
   const closeMobileMenu = () => {
     setIsMobileMenuOpen(false);
   };
 
-  // Handle scroll effect
   useEffect(() => {
     window.addEventListener('scroll', handleScroll);
     return () => {
       window.removeEventListener('scroll', handleScroll);
     };
   }, []);
-  const sections = ["home", "about", "projects", "services", "testimonial", "contacts","blog"];
+
+  const sections = ["home", "about", "projects", "services", "testimonial", "contacts", "blog"];
   const handleScroll = () => {
     const scrollPosition = window.scrollY;
     setIsScrolled(scrollPosition > 50);
 
-    // Highlight the active section in the navbar
-    let currentSection = 'home'; // Default section
+    let currentSection = 'home';
     sections.forEach((section) => {
       const sectionElement = document.getElementById(section);
       if (sectionElement && sectionElement.offsetTop <= scrollPosition + 100) {
@@ -72,36 +68,21 @@ const Navbar = () => {
         }
       }
     });
-    
   };
 
-  useEffect(() => {
-    window.addEventListener('scroll', handleScroll);
-    return () => {
-      window.removeEventListener('scroll', handleScroll);
-    };
-  }, []);
-
-  // Handle Login
   const handleLogin = async () => {
     try {
       const response = await api.post('/auth/login', { email, password });
       const data = response.data;
-      
-      // Display a toast notification for successful login
+
       toast.success('Login successful!');
-      
-      // Store the user details in localStorage
       localStorage.setItem('accessToken', data.access_token);
       localStorage.setItem('userId', data.user._id);
-      localStorage.setItem('userRole', data.user.role);  // Store the user role
+      localStorage.setItem('userRole', data.user.role);
       localStorage.setItem('user', JSON.stringify(data.user));
 
-      // Set logged in state
       setIsLoggedIn(true);
-      setUserRole(data.user.role);  // Set the user role based on the logged-in user
-      
-      // Close the login form modal
+      setUserRole(data.user.role);
       setIsLoginFormOpen(false);
       setLoginError(null);
     } catch (error) {
@@ -110,7 +91,6 @@ const Navbar = () => {
     }
   };
 
-  // Handle Signup
   const handleSignup = async () => {
     if (password !== confirmPassword) {
       setSignupError("Passwords do not match");
@@ -120,22 +100,16 @@ const Navbar = () => {
     try {
       const response = await api.post('/auth/signup', { fullNames, email, password });
       const data = response.data;
-      
-      // Store the user details in localStorage
+
       localStorage.setItem('accessToken', data.access_token);
       localStorage.setItem('userId', data.user._id);
-      localStorage.setItem('userRole', data.user.role);  // Store the user role
+      localStorage.setItem('userRole', data.user.role);
       localStorage.setItem('user', JSON.stringify(data.user));
 
-      // Set logged in state
       setIsLoggedIn(true);
-      setUserRole(data.user.role);  // Set the user role based on the logged-in user
-      
-      // Close the signup form modal
+      setUserRole(data.user.role);
       setIsSignupFormOpen(false);
       setSignupError(null);
-      
-      // Display a toast notification for successful signup
       toast.success('Signup successful!');
     } catch (error) {
       setSignupError("Signup failed, try again");
@@ -143,7 +117,6 @@ const Navbar = () => {
     }
   };
 
-  // Handle logout
   const handleLogout = () => {
     setIsLoggedIn(false);
     setUserRole(null);
@@ -155,13 +128,12 @@ const Navbar = () => {
   };
 
   return (
-    <nav className={`navbar ${isScrolled ? 'scrolled' : ''} section `}>
+    <nav className={`navbar ${isScrolled ? 'scrolled' : ''} section`}>
       <div className="logo">
         <img src="/images/iblogo.png" alt="IMANARIYO Baptiste" />
-        {/* <span>IMANARIYO Baptiste</span> */}
       </div>
-      <div className={`menu ${isMobileMenuOpen ? 'show' : ''}`}>
-        {['Home', 'About', 'Projects', 'Services', 'Testimonial','blog', 'Contacts',].map((item, index) => (
+      <div className={`menu ${isMobileMenuOpen ? 'show' : ''} flex flex-col md:flex-row md:items-center`}>
+        {['Home', 'About', 'Projects', 'Services', 'Testimonial', 'Blog', 'Contacts'].map((item, index) => (
           <a
             key={index}
             href={`#${item.toLowerCase()}`}
@@ -171,8 +143,6 @@ const Navbar = () => {
             {item}
           </a>
         ))}
-
-        {/* Render authentication-related items */}
         <div className="menu-item auth-menu">
           {!isLoggedIn ? (
             <>
@@ -189,7 +159,7 @@ const Navbar = () => {
                 <FaUserCircle /> Profile
               </div>
               {showProfileMenu && (
-                <div className="profile-dropdown">
+                <div className="profile-dropdown absolute bg-white shadow-md rounded mt-2">
                   {userRole === 'admin' && (
                     <a href="dashboard" onClick={closeMobileMenu}>
                       Dashboard
@@ -207,14 +177,14 @@ const Navbar = () => {
           )}
         </div>
       </div>
-      <button className="mobile-menu-btn " aria-label="Toggle menu" onClick={toggleMobileMenu}>
+      <button className="mobile-menu-btn md:hidden" aria-label="Toggle menu" onClick={toggleMobileMenu}>
         {isMobileMenuOpen ? <FaTimes /> : <FaBars />}
       </button>
 
       {/* Login Form Modal */}
       {isLoginFormOpen && (
-        <div className="fixed top-1/2 left-1/2 translate-x-[-50%] translate-y-[50%] flex items-center justify-center h-100vh bg-black bg-opacity-75">
-          <div className="bg-white p-5 rounded shadow-lg text-gray-950 ">
+        <div className="fixed top-48 left-0 w-full h-full flex items-center justify-center bg-black bg-opacity-75">
+          <div className="bg-white p-5 rounded shadow-lg text-gray-950 w-11/12 md:w-1/3">
             <h2 className="text-2xl mb-4">Login</h2>
             {loginError && <p className="text-red-500">{loginError}</p>}
             <input
@@ -231,13 +201,13 @@ const Navbar = () => {
               onChange={(e) => setPassword(e.target.value)}
               className="border border-gray-300 p-2 mb-4 w-full rounded text-gray-950"
             />
-            <button onClick={handleLogin} className="bg-blue-500 text-white py-2 px-4 rounded">
+            <button onClick={handleLogin} className="bg-blue-500 text-white py-2 px-4 rounded w-full">
               Login
             </button>
-            <button onClick={() => setIsSignupFormOpen(true)} className="bg-green-500 text-white py-2 px-4 rounded ml-2">
+            <button onClick={() => setIsSignupFormOpen(true)} className="bg-green-500 text-white py-2 px-4 rounded w-full mt-2">
               Sign Up
             </button>
-            <button onClick={() => setIsLoginFormOpen(false)} className="bg-gray-500 text-white py-2 px-4 rounded ml-2">
+            <button onClick={() => setIsLoginFormOpen(false)} className="bg-gray-500 text-white py-2 px-4 rounded w-full mt-2">
               Cancel
             </button>
           </div>
@@ -246,8 +216,8 @@ const Navbar = () => {
 
       {/* Signup Form Modal */}
       {isSignupFormOpen && (
-        <div className=" fixed top-1/2 left-1/2 translate-x-[-50%] translate-y-[50%] flex items-center justify-center bg-black bgy-opabcity-75 ">
-          <div className="bg-white p-5 rounded shadow-lg ">
+        <div className="fixed top-96 left-0 w-full h-full flex items-center justify-center bg-black bg-opacity-75 ">
+          <div className="bg-white p-5 rounded shadow-lg w-11/12 md:w-1/3">
             <h2 className="text-2xl mb-4 text-gray-950">Sign Up</h2>
             {signupError && <p className="text-red-500">{signupError}</p>}
             <input
@@ -276,15 +246,15 @@ const Navbar = () => {
               placeholder="Confirm Password"
               value={confirmPassword}
               onChange={(e) => setConfirmPassword(e.target.value)}
-              className="border border-gray-300 p-2 mb-4 w-full rounded text-gray-950 "
+              className="border border-gray-300 p-2 mb-4 w-full rounded text-gray-950"
             />
-            <button onClick={handleSignup} className="bg-blue-500 text-white py-2 px-4 rounded">
+            <button onClick={handleSignup} className="bg-blue-500 text-white py-2 px-4 rounded w-full">
               Sign Up
             </button>
-            <button onClick={() => setIsLoginFormOpen(true)} className="bg-green-500 text-white py-2 px-4 rounded ml-2">
+            <button onClick={() => setIsLoginFormOpen(true)} className="bg-green-500 text-white py-2 px-4 rounded w-full mt-2">
               Login
             </button>
-            <button onClick={() => setIsSignupFormOpen(false)} className="bg-gray-500 text-white py-2 px-4 rounded ml-2">
+            <button onClick={() => setIsSignupFormOpen(false)} className="bg-gray-500 text-white py-2 px-4 rounded w-full mt-2">
               Cancel
             </button>
           </div>

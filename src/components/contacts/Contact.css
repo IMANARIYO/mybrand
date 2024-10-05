@@ -3,6 +3,7 @@
  display: flex;
   gap: 20px;
   color: var(--primary-color);
+  z-index: 2;
 
 }
 .error-message{

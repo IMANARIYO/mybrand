@@ -32,7 +32,7 @@ const BlogCard = ({ post, onReadMore }) => {
           }}
         ></div>
 
-        <div className="blog-meta">
+        <div className="blog-meta" onClick={() => onReadMore(post)} >
           <span className="blog-author">
             <img
               src={`${"/images/myImage.png"}`}

@@ -36,6 +36,7 @@ function BlogModal({ handleClose, props }) {
     checkLikedStatusAndCheckDisLikedStatus();
   }, [props]);
 
+
   const checkLikedStatusAndCheckDisLikedStatus = async () => {
 
     if (!accessToken) return;
@@ -222,11 +223,36 @@ function BlogModal({ handleClose, props }) {
 
   const { image, title, description, views } = props || {};
 
+
+
+  useEffect(() => {
+    // Function to disable scrolling
+    const disableScroll = () => {
+      document.body.style.overflow = 'hidden';
+    };
+  
+    // Function to enable scrolling
+    const enableScroll = () => {
+      document.body.style.overflow = 'auto';
+    };
+  
+    if (isLoginFormOpen || isSignupFormOpen) {
+      disableScroll();
+    } else {
+      enableScroll();
+    }
+  
+    // Cleanup function to ensure scrolling is enabled when the component unmounts
+    return () => {
+      enableScroll();
+    };
+  }, [isLoginFormOpen, isSignupFormOpen]);
+  
   return (
-    <div className="flex justify-center items-center bg-black bg-opacity-50 fixed  top-[80px] left-0 right-0 bottom-0 z-500000000000000000000  "
-    onClick={handleClose}>
+    <div className="flex justify-center items-center bg-black bg-opacity-50 fixed  top-[80px] left-0 right-0 bottom-0 z-5000"
+>
       <div
-        className="relative bg-white p-5 max-w-4xl w-full max-h-full overflow-y-auto rounded-lg shadow-lg top-12 pb-24 z-500000000000000000000 "
+        className="relative bg-white p-5 max-w-4xl w-full max-h-full overflow-y-auto rounded-lg shadow-lg top-12 pb-24 z-500 "
         onClick={(e) => e.stopPropagation()}
       >
         <div className="absolute top-0 right-0 p-2">

@@ -216,7 +216,7 @@ const Navbar = () => {
 
       {/* Signup Form Modal */}
       {isSignupFormOpen && (
-        <div className="fixed top-96 left-0 w-full h-full flex items-center justify-center bg-black bg-opacity-75 ">
+        <div className="fixed top-64 left-0 w-full h-full flex items-center justify-center bg-black bg-opacity-75 ">
           <div className="bg-white p-5 rounded shadow-lg w-11/12 md:w-1/3">
             <h2 className="text-2xl mb-4 text-gray-950">Sign Up</h2>
             {signupError && <p className="text-red-500">{signupError}</p>}

@@ -207,7 +207,7 @@ const Navbar = () => {
           )}
         </div>
       </div>
-      <button className="mobile-menu-btn text-gray-950 bg-blue-900" aria-label="Toggle menu" onClick={toggleMobileMenu}>
+      <button className="mobile-menu-btn " aria-label="Toggle menu" onClick={toggleMobileMenu}>
         {isMobileMenuOpen ? <FaTimes /> : <FaBars />}
       </button>
 

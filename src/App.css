@@ -1,20 +1,20 @@
-@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
-/* In Project.css or main CSS file */
 @import '~slick-carousel/slick/slick.css';
 @import '~slick-carousel/slick/slick-theme.css';
 @import 'tailwindcss/base';
 @import 'tailwindcss/components';
 @import 'tailwindcss/utilities';
+
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700&display=swap');
+
 :root {
   --white-shadow-light: 0px 0px 5px rgba(255, 255, 255, 0.4);  
---white-shadow-strong: 0px 0px 15px rgba(255, 255, 255, 0.8);
---white-shadow-subtle: 1px 1px 8px rgba(255, 255, 255, 0.2); 
---white-shadow-deep: 0px 0px 25px rgba(255, 255, 255, 0.9);   
---second-color-shadow-strong: 0px 0px 15px rgba(231, 238, 142, 0.8);
+  --white-shadow-strong: 0px 0px 15px rgba(255, 255, 255, 0.8);
+  --white-shadow-subtle: 1px 1px 8px rgba(255, 255, 255, 0.2); 
+  --white-shadow-deep: 0px 0px 25px rgba(255, 255, 255, 0.9);   
+  --second-color-shadow-strong: 0px 0px 15px rgba(231, 238, 142, 0.8);
 
   --shadow-light: 2px 1px 2px rgba(247, 250, 251, 0.927);
   --shadow1-medium1: 2px 2px 4px rgba(235, 226, 226, 0.2);
-
   --shadow-dark: 0 8px 16px rgba(0, 0, 0, 0.3);
 
   --overlay-bg-light: rgba(0, 0, 0, 0.8);
@@ -33,11 +33,10 @@
   --container-bg-color: #0c0d0d;
   --sub-div-bg-color: #0f1c11;
   --main-bg-color: #1c1c1c;
-  --font-family: 'Arial', sans-serif;
+  --font-family: 'Open Sans', sans-serif; /* Use only one definition */
   --font-size: 16px;
-  --line-height: 1.5;
+  --line-height:1.5;
   --border-radius: 5px;
-  --font-family: 'Roboto', sans-serif;
 
   --first-level-padding: 10px;
   --second-level-padding: 20px;
@@ -45,9 +44,11 @@
   --fourth-level-padding: 40px;
   --fifth-level-padding: 50px;
 }
+
 * {
   box-sizing: border-box;
-
+  font-family: var(--font-family);
+  line-height: var(--line-height);
 }
 
 body {
@@ -58,13 +59,13 @@ body {
   line-height: var(--line-height);
   margin: 0;
   padding: 10px;
-color: var(--primary-color);
 }
 
 a {
   text-decoration: none;
   color: var(--primary-color);
 }
+
 #home,
 #about,
 #contacts,
@@ -74,26 +75,18 @@ a {
 #services,
 #about,
 #testimonial {
-  /* display: grid; */
-
-
-  padding-top: 100px ;
+  padding-top: 100px;
   background-color: var(--main-bg-color);
-/* padding: 150px; */
-
-align-self: center;
-align-items: center;
-justify-content: center;
-justify-self: center;
-width: 80%;
-
+  align-self: center;
+  align-items: center;
+  justify-content: center;
+  justify-self: center;
+  width: 80%;
   margin-left: auto;
   margin-right: auto;
-  /* padding: 20px; */
-
 }
 
-#dashbaord{
+#dashboard {
   padding-top: 100px;
   border: 3px green solid;
 }
@@ -104,32 +97,29 @@ width: 80%;
   font-weight: bold;
   text-align: start;
   border-bottom: 2px var(--secondary-color) solid;
-
-  /* border-width: 50%; */
   margin-bottom: 3rem;
   width: fit-content;
- 
-  /* box-shadow: var(--white-shadow-light); */
 }
+
 .content-subtitle {
   color: var(--secondary-color);
   font-size: 1.5rem;
-  /* font-weight: bold; */
-  /* border-bottom: var(--primary-color) 1px solid; */
   border-left: var(--primary-color) 1px solid;
-padding: 1rem;
+  padding: 1rem;
   border-radius: 10px;
   font-style: italic;
-margin-bottom:2rem;
-  
+  margin-bottom: 2rem;
 }
+
 .content-subtitle:hover {
   border-bottom: var(--secondary-color) 2px solid;
   border-left: var(--secondary-color) 3px solid;
 }
+
 .content-container {
   padding: 0rem 0.5rem;
 }
+
 .footer {
   text-align: center;
   padding: 20px;

@@ -13,7 +13,11 @@
     flex: 1;
     align-self:flex-start;
   }
-  
+  .institution-logo{
+    height: 200px;
+    width: 200px;
+    border-radius: 10px;
+  }
   .gallery {
     display: flex;
     flex-direction: column;

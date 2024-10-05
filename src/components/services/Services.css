@@ -24,7 +24,7 @@
     padding: 1.5rem;
     box-shadow:var(--white-shadow-strong);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
-    text-align: center;
+    text-align: start;
     overflow: hidden;
     cursor: pointer;
     color: white;
@@ -85,8 +85,8 @@
     color: #fff;
     display: flex;
     flex-direction: column;
-    align-items: center;
-    justify-content: center;
+    align-items: start;
+    justify-content: start;
     opacity: 0;
     transition: opacity 0.4s ease;
     padding: 1.5rem;

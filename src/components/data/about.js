@@ -49,7 +49,7 @@ export const education = [
       degree: 'Bachelor of Science in Computer and Software Engineering',
       duration: '2021 - 2025 (Expected)',
       description: 'Currently in my final year, I have gained solid expertise in software engineering, excelling in both front-end and back-end development. My academic journey has equipped me with the most essential skills needed in the industry, such as building responsive web applications and high-performance systems. As graduation nears, I am eager to bring these skills to real-world projects.',
-      logo: '/images/university_of_rwanda.png',
+      logo: '/images/Ur.png',
     },
     {
       id: 2,

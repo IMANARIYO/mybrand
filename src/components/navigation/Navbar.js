@@ -42,9 +42,37 @@ const Navbar = () => {
   };
 
   // Handle scroll effect
+  useEffect(() => {
+    window.addEventListener('scroll', handleScroll);
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
+  const sections = ["home", "about", "projects", "services", "testimonial", "contacts","blog"];
   const handleScroll = () => {
     const scrollPosition = window.scrollY;
     setIsScrolled(scrollPosition > 50);
+
+    // Highlight the active section in the navbar
+    let currentSection = 'home'; // Default section
+    sections.forEach((section) => {
+      const sectionElement = document.getElementById(section);
+      if (sectionElement && sectionElement.offsetTop <= scrollPosition + 100) {
+        currentSection = section;
+      }
+    });
+    setActiveItem(currentSection);
+    sections.forEach((section) => {
+      const menuItem = document.querySelector(`a[href="#${section}"]`);
+      if (menuItem) {
+        if (section === currentSection) {
+          menuItem.classList.add('active');
+        } else {
+          menuItem.classList.remove('active');
+        }
+      }
+    });
+    
   };
 
   useEffect(() => {
@@ -127,13 +155,13 @@ const Navbar = () => {
   };
 
   return (
-    <nav className={`navbar ${isScrolled ? 'scrolled' : ''} section`}>
+    <nav className={`navbar ${isScrolled ? 'scrolled' : ''} section `}>
       <div className="logo">
-        <img src="/images/myImage.png" alt="IMANARIYO Baptiste" />
-        <span>IMANARIYO Baptiste</span>
+        <img src="/images/iblogo.png" alt="IMANARIYO Baptiste" />
+        {/* <span>IMANARIYO Baptiste</span> */}
       </div>
       <div className={`menu ${isMobileMenuOpen ? 'show' : ''}`}>
-        {['Home', 'About', 'Projects', 'Services', 'Testimonial', 'Contacts'].map((item, index) => (
+        {['Home', 'About', 'Projects', 'Services', 'Testimonial','blog', 'Contacts',].map((item, index) => (
           <a
             key={index}
             href={`#${item.toLowerCase()}`}
@@ -185,8 +213,8 @@ const Navbar = () => {
 
       {/* Login Form Modal */}
       {isLoginFormOpen && (
-        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-75">
-          <div className="bg-white p-5 rounded shadow-lg text-gray-950">
+        <div className="fixed top-1/2 left-1/2 translate-x-[-50%] translate-y-[50%] flex items-center justify-center h-100vh bg-black bg-opacity-75">
+          <div className="bg-white p-5 rounded shadow-lg text-gray-950 ">
             <h2 className="text-2xl mb-4">Login</h2>
             {loginError && <p className="text-red-500">{loginError}</p>}
             <input
@@ -218,7 +246,7 @@ const Navbar = () => {
 
       {/* Signup Form Modal */}
       {isSignupFormOpen && (
-        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-75">
+        <div className=" fixed top-1/2 left-1/2 translate-x-[-50%] translate-y-[50%] flex items-center justify-center bg-black bgy-opabcity-75 ">
           <div className="bg-white p-5 rounded shadow-lg ">
             <h2 className="text-2xl mb-4 text-gray-950">Sign Up</h2>
             {signupError && <p className="text-red-500">{signupError}</p>}

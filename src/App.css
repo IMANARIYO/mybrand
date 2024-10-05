@@ -6,9 +6,15 @@
 @import 'tailwindcss/components';
 @import 'tailwindcss/utilities';
 :root {
-  --shadow-light: 0 1px 2px rgba(244, 237, 237, 0.927);
+  --white-shadow-light: 0px 0px 5px rgba(255, 255, 255, 0.4);  
+--white-shadow-strong: 0px 0px 15px rgba(255, 255, 255, 0.8);
+--white-shadow-subtle: 1px 1px 8px rgba(255, 255, 255, 0.2); 
+--white-shadow-deep: 0px 0px 25px rgba(255, 255, 255, 0.9);   
+--second-color-shadow-strong: 0px 0px 15px rgba(231, 238, 142, 0.8);
+
+  --shadow-light: 2px 1px 2px rgba(247, 250, 251, 0.927);
   --shadow1-medium1: 2px 2px 4px rgba(235, 226, 226, 0.2);
-  --shadow1-medium1: 2px 2px 4px rgba(235, 226, 226, 0.2);
+
   --shadow-dark: 0 8px 16px rgba(0, 0, 0, 0.3);
 
   --overlay-bg-light: rgba(0, 0, 0, 0.8);
@@ -19,8 +25,9 @@
   --overlay-text-dark: #ffffff;
   --overlay-text-accent: #ffffff;
 
-  --primary-color: #ffffff;
-  --secondary-color: #abf2c8;
+  --primary-color: #ebeeef;
+  --secondary-color: #0eea6a;
+
   --text-color: #ffffff;
   --background-color: #141414df;
   --container-bg-color: #0c0d0d;
@@ -67,12 +74,23 @@ a {
 #services,
 #about,
 #testimonial {
-  padding-top: 100px;
+  /* display: grid; */
+
+
+  padding-top: 100px ;
   background-color: var(--main-bg-color);
+/* padding: 150px; */
 
+align-self: center;
+align-items: center;
+justify-content: center;
+justify-self: center;
+width: 80%;
 
-  /* height: 100vh; */
-  /* min-height: fit-content; */
+  margin-left: auto;
+  margin-right: auto;
+  /* padding: 20px; */
+
 }
 
 #dashbaord{
@@ -84,7 +102,14 @@ a {
   color: var(--primary-color);
   font-size: 2rem;
   font-weight: bold;
-  text-align: center;
+  text-align: start;
+  border-bottom: 2px var(--secondary-color) solid;
+
+  /* border-width: 50%; */
+  margin-bottom: 3rem;
+  width: fit-content;
+ 
+  /* box-shadow: var(--white-shadow-light); */
 }
 .content-subtitle {
   color: var(--secondary-color);
@@ -93,19 +118,19 @@ a {
   /* border-bottom: var(--primary-color) 1px solid; */
   border-left: var(--primary-color) 1px solid;
 padding: 1rem;
-  border-radius: 18px;
+  border-radius: 10px;
   font-style: italic;
-margin-bottom:1rem;
+margin-bottom:2rem;
   
 }
 .content-subtitle:hover {
-  border-bottom: rgb(247, 255, 7) 2px solid;
-  border-left: rgba(234, 255, 0, 0.962) 2px solid;
+  border-bottom: var(--secondary-color) 2px solid;
+  border-left: var(--secondary-color) 3px solid;
 }
 .content-container {
   padding: 0rem 0.5rem;
 }
-footer {
+.footer {
   text-align: center;
   padding: 20px;
   background-color: var(--background-color);
@@ -113,9 +138,7 @@ footer {
   margin-top: 40px;
   box-shadow: var(--shadow-light);
 }
-.section {
-  padding: 0 10px;
-}
+
 ::-webkit-scrollbar {
   width: 10px;
   height: 10px;

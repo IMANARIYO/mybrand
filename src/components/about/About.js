@@ -1,4 +1,5 @@
 import "./About.css";
+import Media from "../home/Media";
 import React, { useEffect, useState } from "react";
 import { education, experience, skills } from "../data/about";
 
@@ -10,7 +11,7 @@ const AboutMe = () => {
 
   // State for active skill category and active navigation button
   const [activeSkillCategory, setActiveSkillCategory] = useState('frontend');
-  const [activeNavButton, setActiveNavButton] = useState('skills');
+  const [activeNavButton, setActiveNavButton] = useState('experience');
 
   // State for main image in the gallery
   const [mainImage, setMainImage] = useState('images/mythirdimg.jpg');
@@ -57,6 +58,7 @@ const AboutMe = () => {
           </p>
 
           <div className="about-content">
+            <div>
             <div className="about-images gallery">
               <div className="big-image">
                 <img src={mainImage} alt="Big Image" id="main-image" />
@@ -73,7 +75,8 @@ const AboutMe = () => {
                 ))}
               </div>
             </div>
-
+        
+            </div>
             <div className="about-info">
               <div className="about-nav">
                 <button

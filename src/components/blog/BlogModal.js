@@ -223,9 +223,10 @@ function BlogModal({ handleClose, props }) {
   const { image, title, description, views } = props || {};
 
   return (
-    <div className="flex justify-center items-center bg-black bg-opacity-50 fixed inset-0 top-0 left-0 right-0 bottom-0 z-50">
+    <div className="flex justify-center items-center bg-black bg-opacity-50 fixed  top-[80px] left-0 right-0 bottom-0 z-500000000000000000000  "
+    onClick={handleClose}>
       <div
-        className="relative bg-white p-5 max-w-4xl w-full max-h-full overflow-y-auto rounded-lg shadow-lg top-12 pb-24"
+        className="relative bg-white p-5 max-w-4xl w-full max-h-full overflow-y-auto rounded-lg shadow-lg top-12 pb-24 z-500000000000000000000 "
         onClick={(e) => e.stopPropagation()}
       >
         <div className="absolute top-0 right-0 p-2">

@@ -148,7 +148,7 @@ const ProjectsSection = () => {
 
         {/* Projects Container */}
        
-          <Slider {...settings} className="mt-5"  >
+          <Slider {...settings} className="mt-5 projects-container p-4"  >
             {filteredProjects.map((project) => (
               <ProjectCard
                 key={project._id}

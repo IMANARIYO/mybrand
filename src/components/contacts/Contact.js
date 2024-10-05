@@ -45,69 +45,80 @@ const ContactSection = () => {
               The best time to act is now. Send me a message and let’s get started on creating something great together.
             </p>
             <form onSubmit={handleSubmit(onSubmit)}>
-              {/* Name */}
-              <div className="form-group">
-                <input
-                  type="text"
-                  placeholder="Your Name"
-                  className="message text-gray-900"
-                  {...register("name", { required: "Name is required.", minLength: { value: 2, message: "Name must be at least 2 characters long." } })}
-                />
-                {errors.name && <p className="error-message">{errors.name.message}</p>}
-              </div>
+  {/* Name */}
+  <div className="form-group">
+    <label htmlFor="name">Your Name</label>
+    <input
+      id="name"
+      type="text"
+      placeholder="Your Name"
+      className="message text-gray-900"
+      {...register("name", { required: "Name is required.", minLength: { value: 2, message: "Name must be at least 2 characters long." } })}
+    />
+    {errors.name && <p className="error-message">{errors.name.message}</p>}
+  </div>
 
-              {/* Email */}
-              <div className="form-group">
-                <input
-                  type="email"
-                  placeholder="Your Email"
-                  className="message text-gray-900"
-                  {...register("email", {
-                    required: "Email is required.",
-                    pattern: { value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/, message: "Please enter a valid email." }
-                  })}
-                />
-                {errors.email && <p className="error-message">{errors.email.message}</p>}
-              </div>
+  {/* Email */}
+  <div className="form-group">
+    <label htmlFor="email">Your Email</label>
+    <input
+      id="email"
+      type="email"
+      placeholder="Your Email"
+      className="message text-gray-900"
+      {...register("email", {
+        required: "Email is required.",
+        pattern: { value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/, message: "Please enter a valid email." }
+      })}
+    />
+    {errors.email && <p className="error-message">{errors.email.message}</p>}
+  </div>
 
-              {/* Telephone */}
-              <div className="form-group">
-                <input
-                  type="tel"
-                  placeholder="Telephone"
-                  className="message text-gray-900"
-                  {...register("telephone", {
-                    required: "Telephone is required.",
-                    pattern: { value: /^\+?\d{7,15}$/, message: "Please enter a valid telephone number." }
-                  })}
-                />
-                {errors.telephone && <p className="error-message">{errors.telephone.message}</p>}
-              </div>
+  {/* Telephone */}
+  <div className="form-group">
+    <label htmlFor="telephone">Telephone</label>
+    <input
+      id="telephone"
+      type="tel"
+      placeholder="Telephone"
+      className="message text-gray-900"
+      {...register("telephone", {
+        required: "Telephone is required.",
+        pattern: { value: /^\+?\d{7,15}$/, message: "Please enter a valid telephone number." }
+      })}
+    />
+    {errors.telephone && <p className="error-message">{errors.telephone.message}</p>}
+  </div>
 
-              {/* Subject */}
-              <div className="form-group">
-                <input
-                  type="text"
-                  placeholder="Subject"
-                  className="message text-gray-900"
-                  {...register("subject", { required: "Subject is required." })}
-                />
-                {errors.subject && <p className="error-message">{errors.subject.message}</p>}
-              </div>
+  {/* Subject */}
+  <div className="form-group">
+    <label htmlFor="subject">Subject</label>
+    <input
+      id="subject"
+      type="text"
+      placeholder="Subject"
+      className="message text-gray-900"
+      {...register("subject", { required: "Subject is required." })}
+    />
+    {errors.subject && <p className="error-message">{errors.subject.message}</p>}
+  </div>
 
-              {/* Message */}
-              <div className="form-group">
-                <textarea
-                  placeholder="Message"
-                  rows="6"
-                  className="message text-gray-900"
-                  {...register("message", { required: "Message is required.", minLength: { value: 10, message: "Message must be at least 10 characters long." } })}
-                ></textarea>
-                {errors.message && <p className="error-message">{errors.message.message}</p>}
-              </div>
+  {/* Message */}
+  <div className="form-group">
+    <label htmlFor="message">Message</label>
+    <textarea
+      id="message"
+      placeholder="Message"
+      rows="6"
+      className="message text-gray-900"
+      {...register("message", { required: "Message is required.", minLength: { value: 10, message: "Message must be at least 10 characters long." } })}
+    ></textarea>
+    {errors.message && <p className="error-message">{errors.message.message}</p>}
+  </div>
 
-              <button type="submit" className="btn-submit">Contact Me Now</button>
-            </form>
+  <button type="submit" className="btn-submit">Contact Me Now</button>
+</form>
+
           </div>
 
           {/* Right Contact (Social Media, Contact Info, and Map) */}

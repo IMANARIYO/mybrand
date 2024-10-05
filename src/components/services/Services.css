@@ -1,9 +1,10 @@
 /* Container Styles */
 .services-container {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    gap: 10px;
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+    gap: 20px;
     justify-content: center;
+    align-items: center;
   }
   
   .service-item.dont, .section.dont {
@@ -14,25 +15,26 @@
   .service-item {
     position: relative;
     display: flex;
-    /* height:fit-content; */
+    height: 100%;
     margin-bottom: 10px;
     flex-direction: column;
     align-items: center;
-    background-color: #fff;
+    /* background-color: #fff; */
     border-radius: 12px;
     padding: 1.5rem;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    box-shadow:var(--white-shadow-strong);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
     text-align: center;
     overflow: hidden;
     cursor: pointer;
+    color: white;
   }
   
   /* Add glowing border on hover */
   .service-item:hover {
     transform: translateY(-10px);
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-    border: 2px solid #ffdd57; /* Glowing yellow border */
+    box-shadow:var(--second-color-shadow-strong);
+   
   }
   
   /* Service Image Styles */
@@ -53,7 +55,7 @@
   /* Service Title */
   .service-item h3 {
     font-size: 1.8rem;
-    color: #333;
+
     margin-top: 1rem;
     font-weight: bold;
     transition: color 0.3s ease;
@@ -67,7 +69,7 @@
   /* Service Description */
   .service-item p {
     font-size: 1rem;
-    color: #666;
+
     line-height: 1.5;
     margin-top: 0.5rem;
   }

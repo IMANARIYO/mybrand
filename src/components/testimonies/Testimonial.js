@@ -141,7 +141,7 @@ useEffect(() => {
         about working with me.
       </p>
       <div className='  '>
-        <Slider {...settings} className=" mx-auto">
+        <Slider {...settings} className=" ">
           {testimonials.map((testimonial, index) =>
             <TestimonialSlide
               key={testimonial._id}

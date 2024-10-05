@@ -12,7 +12,7 @@ const TestimonialSlide = ({
   mainTestimony
 }) => {
   return (
-    <section className=''>
+    <section className='t'>
       <div className='flex flex-col gap-3  h-auto p-4 lgl:flex-row justify-center items-center '>
         <div className='sm:block md:block  lgl:max-w-[35%]  h-full bg-gradient-to-r from-[#1e2024] to-[#23272b] p-8 rounded-lg flex flex-col md:flex-row lgl:flex-col  justify-center md:justify-start lgl:justify-center'>
           <img

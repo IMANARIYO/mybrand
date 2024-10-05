@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { MenuIcon, XIcon } from "@heroicons/react/outline";
+import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 
 import {
@@ -16,13 +17,13 @@ import {
   FaChartPie,
 } from "react-icons/fa";
 
-// Array containing sidebar items with new unique icons
+// Array containing sidebar items, including the logout option
 const sidebarItems = [
   {
     id: "home",
     label: "Home",
     icon: <FaHome className="h-6 w-6 icon" />,
-    path: "/dashboard",
+    path: "/",
   },
   {
     id: "projects",
@@ -84,13 +85,29 @@ const sidebarItems = [
     icon: <FaChartPie className="h-6 w-6 icon" />,
     path: "/dashboard",
   },
+  {
+    id: "logout",
+    label: "Logout",
+    icon: <FaUser className="h-6 w-6 icon" />,
+    path: "#", // Set to "#" since it will not be a normal link
+  },
 ];
 
 const Sidebar = () => {
   const [isOpen, setIsOpen] = useState(true); // Toggle state
+  const navigate = useNavigate(); // Initialize useNavigate
 
   const toggleSidebar = () => {
     setIsOpen(!isOpen);
+  };
+
+  // Handle logout
+  const handleLogout = () => {
+    localStorage.removeItem('accessToken');
+    localStorage.removeItem('userId');
+    localStorage.removeItem('userRole');
+    localStorage.removeItem('user');
+    navigate('/'); // Navigate to the home page
   };
 
   return (
@@ -124,16 +141,31 @@ const Sidebar = () => {
               isOpen ? "sidebar-item-open" : "sidebar-item-closed"
             }`}
           >
-            <Link to={item.path} className="flex items-center sidebar-link">
-              {item.icon}
-              <span
-                className={`ml-2 transition-all duration-300 ${
-                  isOpen ? "opacity-100" : "opacity-0"
-                } sidebar-label`}
-              >
-                {item.label}
-              </span>
-            </Link>
+            {item.id === 'logout' ? (
+              // Render logout button separately
+              <button onClick={handleLogout} className="flex items-center sidebar-link w-full">
+                {item.icon}
+                <span
+                  className={`ml-2 transition-all duration-300 ${
+                    isOpen ? "opacity-100" : "opacity-0"
+                  } sidebar-label`}
+                >
+                  {item.label}
+                </span>
+              </button>
+            ) : (
+              <Link to={item.path} className="flex items-center sidebar-link">
+                {item.icon}
+                <span
+                  className={`ml-2 transition-all duration-300 ${
+                    isOpen ? "opacity-100" : "opacity-0"
+                  } sidebar-label`}
+                >
+                  {item.label}
+                </span>
+              </Link>
+            )
+            }
           </li>
         ))}
       </ul>

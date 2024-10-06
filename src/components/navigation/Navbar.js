@@ -183,8 +183,8 @@ const Navbar = () => {
 
       {/* Login Form Modal */}
       {isLoginFormOpen && (
-        <div className="fixed top-48 left-0 w-full h-full flex items-center justify-center bg-black bg-opacity-75">
-          <div className="bg-white p-5 rounded shadow-lg text-gray-950 w-11/12 md:w-1/3">
+        <div className="fixed top-0 left-0 w-full h-[100vh]  flex items-center justify-center bg-black bg-opacity-75 ">
+          <div className=" bg-white p-5 rouned shadow-lg text-gray-950 w-11/12 md:w-1/3 mx-auto">
             <h2 className="text-2xl mb-4">Login</h2>
             {loginError && <p className="text-red-500">{loginError}</p>}
             <input
@@ -216,8 +216,8 @@ const Navbar = () => {
 
       {/* Signup Form Modal */}
       {isSignupFormOpen && (
-        <div className="fixed top-64 left-0 w-full h-full flex items-center justify-center bg-black bg-opacity-75 ">
-          <div className="bg-white p-5 rounded shadow-lg w-11/12 md:w-1/3">
+        <div className="fixed top-0 left-0 w-full h-[100vh] flex items-center justify-center bg-black bg-opacity-75 ">
+          <div className=" relative bg-white p-5 rounded shadow-lg w-11/12 md:w-1/3">
             <h2 className="text-2xl mb-4 text-gray-950">Sign Up</h2>
             {signupError && <p className="text-red-500">{signupError}</p>}
             <input

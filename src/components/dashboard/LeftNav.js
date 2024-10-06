@@ -112,7 +112,7 @@ const Sidebar = () => {
 
   return (
     <div
-      className={`bg-gray-500 flex flex-col text-white h-[100vh] transition-all duration-300 ${
+      className={`bg-gray-500 flex flex-col text-white h-[100vh] transition-all duration-300  sticky  top-0 left -0 ${
         isOpen ? "w-64" : "w-16"
       } sidebar-container`}
     >

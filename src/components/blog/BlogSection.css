@@ -82,7 +82,10 @@
   gap: 1rem;
   color: var(--secondary-color);
 }
-
+.blog-meta:hover {
+  box-shadow: var(--white-shadow-strong);
+  color: var(--secondary-color);
+}
 .blog-meta span {
   font-size: 14px;
 ;
@@ -144,15 +147,15 @@
   padding: 5px 5px;
   font-size: 16px;
   color: #fff;
-  background-color: var(--second-color);
-
+  
   border-radius: 5px;
   text-decoration: none;
   transition: background-color 0.3s;
+  background-color: #0056b3;
 }
 
 .blog-read-more:hover {
-  background-color: #0056b3;
+  background-color: var(--secondary-color);
 }
 
 /* Responsive Design */

@@ -45,7 +45,7 @@ const Navbar = () => {
     };
   }, []);
 
-  const sections = ["home", "about", "projects", "services", "testimonial", "contacts", "blog"];
+  const sections = ["home", "about", "projects", "services", "testimonial", "blog", "contacts"];
   const handleScroll = () => {
     const scrollPosition = window.scrollY;
     setIsScrolled(scrollPosition > 50);

@@ -126,6 +126,7 @@ box-shadow: var(--white-shadow-strong);
 
 }
 .lower-section p,.upper-section p,.urgent-message,.contact-subtitle{
+  margin-bottom: 1rem;
  box-shadow: var( --white-shadow-light);
 }
 .warning{

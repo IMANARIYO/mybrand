@@ -179,7 +179,7 @@ height:600px;
     cursor: pointer;
     transition: background-color 0.3s ease;
     position: absolute;
-    top: -30px;
+    top: 10px;
     box-shadow: var(--white-shadow-light);
     transform: translateY(-50%);
     z-index: 1;

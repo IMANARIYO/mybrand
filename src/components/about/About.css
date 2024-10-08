@@ -171,7 +171,8 @@
   
   .category {
     display: none; 
-    border: 1px solid #ccc;
+    /* border: 1px solid #ccc; */
+    box-shadow: var(--white-shadow-subtle);
     border-radius: 10px;
     padding: 1rem;
     /* background-color: #f4f4f4; */
@@ -198,8 +199,7 @@
     padding: 10px;
     align-items: center;
     width: 120px;
-    border: 2px solid #ccc;
-    
+    box-shadow: var(--white-shadow-strong);
     border-radius: 10px;
   }
   .highlight{
@@ -271,9 +271,9 @@
     margin-bottom: 20px;
     padding: 20px;
     border-radius: 18px;
-    border: 0.5px solid white;
+   
     background-color:rgb(22, 22, 22);
-    box-shadow: var(--shadow-light);
+    box-shadow: var(--white-shadow-subtle);
   }
   
   .education-item:hover,

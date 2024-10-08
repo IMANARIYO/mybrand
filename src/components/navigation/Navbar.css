@@ -43,7 +43,7 @@
    font-size: 1.2rem;
     z-index: 10000;
     height: 100px;
-    padding:1rem 0rem;
+    padding:0.5rem 0rem;
    
   }
   .profile-dropdown {
@@ -94,9 +94,9 @@
   .menu-item {
     text-decoration: none;
     align-items: center;
-
-    font-weight: 500;
-    border: 1px solid transparent; 
+box-shadow: var(--shadow-dark);
+    font-weight: 300;
+ 
     /* border-radius: 18px; */
     /* padding: 0.5rem 1.5rem; */
     transition: background-color var(--transition-medium), 
@@ -137,7 +137,8 @@ align-self: center;
   /* Media Queries for Responsiveness */
   @media (min-width: 769px) {
     .menu-item {
-      padding: 0.5rem 1.5rem; /* Specific padding for larger screens */
+
+      padding: 0.5rem 1rem; /* Specific padding for larger screens */
     }
   }
   

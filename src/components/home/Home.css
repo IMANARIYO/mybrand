@@ -3,6 +3,7 @@
     display: flex;
     padding-top: 30px;
     justify-content: space-between;
+    align-items: flex-end;
 
 
     gap: 40px;
@@ -11,17 +12,19 @@
   /* Home Content */
   .home-content {
  flex: 2;
+justify-content: space-between;
 
- 
     text-align: initial;
   }
   
   .welcome-text {
-    font-size: 18px;
-    font-weight: 500;
-    color: var(--primary-color);
+
+
+    color: var(--secondary-color);
     text-transform: uppercase;
     letter-spacing: 1.5px;
+    font-weight: 700;
+    font-size: 40px;
     /* margin-bottom: 10px; */
   }
   

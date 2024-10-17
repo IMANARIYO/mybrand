@@ -81,12 +81,14 @@ a {
   align-items: center;
   justify-content: center;
   justify-self: center;
-  width: 80%;
+  width: 90%;
   margin-left: auto;
   margin-right: auto;
 }
 
-
+.blogmoadal{
+  z-index: 2000;
+}
 
 .content-title {
   color: var(--primary-color);

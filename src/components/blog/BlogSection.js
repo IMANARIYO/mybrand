@@ -7,7 +7,7 @@ import { blogPosts } from "../data/blogs";
 const initial=blogPosts;
 const BlogSection = () => {
   const [selectedPost, setSelectedPost] = useState(null); // State to manage the selected post
-  const [blogPosts, setBlogs] = useState(initial); // State to hold the fetched blogs
+  const [blogPosts, setBlogs] = useState([]); // State to hold the fetched blogs
   const [loading, setLoading] = useState(true); // To manage loading state
   useEffect(() => {
     const fetchBlogs = async () => {

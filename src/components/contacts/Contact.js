@@ -1,3 +1,4 @@
+import "@fortawesome/fontawesome-free/css/all.min.css";
 import "react-toastify/dist/ReactToastify.css";
 import "./Contact.css";
 import React from "react";
@@ -116,7 +117,7 @@ const ContactSection = () => {
     {errors.message && <p className="error-message">{errors.message.message}</p>}
   </div>
 
-  <button type="submit" className="btn-submit">Contact Me Now</button>
+  <button type="submit" className="btn-submit">send message</button>
 </form>
 
           </div>

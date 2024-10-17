@@ -31,7 +31,7 @@ function SamplePrevArrow(props) {
 const ProjectsSection = () => {
   const [dotActive, setDotActive] = useState(0);
   const [selectedTech, setSelectedTech] = useState("all"); // State to track the selected filter
-  const [projectData, setProjectData] = useState(initialProject);
+  const [projectData, setProjectData] = useState([]);
   // Function to handle tech filter changes
   const handleFilterChange = (e) => {
     setSelectedTech(e.target.value);

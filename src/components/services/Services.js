@@ -7,7 +7,7 @@ import { serviceData } from "../data/services";
   
 
 const Services = () => {
-  const [services, setServices] = useState(serviceData);
+  const [services, setServices] = useState([]);
   useEffect(() => {
     const fetchServices = async () => {
       try {

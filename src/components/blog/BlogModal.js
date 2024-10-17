@@ -1,5 +1,5 @@
 import DOMPurify from "dompurify";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import api from "../../apirequest/api";
 import axios from "axios";
 import { AiOutlineEye } from "react-icons/ai";
@@ -249,16 +249,18 @@ function BlogModal({ handleClose, props }) {
   }, [isLoginFormOpen, isSignupFormOpen]);
   
   return (
-    <div className="flex justify-center items-center bg-black bg-opacity-50 fixed  top-[80px] left-0 right-0 bottom-0 z-5000"
->
-      <div
-        className="relative bg-white p-5 max-w-4xl w-full max-h-full overflow-y-auto rounded-lg shadow-lg top-12 pb-24 z-500 "
-        onClick={(e) => e.stopPropagation()}
+    <div
+    className="flex justify-center items-center bg-black bg-opacity-50 fixed inset-0 blogmoadal"
+   
+  >
+       <div
+        className="relative bg-white p-5 max-w-[90vw] w-full max-h-full overflow-y-auto rounded-lg shadow-lg pb-32"
+        onClick={(e) => e.stopPropagation()} // Prevent closing when clicking inside the modal
       >
-        <div className="absolute top-0 right-0 p-2">
+        <div className="absolute top-0 right-0 p-2 w-32 h-32  ">
           <button
             onClick={handleClose}
-            className="bg-green-600 p-2 rounded-full text-2xl"
+            className="bg-green-600  hover:bg-green-300 p-2 rounded-full text-2xl w-full h-full flex justify-center items-center"
           >
             <FaRegWindowClose />
           </button>
@@ -340,7 +342,7 @@ function BlogModal({ handleClose, props }) {
 
       {/* Embedded Login Form */}
       {isLoginFormOpen && (
-        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-75">
+        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-75 z-">
           <div className="bg-white p-5 rounded shadow-lg">
             <h2 className="text-2xl mb-4 text-gray-950">Login</h2>
             {loginError && <p className="text-red-500">{loginError}</p>}

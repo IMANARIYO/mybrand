@@ -1,5 +1,6 @@
 import BlogCard from "./BlogCard";
 import BlogModal from "./BlogModal";
+import LoadingIndicator from "../../LoadingIndicator";
 import React, { useEffect, useState } from "react";
 import { getAllBlogs } from "../../apirequest/blogApi";
 import { blogPosts } from "../data/blogs";
@@ -14,20 +15,18 @@ const BlogSection = () => {
       try {
         const response = await getAllBlogs(); // Fetching data from API
         setBlogs(response.data); // Set the blogs to the response data
-   
+        setLoading(false); 
       } catch (error) {
         console.error("Error fetching blogs", error);
       } finally {
-        setLoading(false); // Turn off loading
+       // Turn off loading
       }
     };
 
     fetchBlogs(); // Fetch the blogs when component mounts
   }, []);
 
-  if (loading) {
-    return <div>Loading blogs...</div>; // Display loading indicator
-  }
+
   const handleReadMore = (post) => {
     setSelectedPost(post); // Set the selected post
   };
@@ -45,12 +44,27 @@ const BlogSection = () => {
         </p>
 
         {/* Blog Cards Container */}
-        <div className="blog-container">
+
+       {
+        loading ? (
+        
+        
+          <LoadingIndicator
+          loadingMessage="Please wait a moment while we gather the latest insights from our blog."
+          speedMessage="connection speed"
+          performanceMessage="system performance"
+          additionalMessage="This may take a little longer, but we appreciate your patience!"
+        />
+           
+                
+                  ) :
+       ( <div className="blog-container">
           {blogPosts.map((post) => (
             <BlogCard key={post._id} post={post} onReadMore={handleReadMore} />
           ))}
           
-        </div>
+        </div>)
+        }
       </div>
       {selectedPost && (
         <BlogModal post={selectedPost} handleClose={handleCloseModal} props={selectedPost}  onReadMore={handleReadMore} />

@@ -1,4 +1,5 @@
 import "slick-carousel/slick/slick.css";
+import LoadingIndicator from "../../LoadingIndicator";
 import React, { useEffect, useState } from "react";
 import Slider from "react-slick";
 import TestimonialSlide from "./TestimonialSlide";
@@ -58,14 +59,15 @@ const initialTestimonials = testimonials
 const Testimonial = () => {
   const [dotActive, setDocActive] = useState(0)
 const[testimonials,setTestimonials]=useState(initialTestimonials)
-
+const [loading, setLoading] = useState(true);
 
 useEffect(() => {
   const fetchTestimonials = async () => {
     try {
       const response=await getAllTestimonies();
-      console.log("testimonials",response.data)
-      setTestimonials(response.data)
+      console.log("testimonials",response.data);
+      setTestimonials(response.data);
+      setLoading(false);
     } catch (error) {
       console.log("error fetching testimalials")
     }
@@ -141,7 +143,19 @@ useEffect(() => {
         about working with me.
       </p>
       <div className='  '>
-        <Slider {...settings} className=" ">
+
+      { loading ? (
+        
+        <LoadingIndicator
+        loadingMessage="Just a moment! We’re gathering feedback from my satisfied clients."
+        speedMessage="internet speed can vary"
+        performanceMessage="your device’s performance"
+        additionalMessage="Thank you for your patience while we compile these testimonials!"
+      />
+        
+         
+              
+                ) : (<Slider {...settings} className=" ">
           {testimonials.map((testimonial, index) =>
             <TestimonialSlide
               key={testimonial._id}
@@ -154,7 +168,8 @@ useEffect(() => {
               head={testimonial.service}
             />
           )}
-        </Slider>
+        </Slider>)
+        }
       </div>
     </section>
   )

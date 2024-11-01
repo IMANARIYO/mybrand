@@ -1,4 +1,7 @@
 import "./Project.css";
+import CircularProgress from "@mui/material/CircularProgress";
+import LinearProgress from "@mui/material/LinearProgress";
+import LoadingIndicator from "../../LoadingIndicator";
 import ProjectCard from "./ProjectCard";
 import React, { useEffect, useState } from "react";
 import Slider from "react-slick";
@@ -32,6 +35,7 @@ const ProjectsSection = () => {
   const [dotActive, setDotActive] = useState(0);
   const [selectedTech, setSelectedTech] = useState("all"); // State to track the selected filter
   const [projectData, setProjectData] = useState([]);
+  const [loading, setLoading] = useState(true);
   // Function to handle tech filter changes
   const handleFilterChange = (e) => {
     setSelectedTech(e.target.value);
@@ -110,9 +114,14 @@ const ProjectsSection = () => {
       try {
         const response = await getAllProjects();
         setProjectData(response.data);
+        setLoading(false);
         console.log("projects fetched",response.data);
       } catch (error) {
-        toast.error("Failed to fetch projects.");
+        setLoading(true); 
+        // toast.error("Failed to fetch projects.");
+      }finally {
+        // Set loading to false once data is fetched
+        console.log("finished loading")
       }
     };
 
@@ -148,7 +157,19 @@ const ProjectsSection = () => {
 
         {/* Projects Container */}
        
-          <Slider {...settings} className="mt-5 projects-container p-4"  >
+        {loading ? (
+        
+        <LoadingIndicator
+        loadingMessage="Hang tight! We’re retrieving some amazing projects for you."
+        speedMessage="internet speed may affect loading time"
+        performanceMessage="your device performance"
+        additionalMessage="Thank you for your patience while we gather these inspiring works!"
+      />
+
+ 
+      
+        ) : (
+          <Slider {...settings} className="mt-5 projects-container p-4">
             {filteredProjects.map((project) => (
               <ProjectCard
                 key={project._id}
@@ -162,6 +183,7 @@ const ProjectsSection = () => {
               />
             ))}
           </Slider>
+        )}
        
       </div>
     </section>

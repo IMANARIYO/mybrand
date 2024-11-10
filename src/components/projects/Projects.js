@@ -170,19 +170,24 @@ const ProjectsSection = () => {
       
         ) : (
           <Slider {...settings} className="mt-5 projects-container p-4">
-            {filteredProjects.map((project) => (
+          {filteredProjects.map((project) => {
+            // Split the technologies string into an array
+            const technologies = project.languageUsed[0].split(',').map((tech) => tech.trim());
+        
+            return (
               <ProjectCard
                 key={project._id}
                 image={project.image}
                 title={project.projectName}
                 description={project.description}
-                techUsed={project.languageUsed}
-                company={project.company}
                 githubLink={project.github}
                 visitLink={project.projectLink}
+                technologies={technologies} // Passing the split technologies array
               />
-            ))}
-          </Slider>
+            );
+          })}
+        </Slider>
+        
         )}
        
       </div>

@@ -1,134 +1,149 @@
-  
+/* Container Styles */
+.home-container {
+  display: flex;
+  padding-top: 30px;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 40px;
+}
+
+.home-content {
+  flex: 2;
+  text-align: left;
+}
+
+/* Welcome Text */
+.welcome-text {
+  color: var(--secondary-color);
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  font-weight: 700;
+  font-size: 40px;
+}
+
+/* Name Introduction */
+.name-intro {
+  font-size: 48px;
+  font-weight: 700;
+  line-height: 1.2;
+  color: var(--text-color);
+}
+
+.highlighted-name {
+  color: var(--secondary-color);
+}
+
+/* Role Introduction with Animation */
+.role-intro {
+  font-size: 36px;
+  font-weight: 600;
+  color: var(--primary-color);
+}
+
+.dynamic-role {
+  color: var(--secondary-color);
+  opacity: 0;
+  transform: translateY(20px);
+  animation: construct 0.5s forwards;
+}
+
+.constructive {
+  animation: construct 0.5s forwards;
+}
+
+.destructive {
+  animation: destruct 0.5s forwards;
+}
+
+/* Constructive and Destructive Animations */
+@keyframes construct {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes destruct {
+  from {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+}
+
+/* Introductory Text */
+.intro-text {
+  font-size: 1.5rem;
+  line-height: 1.6;
+  color: var(--text-color);
+  margin-bottom: 40px;
+}
+
+.convince-text {
+  font-size: 1.2rem;
+  color: var(--text-color);
+  margin-bottom: 20px;
+}
+
+/* Action Buttons */
+.action-buttons {
+  display: flex;
+  gap: 20px;
+}
+
+.button {
+  display: inline-block;
+  padding: 15px 30px;
+  font-size: 18px;
+  font-weight: 600;
+  color: black;
+  background-color: var(--text-color);
+  border-radius: 8px;
+  text-decoration: none;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.button:hover {
+  background-color: var(--secondary-color);
+  transform: translateY(-3px);
+  scale: 1.01;
+}
+
+/* Image Section */
+.home-image {
+  flex: 1;
+}
+
+.home-image img {
+  width: 100%;
+  border-radius: 10px;
+  box-shadow: var(--shadow-medium);
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
   .home-container {
-    display: flex;
-    padding-top: 30px;
-    justify-content: space-between;
-    align-items: flex-end;
-
-
-    gap: 40px;
+    flex-direction: column;
+    text-align: center;
   }
 
-  /* Home Content */
-  .home-content {
- flex: 2;
-justify-content: space-between;
-
-    text-align: initial;
-  }
-  
-  .welcome-text {
-
-
-    color: var(--secondary-color);
-    text-transform: uppercase;
-    letter-spacing: 1.5px;
-    font-weight: 700;
-    font-size: 40px;
-    /* margin-bottom: 10px; */
-  }
-  
   .name-intro {
-    font-size: 48px;
-    font-weight: 700;
-    line-height: 1.2;
-  
-    color: var(--text-color);
-  }
-  
-  .highlighted-name {
-    color: var(--secondary-color);
-  }
-  
-  .role-intro {
     font-size: 36px;
-    font-weight: 600;
-    color: var(--primary-color);
-    /* margin-bottom: 30px; */
   }
-  
-  .dynamic-role {
-    color: var(--secondary-color);
+
+  .role-intro {
+    font-size: 28px;
   }
-  
-  .intro-text {
-    font-size: 1.5rem;
-    line-height: 1.6;
-    color: var(--text-color);
-    margin-bottom: 40px;
-  }
-  
 
   .action-buttons {
-    display: flex;
-    gap: 20px;
+    flex-wrap: wrap;
+    gap: 15px;
   }
-  
-  .button {
-    display: inline-block;
-    /* width:50%; */
-    padding: 15px 30px;
-    font-size: 18px;
-    font-weight: 600;
-    color: black;
-    background-color: var(--text-color);
-    border-radius: 8px;
-    text-decoration: none;
-    transition: background-color 0.3s ease, transform 0.3s ease;
-  }
-  
-  .button:hover {
-    background-color:var(--secondary-color);
-    transform: translateY(-3px);
-    scale: 1.01;
-  }
-  
-
-  .home-image {
-   
-    flex: 1;
-
-  }
-  
-  .home-image img {
-    width: 100%;
-    border-radius: 10px;
-    box-shadow: var(--shadow-medium);
-  }
-  
-  /* Responsive Design */
-  @media (max-width: 1024px) {
-    .home-container {
-      flex-direction: column;
-      text-align: center;
-    }
-  
-    .home-content {
-      max-width: 100%;
-    }
-  
-    .home-image {
-      max-width: 80%;
-      margin: 0 auto;
-    }
-  }
-  
-  @media (max-width: 1024px) {
-    .name-intro {
-      font-size: 36px;
-    }
-  
-    .role-intro {
-      font-size: 28px;
-    }
-  
-    .action-buttons {
-      /* flex-direction: column; */
-      flex-wrap: wrap;
-      gap: 15px;
-     
-    }
-  
-    
-  }
-  
+}

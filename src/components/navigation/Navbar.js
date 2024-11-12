@@ -2,7 +2,7 @@ import "react-toastify/dist/ReactToastify.css";
 import "./Navbar.css";
 import React, { useEffect, useState } from "react";
 import api from "../../apirequest/api";
-import { FaBars, FaSignInAlt, FaTimes, FaUserCircle } from "react-icons/fa";
+import { FaBars, FaSignInAlt, FaTimes, FaUserCircle, FaUserPlus } from "react-icons/fa";
 import { toast } from "react-toastify";
 
 const Navbar = () => {
@@ -150,7 +150,7 @@ const Navbar = () => {
                 <FaSignInAlt /> Login
               </a>
               <a href="#" className="menu-item" onClick={() => setIsSignupFormOpen(true)}>
-                <FaSignInAlt /> Signup
+                <FaUserPlus /> Signup
               </a>
             </>
           ) : (

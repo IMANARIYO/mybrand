@@ -2,27 +2,35 @@ import React from "react";
 import { BsGithub } from "react-icons/bs";
 import { FaGlobe } from "react-icons/fa";
 
-const ProjectsCard = ({ title, image, description, githubLink, visitLink, technologies}) => {
+const ProjectsCard = ({
+  title,
+  image,
+  description,
+  githubLink,
+  visitLink,
+  technologies,
+}) => {
   return (
-    <div className="project-item p-4 rounded-lg shadow-shadowOne flex flex-col duration-1000 ">
-      <div className="w-full h-[60%] overflow-hidden rounded-lg">
+    <div className="project-item p-2 rounded-xl shadow-xl bg-gradient-to-r from-[#2c2a2f] to-[#1c1b1f] flex flex-col duration-300 group hover:scale-105 transform transition-transform">
+      <div className="w-full h-[60%] overflow-hidden rounded-lg relative">
         <img
-          className="w-full h-full object-cover group-hover:scale-110 duration-300 cursor-pointer"
+          className="w-full h-full object-cover group-hover:scale-110 duration-300 ease-in-out cursor-pointer rounded-lg shadow-md"
           src={image}
           alt="Project"
         />
+        <div className="absolute inset-0 bg-black opacity-30 group-hover:opacity-0 transition-all duration-300 rounded-lg"></div>
       </div>
-      <div className="w-full mt-5 flex flex-col gap-4">
+      <div className="w-full mt-2 flex flex-col gap-4">
         <div className="flex items-center justify-between">
-          <h3 className="text-base uppercase text-designColor font-normal">{title}</h3>
-          <div className="flex">
+          <h3 className="text-xl text-[#ff6b6c] font-semibold uppercase tracking-wider">{title}</h3>
+          <div className="flex space-x-4">
             {githubLink && (
               <a
                 href={githubLink}
                 target="_blank"
                 title="View on GitHub"
                 rel="noopener noreferrer"
-                className="text-lg w-10 h-10 rounded-full bg-black inline-flex justify-center items-center text-gray-400 hover:text-designColor duration-300 cursor-pointer"
+                className="text-lg w-12 h-12 rounded-full bg-[#333] inline-flex justify-center items-center text-gray-400 hover:text-[#ff6b6c] duration-300 cursor-pointer shadow-lg hover:shadow-2xl transition-all"
               >
                 <BsGithub />
               </a>
@@ -33,29 +41,27 @@ const ProjectsCard = ({ title, image, description, githubLink, visitLink, techno
                 title="Visit Website"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-lg w-10 h-10 rounded-full bg-black inline-flex justify-center items-center text-gray-400 hover:text-designColor duration-300 cursor-pointer"
+                className="text-lg w-12 h-12 rounded-full bg-[#333] inline-flex justify-center items-center text-gray-400 hover:text-[#ff6b6c] duration-300 cursor-pointer shadow-lg hover:shadow-2xl transition-all"
               >
                 <FaGlobe />
               </a>
             )}
           </div>
         </div>
-
-        {/* Technologies Section */}
+        <h4 className="text-lg font-semibold text-gray-300">Technologies Used</h4>
         {technologies && technologies.length > 0 && (
-          <div className="flex flex-wrap gap-2 mt-3">
+          <div className="flex flex-wrap gap-3 mt-1">
             {technologies.map((tech, index) => (
               <span
                 key={index}
-                className="text-xs font-medium bg-gray-200 text-gray-700 rounded-full py-1 px-3 hover:bg-gray-300 transition-all"
+                className="text-xs font-medium bg-[#3c3a3f] text-gray-300 rounded-md p-2 hover:bg-[#4d4b52] transition-all duration-300"
               >
                 {tech}
               </span>
             ))}
           </div>
         )}
-
-        <p className="text-sm tracking-wide mt-3 hover:text-gray-100 duration-300 h-[120px] overflow-y-hidden">
+        <p className="text-sm text-gray-400 mt-4 hover:text-gray-200 duration-300 h-[120px] overflow-hidden transition-all">
           {description}
         </p>
       </div>

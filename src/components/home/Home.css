@@ -11,6 +11,38 @@
   flex: 2;
   text-align: left;
 }
+/* Floating Animation */
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0);
+    transform: translateY(5px);
+    transform: scale(1.3);
+    box-shadow: 0 0 10px rgba(73, 184, 224, 0.4), 0 0 20px rgba(73, 184, 224, 0.3);
+  }
+  50% {
+    transform: translateY(-5px);
+    transform: translateX(-5px);
+
+  }
+}
+
+/* Apply the float animation to the CV button */
+.animated-cv-button {
+  animation: float 3s ease-in-out infinite;
+}
+
+/* Style the icon for consistency */
+.animated-cv-button .icon {
+  width: 20px;
+  height: 20px;
+  color: white; 
+  transition: transform 0.3s;
+}
+
+/* Hover effect for icon */
+.animated-cv-button:hover .icon {
+  transform: scale(1.2);
+}
 
 /* Welcome Text */
 .welcome-text {

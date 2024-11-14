@@ -6,6 +6,10 @@
   z-index: 2;
 
 }
+
+
+
+
 .error-message{
   color: red ;
 }
@@ -109,25 +113,70 @@ box-shadow: var(--white-shadow-strong);
 
 }
 
+.upper-section {
+  display: grid;
+  gap: 10px;
+  grid-template-columns: 1fr 1fr;
+  margin-top: 20px;
+}
 
-
-.upper-section{
-  display: flex;
+.holder {
+  padding: 5px;
+  display: grid;
   justify-content: space-between;
-  gap: 30px;
-
+  border-radius: 12px;
+  box-shadow:var(--white-shadow-light);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  text-align: center;
+  animation: fadeInUp 0.8s ease-out;
 }
 
+.holder:hover {
+  transform: translateY(-5px);
+  box-shadow:var(--white-shadow-strong);
+}
 
-/* Contact Title */
+/* Contact Title Styling */
 .contact-title {
-  font-size: 24px;
- 
-
+  font-size: 2rem;
+  margin-bottom: 10px;
+  font-weight: bold;
 }
+
+/* Social and Contact Links Styling */
+.social-links,
+.contact-links {
+  display: flex;
+  gap: 15px;
+  justify-content: start;
+  margin-top: 15px;
+}
+
+
+/* Marquee Text Styling */
+.marquee-text {
+  font-size: 1rem;
+  margin: 10px 0;
+  animation: marqueeTextAnimation 10s linear infinite;
+}
+
+/* Animations */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+
+
 .lower-section p,.upper-section p,.urgent-message,.contact-subtitle{
   margin-bottom: 1rem;
- box-shadow: var( --white-shadow-light);
+ /* box-shadow: var( --white-shadow-light); */
 }
 .warning{
   color: rgb(235, 12, 12);
@@ -136,7 +185,8 @@ box-shadow: var(--white-shadow-strong);
 .social-links, .contact-links {
   display: flex;
   flex-wrap: wrap;
-  gap: 2px;
+  /* justify-content: space-around; */
+  gap: 20px;
 }
 .lower-section{
   display: flex;
@@ -191,10 +241,13 @@ flex-wrap: wrap;
 
 /* Responsive Design */
 @media (max-width: 1024px) {
-  .contact-wrapper,
-  .upper-section {
+  .contact-wrapper
+   {
    flex-direction: column;
 
+  }
+  .upper-section {
+    grid-template-columns: 1fr; /* Switch to single column on smaller screens */
   }
 
   

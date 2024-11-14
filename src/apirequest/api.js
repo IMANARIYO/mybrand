@@ -2,7 +2,7 @@ import axios from "axios";
 
 // Create an axios instance
 const api = axios.create({
-  baseURL: 'https://myportfolioapi-8vku.onrender.com', // Change this to your actual production server URL
+  baseURL: 'https://myportfolioapi-8vku.onrender.com', 
   headers: {
     'Content-Type': 'application/json',
   },

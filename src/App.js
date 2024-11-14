@@ -1,3 +1,4 @@
+import "react-toastify/dist/ReactToastify.css";
 import "./App.css";
 import AboutMe from "./components/about/About";
 import AdminRoute from "./AdminRoute";
@@ -22,8 +23,8 @@ import SkillsTableModule from "./components/dashboard/AboutMngt/SkillsTable";
 import Testimonial from "./components/testimonies/Testimonial";
 import TestimonialsMngt from "./components/dashboard/TestimonyMngt/Testimonialmngt";
 import UsersManagement from "./components/dashboard/users/UsersManagement";
-import { Login } from "@mui/icons-material";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import { ToastContainer } from "react-toastify";
 
 function App() {
   return (
@@ -100,6 +101,7 @@ function App() {
         }
       />
       </Routes>
+      <ToastContainer />
     </Router>
   );
 }

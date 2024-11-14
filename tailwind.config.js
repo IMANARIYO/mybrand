@@ -26,9 +26,11 @@ export default {
         lightText: "#c4cfde",
         boxBg: "linear-gradient(145deg, #1e2024, #23272b)",
         designColor: "#0eea6a",
+        designColor: "#35a8f0",
       },
       boxShadow: {
         shadowOne: "10px 10px 19px #1c1e22, -10px -10px 19px #262a2e",
+ 
         whiteshadowlight: "0px 0px 5px rgba(255, 255, 255, 0.4)",
         whiteshadowstrong: "0px 0px 15px rgba(255, 255, 255, 0.8)",
 

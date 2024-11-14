@@ -21,8 +21,8 @@ const ProjectsCard = ({
         <div className="absolute inset-0 bg-black opacity-30 group-hover:opacity-0 transition-all duration-300 rounded-lg"></div>
       </div>
       <div className="w-full mt-2 flex flex-col gap-4">
-        <div className="flex items-center justify-between">
-          <h3 className="text-xl text-[#ff6b6c] font-semibold uppercase tracking-wider">{title}</h3>
+        <div className="flex items-start justify-between flex-col">
+          <h3 className="text-xl text-[#35a8f0] font-semibold uppercase tracking-wider">{title}</h3>
           <div className="flex space-x-4">
             {githubLink && (
               <a

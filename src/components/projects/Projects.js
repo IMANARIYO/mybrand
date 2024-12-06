@@ -3,6 +3,7 @@ import CircularProgress from "@mui/material/CircularProgress";
 import LinearProgress from "@mui/material/LinearProgress";
 import LoadingIndicator from "../../LoadingIndicator";
 import ProjectCard from "./ProjectCard";
+import ProjectsCardSkeleton from "./ProjectsCardSkeleton";
 import React, { useEffect, useState } from "react";
 import Slider from "react-slick";
 import { HiArrowLeft, HiArrowRight } from "react-icons/hi";
@@ -159,13 +160,18 @@ const ProjectsSection = () => {
        
         {loading ? (
         
-        <LoadingIndicator
-        loadingMessage="Hang tight! We’re retrieving some amazing projects for you."
-        speedMessage="internet speed may affect loading time"
-        performanceMessage="your device performance"
-        additionalMessage="Thank you for your patience while we gather these inspiring works!"
-      />
-
+      //   <LoadingIndicator
+      //   loadingMessage="Hang tight! We’re retrieving some amazing projects for you."
+      //   speedMessage="internet speed may affect loading time"
+      //   performanceMessage="your device performance"
+      //   additionalMessage="Thank you for your patience while we gather these inspiring works!"
+      // />
+<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mt-5">
+            {/* Skeleton Cards */}
+            {[...Array(4)].map((_, index) => (
+              <ProjectsCardSkeleton key={index} />
+            ))}
+          </div>
  
       
         ) : (

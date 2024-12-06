@@ -47,7 +47,7 @@ const Home = () => {
               to help transform your vision into reality.
             </p>
 
-            <div className="flex gap-16">
+            <div className="flex gap-20 justify-center">
               <a
                 href="https://res.cloudinary.com/dorjr1njc/image/upload/v1731425460/fauu76nivqxk5qpniqvy.pdf"
                 download
@@ -55,7 +55,7 @@ const Home = () => {
                 rel="noopener noreferrer"
                 className="px-6 py-3 bg-[#49b8e0] text-white font-medium rounded-lg hover:bg-[#35a8f0] transition-colors duration-300 animated-cv-button flex gap-5"
               >
-               <Download className="icon" /> View My CV
+               <Download className="icon" /> View My Cv
               </a>
               <a
                 href="#contacts"

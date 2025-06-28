@@ -13,6 +13,7 @@ import ExperienceTableModule from "./components/dashboard/AboutMngt/ExperienceTa
 import Home from "./components/home/Home";
 import Layout from "./Layout";
 import LoginForm from "./components/userscomponent/Login";
+
 import ProfileManagementModule from "./components/dashboard/AboutMngt/AboutManagement";
 import ProjectTableModule from "./components/dashboard/ProjectsMngt/ProjectTable";
 import ProjectsSection from "./components/projects/Projects";
@@ -54,8 +55,9 @@ function App() {
             element={
               <>
                 <Home />
-                <AboutMe />
                 <ProjectsSection />
+                <AboutMe />
+  
                 <Services />
                 <Testimonial />
                 <BlogSection />

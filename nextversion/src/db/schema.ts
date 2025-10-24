@@ -7,6 +7,7 @@ import {
   json,
   varchar,
   pgEnum,
+  uuid,
 } from "drizzle-orm/pg-core";
 
 export const userRoleEnum = pgEnum("role", ["USER", "ADMIN"]);
@@ -72,3 +73,82 @@ export const projectsTable = pgTable("projects", {
   createdAt: timestamp("created_at").notNull().defaultNow(),
   updatedAt: timestamp("updated_at").notNull().defaultNow(),
 });
+
+// Service Request Status Enum
+export const serviceRequestStatusEnum = pgEnum("service_request_status", [
+  "pending",
+  "in-progress",
+  "completed",
+  "cancelled",
+]);
+
+// Service Interface Types
+export interface ServiceBenefit {
+  title: string;
+  description: string;
+  icon?: string;
+}
+
+export interface ServiceProcess {
+  step: number;
+  title: string;
+  description: string;
+  icon?: string;
+}
+
+export interface ServiceAction {
+  label: string;
+  actionType: "link" | "modal" | "scroll" | "form";
+  target?: string;
+}
+
+// Service Status Enum
+export const serviceStatusEnum = pgEnum("service_status", [
+  "featured",
+  "new", 
+  "completed",
+  "in-progress",
+  "available"
+]);
+
+// Services Table
+export const services = pgTable("services", {
+  id: uuid("id").defaultRandom().primaryKey(),
+  title: text("title").notNull(),
+  tagline: text("tagline").notNull(),
+  description: text("description").notNull(),
+  imageUrl: text("image_url"),
+  icon: text("icon").notNull(),
+  category: text("category").notNull(),
+  pricing: text("pricing").notNull(),
+  duration: text("duration").notNull(),
+  featured: text("featured").notNull().default("false"),
+  status: serviceStatusEnum("status").notNull().default("available"),
+  skills: json("skills").$type<string[]>().notNull(),
+  benefits: json("benefits").$type<ServiceBenefit[]>().notNull(),
+  process: json("process").$type<ServiceProcess[]>().notNull(),
+  actions: json("actions").$type<ServiceAction[]>().notNull(),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+  updatedAt: timestamp("updated_at").defaultNow().notNull(),
+});
+
+// Service Requests Table
+export const serviceRequests = pgTable("service_requests", {
+  id: uuid("id").defaultRandom().primaryKey(),
+  serviceId: uuid("service_id")
+    .notNull()
+    .references(() => services.id, { onDelete: "cascade" }),
+  name: text("name").notNull(),
+  email: text("email").notNull(),
+  phone: text("phone").notNull(),
+  message: text("message"),
+  status: serviceRequestStatusEnum("status").notNull().default("pending"),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+  updatedAt: timestamp("updated_at").defaultNow().notNull(),
+});
+
+// Types
+export type Service = typeof services.$inferSelect;
+export type NewService = typeof services.$inferInsert;
+export type ServiceRequest = typeof serviceRequests.$inferSelect;
+export type NewServiceRequest = typeof serviceRequests.$inferInsert;

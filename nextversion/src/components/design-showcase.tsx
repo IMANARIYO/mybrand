@@ -2,7 +2,7 @@
 
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
+import { SectionHeader } from "@/components/ui/section-header"
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
@@ -14,40 +14,20 @@ export function DesignShowcase() {
     <div className="min-h-screen bg-background">
       {/* Hero Section */}
       <section id="home" className="container mx-auto px-4 py-20">
-        <div className="text-center space-y-6 max-w-3xl mx-auto">
-          <Badge variant="secondary" className="mb-4">
-            Design System v1.0
-          </Badge>
-          <h1 className="text-5xl font-bold text-balance">Complete Design System Showcase</h1>
-          <p className="text-xl text-muted-foreground text-pretty">
-            A comprehensive design system with light, dark, and custom themes. Built with shadcn/ui and Tailwind CSS v4.
-          </p>
-          <div className="flex flex-wrap gap-4 justify-center pt-4">
-            <Button size="lg" className="bg-cta text-cta-foreground hover:bg-cta/90">
-              <Sparkles className="mr-2 h-5 w-5" />
-              Get Started
-            </Button>
-            <Button size="lg" variant="outline">
-              Learn More
-            </Button>
-            <Button size="lg" variant="secondary">
-              Documentation
-            </Button>
-          </div>
-        </div>
+        <SectionHeader
+          title="Complete Design System Showcase"
+          subtitle="A comprehensive design system with light, dark, and custom themes. Built with shadcn/ui and Tailwind CSS v4."
+        />
       </section>
 
 
       {/* Typography */}
       <section id="projects" className="container mx-auto px-4 py-20 border-t border-border">
         <div className="space-y-8">
-          <div className="text-center space-y-4">
-            <Type className="w-12 h-12 mx-auto text-primary" />
-            <h2 className="text-4xl font-bold">Typography</h2>
-            <p className="text-muted-foreground max-w-2xl mx-auto">
-              Clean, readable typography with proper hierarchy and spacing.
-            </p>
-          </div>
+          <SectionHeader
+            title="Typography"
+            subtitle="Clean, readable typography with proper hierarchy and spacing."
+          />
 
           <Card>
             <CardContent className="pt-6 space-y-6">
@@ -93,13 +73,10 @@ export function DesignShowcase() {
       {/* Components */}
       <section id="services" className="container mx-auto px-4 py-20 border-t border-border">
         <div className="space-y-8">
-          <div className="text-center space-y-4">
-            <Layout className="w-12 h-12 mx-auto text-primary" />
-            <h2 className="text-4xl font-bold">UI Components</h2>
-            <p className="text-muted-foreground max-w-2xl mx-auto">
-              Pre-built components following our design system principles.
-            </p>
-          </div>
+          <SectionHeader
+            title="UI Components"
+            subtitle="Pre-built components following our design system principles."
+          />
 
           <Tabs defaultValue="buttons" className="w-full">
             <TabsList className="grid w-full grid-cols-4">
@@ -279,12 +256,10 @@ export function DesignShowcase() {
       {/* Spacing & Layout */}
       <section id="testimonial" className="container mx-auto px-4 py-20 border-t border-border">
         <div className="space-y-8">
-          <div className="text-center space-y-4">
-            <h2 className="text-4xl font-bold">Spacing & Shadows</h2>
-            <p className="text-muted-foreground max-w-2xl mx-auto">
-              Consistent spacing and elevation system for depth and hierarchy.
-            </p>
-          </div>
+          <SectionHeader
+            title="Spacing & Shadows"
+            subtitle="Consistent spacing and elevation system for depth and hierarchy."
+          />
 
           <div className="grid md:grid-cols-4 gap-6">
             <Card className="shadow-custom-sm">
@@ -318,23 +293,11 @@ export function DesignShowcase() {
       {/* CTA Section */}
       <section id="blog" className="container mx-auto px-4 py-20 border-t border-border">
         <Card className="bg-cta text-cta-foreground">
-          <CardContent className="pt-12 pb-12 text-center space-y-6">
-            <h2 className="text-4xl font-bold">Ready to Get Started?</h2>
-            <p className="text-xl max-w-2xl mx-auto opacity-90">
-              Use this design system to build beautiful, consistent interfaces with ease.
-            </p>
-            <div className="flex flex-wrap gap-4 justify-center pt-4">
-              <Button size="lg" variant="secondary">
-                View Documentation
-              </Button>
-              <Button
-                size="lg"
-                variant="outline"
-                className="bg-transparent border-cta-foreground text-cta-foreground hover:bg-cta-foreground hover:text-cta"
-              >
-                Contact Us
-              </Button>
-            </div>
+          <CardContent className="pt-12 pb-12">
+            <SectionHeader
+              title="Ready to Get Started?"
+              subtitle="Use this design system to build beautiful, consistent interfaces with ease."
+            />
           </CardContent>
         </Card>
       </section>

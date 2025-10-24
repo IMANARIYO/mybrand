@@ -1,12 +1,13 @@
 "use client"
 
 import { useState, useEffect } from "react"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import { Card, CardContent } from "@/components/ui/card"
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { SectionHeader } from "@/components/ui/section-header"
 import { ProjectCard, ProjectDialog } from "@/projects"
 import { Project } from "@/app/projects/_types/project.types"
 import { listProjects } from "@/app/projects/_server-actions/listProjects"
-import { Briefcase, Filter } from "lucide-react"
+import { Code2, Filter } from "lucide-react"
 
 export function ProjectsSection() {
   const [selectedProject, setSelectedProject] = useState<Project | null>(null)
@@ -28,25 +29,22 @@ export function ProjectsSection() {
   }
 
   const categories = ['all', 'fullstack', 'web', 'mobile', 'api']
-  const filteredProjects = activeFilter === 'all' 
-    ? projects 
+  const filteredProjects = activeFilter === 'all'
+    ? projects
     : projects.filter((project: Project) => project.category === activeFilter)
 
   return (
     <section id="projects" className="min-h-screen bg-background py-20 px-4">
       <div className="container mx-auto max-w-7xl">
-        <Card className="border-2 shadow-2xl bg-gradient-to-br from-primary/5 via-background to-accent/5 mb-12">
-          <CardHeader className="text-center">
-            <CardTitle className="text-5xl font-bold flex items-center justify-center gap-3 mb-4">
-              <Briefcase className="h-12 w-12 text-primary" />
-              My Projects
-            </CardTitle>
-            <CardDescription className="text-xl max-w-3xl mx-auto">
-              Explore my portfolio of full-stack applications, showcasing modern technologies, 
-              scalable architectures, and real-world problem-solving capabilities.
-            </CardDescription>
-          </CardHeader>
-        </Card>
+        <SectionHeader
+          title={
+            <>
+              My <span className="bg-gradient-to-r from-primary via-secondary to-accent bg-clip-text text-transparent">Projects</span>
+            </>
+          }
+          subtitle="Explore my portfolio of full-stack applications, showcasing modern technologies, scalable architectures, and real-world problem-solving capabilities."
+          icon={<Code2 className="h-12 w-12 text-primary animate-fade-in" />}
+        />
 
         {/* Filter Tabs */}
         <Card className="mb-8">

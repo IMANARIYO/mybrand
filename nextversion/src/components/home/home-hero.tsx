@@ -85,31 +85,7 @@ const HomeHero = () => {
                             <div className="lg:col-span-8 space-y-8 order-2 lg:order-1">
                                 <p className="text-lg text-muted-foreground leading-relaxed">{t.description}</p>
 
-                                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                                    <Card className="p-4 bg-primary/5 border-primary/20 hover:shadow-lg transition-all duration-300">
-                                        <div className="text-center">
-                                            <div className="text-2xl mb-2">⚡</div>
-                                            <h3 className="font-semibold text-primary">Performance</h3>
-                                            <p className="text-sm text-muted-foreground">Optimized & Scalable</p>
-                                        </div>
-                                    </Card>
 
-                                    <Card className="p-4 bg-secondary/5 border-secondary/20 hover:shadow-lg transition-all duration-300">
-                                        <div className="text-center">
-                                            <div className="text-2xl mb-2">🎯</div>
-                                            <h3 className="font-semibold text-secondary">Precision</h3>
-                                            <p className="text-sm text-muted-foreground">User-Centered Design</p>
-                                        </div>
-                                    </Card>
-
-                                    <Card className="p-4 bg-accent/5 border-accent/20 hover:shadow-lg transition-all duration-300">
-                                        <div className="text-center">
-                                            <div className="text-2xl mb-2">🚀</div>
-                                            <h3 className="font-semibold text-accent">Innovation</h3>
-                                            <p className="text-sm text-muted-foreground">Modern Solutions</p>
-                                        </div>
-                                    </Card>
-                                </div>
 
                                 <MediaLinks />
                             </div>

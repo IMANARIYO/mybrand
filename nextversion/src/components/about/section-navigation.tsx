@@ -1,5 +1,6 @@
 import { Card, CardContent } from "../ui/card";
 import { Tabs, TabsList, TabsTrigger } from "../ui/tabs";
+import { Code2, GraduationCap, Briefcase } from "lucide-react";
 
 interface SectionNavigationProps {
   sections: string[];
@@ -8,9 +9,9 @@ interface SectionNavigationProps {
 }
 
 const sectionIcons = {
-  skills: '💻',
-  education: '🎓',
-  experience: '🚀'
+  skills: Code2,
+  education: GraduationCap,
+  experience: Briefcase
 };
 
 const sectionDescriptions = {
@@ -31,7 +32,10 @@ export const SectionNavigation = ({ sections, activeSection, onSectionChange }: 
                 value={section}
                 className="flex flex-col items-center gap-1 sm:gap-2 p-2 sm:p-4 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground min-h-[60px] sm:min-h-[80px]"
               >
-                <span className="text-lg sm:text-2xl">{sectionIcons[section as keyof typeof sectionIcons]}</span>
+                {(() => {
+                  const IconComponent = sectionIcons[section as keyof typeof sectionIcons]
+                  return <IconComponent className="h-5 w-5 sm:h-6 sm:w-6" />
+                })()}
                 <div className="text-center">
                   <div className="font-medium capitalize text-xs sm:text-sm">{section}</div>
                   <div className="text-[10px] sm:text-xs opacity-80 hidden sm:block">{sectionDescriptions[section as keyof typeof sectionDescriptions]}</div>

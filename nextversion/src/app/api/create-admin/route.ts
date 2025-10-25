@@ -1,0 +1,19 @@
+import { createAdminUser } from "@/lib/create-admin"
+import { NextResponse } from "next/server"
+
+export async function POST() {
+  try {
+    const adminUser = await createAdminUser()
+    return NextResponse.json({ 
+      success: true, 
+      message: "Admin user created successfully",
+      email: adminUser.email 
+    })
+  } catch (error) {
+    console.error("Error in create-admin API:", error)
+    return NextResponse.json({ 
+      success: false, 
+      message: "Failed to create admin user" 
+    }, { status: 500 })
+  }
+}

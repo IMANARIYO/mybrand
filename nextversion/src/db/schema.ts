@@ -37,39 +37,69 @@ export const projectsTable = pgTable("projects", {
   description: text("description").notNull(),
   overview: text("overview").notNull(),
   role: text("role").notNull(),
+
   techStack: json("tech_stack")
     .$type<{
       frontend: string[];
       backend: string[];
       database: string[];
       infrastructure: string[];
+      [key: string]: string[]; // allow extra layers in the future
     }>()
     .notNull(),
-  architecture: text("architecture", {
-    enum: ["monolithic", "microservices"],
-  }).notNull(),
+
+  architecture: json("architecture")
+    .$type<{
+      layers: {
+        name: string; // e.g., "frontend", "backend", "database"
+        description?: string;
+        diagrams?: string[]; // optional multiple images/screenshots per layer
+      }[];
+      notes?: string; // overall architecture notes
+    }>()
+    .notNull(),
+
   frontendRendering: text("frontend_rendering", {
     enum: ["CSR", "SSR", "SSG", "ISR"],
   }).notNull(),
+
   mobileSupport: boolean("mobile_support").notNull().default(false),
+
   features: json("features").$type<string[]>().notNull(),
   challenges: json("challenges").$type<string[]>().notNull(),
   results: text("results").notNull(),
-  images: json("images").$type<string[]>().notNull(),
+
+  images: json("images")
+    .$type<{
+      main: string; // main image
+      others?: {
+        url: string;
+        type?: "screenshot" | "diagram" | "other";
+        caption?: string;
+      }[];
+    }>()
+    .notNull(), // main + additional images/screenshots
+
   liveDemo: text("live_demo"),
   sourceCode: text("source_code"),
+
   category: text("category", {
     enum: ["web", "mobile", "fullstack", "api"],
   }).notNull(),
+
   status: text("status", {
     enum: ["completed", "in-progress", "planned"],
   }).notNull(),
+
   startDate: text("start_date").notNull(),
   endDate: text("end_date"),
+
   tags: json("tags").$type<string[]>().notNull(),
   whyItMatters: text("why_it_matters"),
+
   isFeatured: boolean("is_featured").notNull().default(false),
   viewCount: integer("view_count").notNull().default(0),
+
   createdAt: timestamp("created_at").notNull().defaultNow(),
   updatedAt: timestamp("updated_at").notNull().defaultNow(),
 });
@@ -105,10 +135,10 @@ export interface ServiceAction {
 // Service Status Enum
 export const serviceStatusEnum = pgEnum("service_status", [
   "featured",
-  "new", 
+  "new",
   "completed",
   "in-progress",
-  "available"
+  "available",
 ]);
 
 // Services Table
@@ -147,8 +177,35 @@ export const serviceRequests = pgTable("service_requests", {
   updatedAt: timestamp("updated_at").defaultNow().notNull(),
 });
 
+// Contacts Table
+export const contacts = pgTable("contacts", {
+  id: uuid("id").defaultRandom().primaryKey(),
+  name: text("name").notNull(),
+  email: text("email").notNull(),
+  telephone: text("telephone").notNull(),
+  subject: text("subject").notNull(),
+  message: text("message").notNull(),
+  inquiryType: text("inquiry_type", {
+    enum: ["general", "project", "support", "consultation"],
+  })
+    .notNull()
+    .default("general"),
+  status: text("status", {
+    enum: ["new", "read", "replied", "archived"],
+  })
+    .notNull()
+    .default("new"),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+  updatedAt: timestamp("updated_at").defaultNow().notNull(),
+});
+
 // Types
 export type Service = typeof services.$inferSelect;
 export type NewService = typeof services.$inferInsert;
 export type ServiceRequest = typeof serviceRequests.$inferSelect;
 export type NewServiceRequest = typeof serviceRequests.$inferInsert;
+export type Contact = typeof contacts.$inferSelect;
+export type NewContact = typeof contacts.$inferInsert;
+export type Project = typeof projectsTable.$inferSelect;
+export type NewProject = typeof projectsTable.$inferInsert;
+export type User = typeof users.$inferSelect;

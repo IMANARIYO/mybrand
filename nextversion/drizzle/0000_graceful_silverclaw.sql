@@ -1,6 +1,19 @@
 CREATE TYPE "public"."service_request_status" AS ENUM('pending', 'in-progress', 'completed', 'cancelled');--> statement-breakpoint
 CREATE TYPE "public"."service_status" AS ENUM('featured', 'new', 'completed', 'in-progress', 'available');--> statement-breakpoint
 CREATE TYPE "public"."role" AS ENUM('USER', 'ADMIN');--> statement-breakpoint
+CREATE TABLE "contacts" (
+	"id" uuid PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
+	"name" text NOT NULL,
+	"email" text NOT NULL,
+	"telephone" text NOT NULL,
+	"subject" text NOT NULL,
+	"message" text NOT NULL,
+	"inquiry_type" text DEFAULT 'general' NOT NULL,
+	"status" text DEFAULT 'new' NOT NULL,
+	"created_at" timestamp DEFAULT now() NOT NULL,
+	"updated_at" timestamp DEFAULT now() NOT NULL
+);
+--> statement-breakpoint
 CREATE TABLE "projects" (
 	"id" text PRIMARY KEY NOT NULL,
 	"title" text NOT NULL,
@@ -8,7 +21,7 @@ CREATE TABLE "projects" (
 	"overview" text NOT NULL,
 	"role" text NOT NULL,
 	"tech_stack" json NOT NULL,
-	"architecture" text NOT NULL,
+	"architecture" json NOT NULL,
 	"frontend_rendering" text NOT NULL,
 	"mobile_support" boolean DEFAULT false NOT NULL,
 	"features" json NOT NULL,

@@ -1,7 +1,7 @@
 import Logo from '@/components/ui/logo';
-import SignupForm from '@/components/ui/signup-form';
+import SignupForm from '@/app/(auth)/signup/_signup_components/signup-form';
 import { Suspense } from 'react';
- 
+
 export default function SignupPage() {
   return (
     <main className="flex items-center justify-center min-h-screen bg-background">

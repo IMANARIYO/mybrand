@@ -8,9 +8,10 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from "@/components/ui/alert-dialog"
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog"
 import { Edit, Trash2, Eye, Plus, ExternalLink, Github } from "lucide-react"
-import { Project } from "../_types/project.types"
+
 import { ProjectForm } from "./ProjectForm"
 import { deleteProject } from "../_server-actions/deleteProject"
+import type { Project } from "@/db/schema"
 
 interface ProjectTableProps {
   projects: Project[]
@@ -150,7 +151,7 @@ export function ProjectTable({ projects, onProjectUpdated }: ProjectTableProps) 
                           <Eye className="h-4 w-4" />
                         </a>
                       </Button>
-                      
+
                       <Dialog open={editingProject?.id === project.id} onOpenChange={(open) => !open && setEditingProject(null)}>
                         <DialogTrigger asChild>
                           <Button variant="ghost" size="sm" onClick={() => setEditingProject(project)}>
@@ -163,7 +164,15 @@ export function ProjectTable({ projects, onProjectUpdated }: ProjectTableProps) 
                           </DialogHeader>
                           {editingProject && (
                             <ProjectForm
-                              project={editingProject}
+                              project={{
+                                ...editingProject,
+                                architecture: (editingProject.architecture as unknown) as 'monolithic' | 'microservices',
+                                images: Array.isArray(editingProject.images) ? editingProject.images : [],
+                                liveDemo: editingProject.liveDemo ?? undefined,
+                                sourceCode: editingProject.sourceCode ?? undefined,
+                                endDate: editingProject.endDate ?? undefined,
+                                whyItMatters: editingProject.whyItMatters ?? undefined
+                              }}
                               onSuccess={() => {
                                 setEditingProject(null)
                                 onProjectUpdated?.()
@@ -184,7 +193,7 @@ export function ProjectTable({ projects, onProjectUpdated }: ProjectTableProps) 
                           <AlertDialogHeader>
                             <AlertDialogTitle>Delete Project</AlertDialogTitle>
                             <AlertDialogDescription>
-                              Are you sure you want to delete "{project.title}"? This action cannot be undone.
+                              Are you sure you want to delete &ldquo;{project.title}&rdquo;? This action cannot be undone.
                             </AlertDialogDescription>
                           </AlertDialogHeader>
                           <AlertDialogFooter>
@@ -206,7 +215,7 @@ export function ProjectTable({ projects, onProjectUpdated }: ProjectTableProps) 
             </TableBody>
           </Table>
         </div>
-        
+
         {projects.length === 0 && (
           <div className="text-center py-12">
             <div className="text-muted-foreground">

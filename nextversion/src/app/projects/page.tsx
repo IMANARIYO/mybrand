@@ -4,6 +4,7 @@ import { ProjectTable } from "./_components/ProjectTable"
 import { listProjects } from "./_server-actions/listProjects"
 import { getProjectAnalytics } from "./_server-actions/projectAnalytics"
 import { Briefcase, TrendingUp, Star, Eye } from "lucide-react"
+import type { Project as DbProject } from "@/db/schema"
 
 async function ProjectsPage() {
   const [projects, analytics] = await Promise.all([
@@ -84,7 +85,7 @@ async function ProjectsPage() {
 
         {/* Projects Table */}
         <Suspense fallback={<div>Loading projects...</div>}>
-          <ProjectTable projects={projects} />
+          <ProjectTable projects={projects as DbProject[]} />
         </Suspense>
       </div>
     </div>

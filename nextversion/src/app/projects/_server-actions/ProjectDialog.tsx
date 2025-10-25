@@ -6,7 +6,8 @@ import { Badge } from "@/components/ui/badge"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Github, Code, Database, Server, Globe, CheckCircle, AlertCircle, TrendingUp, Heart } from "lucide-react"
 import Image from "next/image"
-import { Project } from "../_types/project.types"
+import type { Project } from "@/db/schema"
+
 
 interface ProjectDialogProps {
   project: Project | null
@@ -51,18 +52,28 @@ export function ProjectDialog({ project, open, onOpenChange }: ProjectDialogProp
           </Card>
 
           {/* Images Gallery */}
-          {project.images.length > 0 && (
+          {(project.images.main || project.images.others?.length) && (
             <Card>
               <CardHeader>
                 <CardTitle>Screenshots</CardTitle>
               </CardHeader>
               <CardContent>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  {project.images.map((image: string, index: number) => (
+                  {project.images.main && (
+                    <div className="relative aspect-video overflow-hidden rounded-lg border">
+                      <Image
+                        src={project.images.main}
+                        alt={`${project.title} main screenshot`}
+                        fill
+                        className="object-cover hover:scale-105 transition-transform duration-300"
+                      />
+                    </div>
+                  )}
+                  {project.images.others?.map((image, index: number) => (
                     <div key={index} className="relative aspect-video overflow-hidden rounded-lg border">
                       <Image
-                        src={image}
-                        alt={`${project.title} screenshot ${index + 1}`}
+                        src={image.url}
+                        alt={image.caption || `${project.title} screenshot ${index + 1}`}
                         fill
                         className="object-cover hover:scale-105 transition-transform duration-300"
                       />
@@ -119,7 +130,21 @@ export function ProjectDialog({ project, open, onOpenChange }: ProjectDialogProp
               <CardTitle>Architecture Summary</CardTitle>
             </CardHeader>
             <CardContent>
-              <p className="text-muted-foreground leading-relaxed">{project.architecture}</p>
+              <div className="space-y-4">
+                {project.architecture.layers.map((layer, index: number) => (
+                  <div key={index} className="border-l-4 border-primary/20 pl-4">
+                    <h4 className="font-semibold capitalize">{layer.name}</h4>
+                    {layer.description && (
+                      <p className="text-muted-foreground text-sm">{layer.description}</p>
+                    )}
+                  </div>
+                ))}
+                {project.architecture.notes && (
+                  <div className="mt-4 p-4 bg-muted/50 rounded-lg">
+                    <p className="text-muted-foreground italic">{project.architecture.notes}</p>
+                  </div>
+                )}
+              </div>
             </CardContent>
           </Card>
 
@@ -150,7 +175,7 @@ export function ProjectDialog({ project, open, onOpenChange }: ProjectDialogProp
             </CardHeader>
             <CardContent>
               <ul className="space-y-3">
-                {project.challenges.map((challenge, index) => (
+                {project.challenges.map((challenge: string, index: number) => (
                   <li key={index} className="flex items-start gap-2">
                     <div className="w-2 h-2 bg-orange-600 rounded-full mt-2 flex-shrink-0" />
                     <span className="text-muted-foreground">{challenge}</span>

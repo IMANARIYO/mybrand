@@ -66,15 +66,7 @@ export function ProjectForm({ project, onSuccess, onCancel }: ProjectFormProps) 
     setValue(`techStack.${category}`, watchedValues.techStack[category].filter(t => t !== tech))
   }
 
-  const addArrayItem = (field: 'features' | 'challenges' | 'images' | 'tags', value: string) => {
-    if (value.trim() && !watchedValues[field].includes(value.trim())) {
-      setValue(field, [...watchedValues[field], value.trim()])
-    }
-  }
 
-  const removeArrayItem = (field: 'features' | 'challenges' | 'images' | 'tags', index: number) => {
-    setValue(field, watchedValues[field].filter((_, i) => i !== index))
-  }
 
   const onSubmit = async (data: ProjectFormData) => {
     setIsSubmitting(true)
@@ -113,7 +105,7 @@ export function ProjectForm({ project, onSuccess, onCancel }: ProjectFormProps) 
             
             <div className="space-y-2">
               <Label htmlFor="category">Category</Label>
-              <Select onValueChange={(value) => setValue("category", value as any)} defaultValue={watchedValues.category}>
+              <Select onValueChange={(value) => setValue("category", value as "web" | "mobile" | "fullstack" | "api")} defaultValue={watchedValues.category}>
                 <SelectTrigger>
                   <SelectValue />
                 </SelectTrigger>
@@ -175,7 +167,7 @@ export function ProjectForm({ project, onSuccess, onCancel }: ProjectFormProps) 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             <div className="space-y-2">
               <Label>Architecture</Label>
-              <Select onValueChange={(value) => setValue("architecture", value as any)} defaultValue={watchedValues.architecture}>
+              <Select onValueChange={(value) => setValue("architecture", value as "monolithic" | "microservices")} defaultValue={watchedValues.architecture}>
                 <SelectTrigger>
                   <SelectValue />
                 </SelectTrigger>
@@ -188,7 +180,7 @@ export function ProjectForm({ project, onSuccess, onCancel }: ProjectFormProps) 
 
             <div className="space-y-2">
               <Label>Frontend Rendering</Label>
-              <Select onValueChange={(value) => setValue("frontendRendering", value as any)} defaultValue={watchedValues.frontendRendering}>
+              <Select onValueChange={(value) => setValue("frontendRendering", value as "CSR" | "SSR" | "SSG" | "ISR")} defaultValue={watchedValues.frontendRendering}>
                 <SelectTrigger>
                   <SelectValue />
                 </SelectTrigger>
@@ -203,7 +195,7 @@ export function ProjectForm({ project, onSuccess, onCancel }: ProjectFormProps) 
 
             <div className="space-y-2">
               <Label>Status</Label>
-              <Select onValueChange={(value) => setValue("status", value as any)} defaultValue={watchedValues.status}>
+              <Select onValueChange={(value) => setValue("status", value as "planned" | "in-progress" | "completed")} defaultValue={watchedValues.status}>
                 <SelectTrigger>
                   <SelectValue />
                 </SelectTrigger>

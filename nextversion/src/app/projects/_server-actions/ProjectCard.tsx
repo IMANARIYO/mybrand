@@ -3,7 +3,13 @@ import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { ExternalLink, Github, Calendar, Eye } from "lucide-react"
 import Image from "next/image"
-import { ProjectCardProps } from "../project.types"
+import type { Project } from "@/db/schema"
+
+interface ProjectCardProps {
+  project: Project
+  onViewMore: (project: Project) => void
+}
+
 
 export function ProjectCard({ project, onViewMore }: ProjectCardProps) {
   const getCategoryColor = (category: string) => {
@@ -49,10 +55,10 @@ export function ProjectCard({ project, onViewMore }: ProjectCardProps) {
       </CardHeader>
 
       <CardContent className="space-y-4">
-        {project.images[0] && (
+        {project.images.main && (
           <div className="relative aspect-video overflow-hidden rounded-lg border">
             <Image
-              src={project.images[0]}
+              src={project.images.main}
               alt={project.title}
               fill
               className="object-cover transition-transform duration-300 group-hover:scale-105"
@@ -67,12 +73,12 @@ export function ProjectCard({ project, onViewMore }: ProjectCardProps) {
           </div>
 
           <div className="flex flex-wrap gap-1">
-            {project.techStack.frontend.slice(0, 3).map((tech) => (
+            {project.techStack.frontend.slice(0, 3).map((tech: string) => (
               <Badge key={tech} variant="outline" className="text-xs">
                 {tech}
               </Badge>
             ))}
-            {project.techStack.backend.slice(0, 2).map((tech) => (
+            {project.techStack.backend.slice(0, 2).map((tech: string) => (
               <Badge key={tech} variant="outline" className="text-xs">
                 {tech}
               </Badge>
@@ -87,14 +93,14 @@ export function ProjectCard({ project, onViewMore }: ProjectCardProps) {
       </CardContent>
 
       <CardFooter className="flex gap-2 pt-4">
-        <Button 
+        <Button
           onClick={() => onViewMore(project)}
           className="flex-1 group-hover:bg-primary group-hover:text-primary-foreground transition-colors"
         >
           <Eye className="h-4 w-4 mr-2" />
           View Details
         </Button>
-        
+
         <div className="flex gap-2">
           {project.liveDemo && (
             <Button asChild variant="outline" size="icon">

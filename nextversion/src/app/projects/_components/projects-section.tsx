@@ -5,9 +5,10 @@ import { Card, CardContent } from "@/components/ui/card"
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { SectionHeader } from "@/components/ui/section-header"
 import { ProjectCard, ProjectDialog } from "@/projects"
-import { Project } from "@/app/projects/_types/project.types"
+
 import { listProjects } from "@/app/projects/_server-actions/listProjects"
 import { Code2, Filter } from "lucide-react"
+import type { Project } from "@/db/schema"
 
 export function ProjectsSection() {
   const [selectedProject, setSelectedProject] = useState<Project | null>(null)
@@ -18,7 +19,7 @@ export function ProjectsSection() {
   useEffect(() => {
     const loadProjects = async () => {
       const projectsData = await listProjects()
-      setProjects(projectsData)
+      setProjects(projectsData as Project[])
     }
     loadProjects()
   }, [])

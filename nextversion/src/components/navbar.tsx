@@ -2,7 +2,7 @@
 
 import * as React from "react"
 import Link from "next/link"
-import { Menu, Home, User, Briefcase, Settings, MessageSquare, BookOpen, Mail, LogIn, UserPlus, LogOut, User as UserIcon } from "lucide-react"
+import { Menu, Home, User, Briefcase, Settings, Mail, LogIn, UserPlus, LogOut, User as UserIcon } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
@@ -25,8 +25,6 @@ const navItems: NavItem[] = [
   { key: "about", href: "#about", icon: User },
   { key: "projects", href: "#projects", icon: Briefcase, badge: "New" },
   { key: "services", href: "#services", icon: Settings },
-  { key: "testimonial", href: "#testimonial", icon: MessageSquare },
-  { key: "blog", href: "#blog", icon: BookOpen },
   { key: "contacts", href: "#contacts", icon: Mail },
 ]
 
@@ -159,7 +157,7 @@ export function Navbar() {
   const NavItemComponent = ({ item, isMobile = false }: { item: NavItem; isMobile?: boolean }) => {
     const Icon = item.icon
     const isActive = activeSection === item.href.substring(1)
-    
+
     return (
       <button
         onClick={() => scrollToSection(item.href)}
@@ -189,8 +187,8 @@ export function Navbar() {
     <nav
       className={cn(
         "fixed top-0 left-0 right-0 z-50 transition-all duration-300",
-        isScrolled 
-          ? "bg-background/95 backdrop-blur-lg shadow-lg border-b border-border/50" 
+        isScrolled
+          ? "bg-background/95 backdrop-blur-lg shadow-lg border-b border-border/50"
           : "bg-background/80 backdrop-blur-sm",
       )}
     >
@@ -223,7 +221,7 @@ export function Navbar() {
               <LanguageSwitcher />
               <ThemeSwitcher />
             </div>
-            
+
             <AuthButtons />
 
             {/* Mobile Menu */}
@@ -243,12 +241,12 @@ export function Navbar() {
                     Navigation
                   </SheetTitle>
                 </SheetHeader>
-                
+
                 <div className="flex flex-col space-y-2 mt-8">
                   {navItems.map((item) => (
                     <NavItemComponent key={item.key} item={item} isMobile />
                   ))}
-                  
+
                   <div className="pt-6 mt-6 border-t border-border">
                     <div className="flex items-center justify-between mb-4">
                       <span className="text-sm font-medium text-muted-foreground">Settings</span>

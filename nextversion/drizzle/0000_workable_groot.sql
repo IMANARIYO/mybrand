@@ -38,8 +38,12 @@ CREATE TABLE "projects" (
 	"why_it_matters" text,
 	"is_featured" boolean DEFAULT false NOT NULL,
 	"view_count" integer DEFAULT 0 NOT NULL,
+	"slug" text NOT NULL,
+	"is_public" boolean DEFAULT false NOT NULL,
+	"share_url" text NOT NULL,
 	"created_at" timestamp DEFAULT now() NOT NULL,
-	"updated_at" timestamp DEFAULT now() NOT NULL
+	"updated_at" timestamp DEFAULT now() NOT NULL,
+	CONSTRAINT "projects_slug_unique" UNIQUE("slug")
 );
 --> statement-breakpoint
 CREATE TABLE "service_requests" (
@@ -70,8 +74,12 @@ CREATE TABLE "services" (
 	"benefits" json NOT NULL,
 	"process" json NOT NULL,
 	"actions" json NOT NULL,
+	"slug" text NOT NULL,
+	"is_public" boolean DEFAULT false NOT NULL,
+	"share_url" text NOT NULL,
 	"created_at" timestamp DEFAULT now() NOT NULL,
-	"updated_at" timestamp DEFAULT now() NOT NULL
+	"updated_at" timestamp DEFAULT now() NOT NULL,
+	CONSTRAINT "services_slug_unique" UNIQUE("slug")
 );
 --> statement-breakpoint
 CREATE TABLE "users" (

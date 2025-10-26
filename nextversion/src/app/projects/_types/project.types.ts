@@ -26,6 +26,7 @@ export interface ProjectFormData {
   tags: string[];
   whyItMatters?: string;
   isFeatured: boolean;
+  isPublic: boolean;
 }
 
 // For hover cards or project dialogs

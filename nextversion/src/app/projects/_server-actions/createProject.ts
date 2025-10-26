@@ -6,10 +6,13 @@ import { projectsTable } from "@/db/schema";
 import { ProjectFormData } from "../_types/project.types";
 import { nanoid } from "nanoid";
 import { revalidatePath } from "next/cache";
+import { generateSlug, generateShareUrl } from "@/lib/slug-generator";
 
-export async function createProject(data: ProjectFormData) {
+export async function createProject(data: ProjectFormData & { isPublic?: boolean }) {
   try {
     const projectId = nanoid();
+    const slug = generateSlug(data.title);
+    const shareUrl = generateShareUrl(slug);
 
     // Transform form data to match database schema
     const dbData = {
@@ -46,7 +49,10 @@ export async function createProject(data: ProjectFormData) {
       tags: data.tags,
       whyItMatters: data.whyItMatters,
       isFeatured: data.isFeatured,
-      viewCount: 0
+      viewCount: 0,
+      slug,
+      isPublic: data.isPublic || false,
+      shareUrl
     };
 
     await db.insert(projectsTable).values(dbData);

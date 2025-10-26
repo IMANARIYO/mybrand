@@ -1,8 +1,9 @@
 import { db } from "@/db";
 import { services } from "@/db/schema";
 import { NewService } from "@/db/schema";
+import { generateSlug, generateShareUrl } from "@/lib/slug-generator";
 
-const servicesData: NewService[] = [
+const servicesData: Omit<NewService, 'slug' | 'shareUrl'>[] = [
   {
     title: "Full-Stack Web Development",
     tagline: "Transform your vision into reality",
@@ -245,8 +246,20 @@ async function seedServices() {
     await db.delete(services);
     console.log("🗑️  Cleared existing services");
     
+    // Transform services data to include sharing fields
+    const servicesWithSharing = servicesData.map(service => {
+      const slug = generateSlug(service.title);
+      const shareUrl = generateShareUrl(slug, process.env.NEXT_PUBLIC_BASE_URL);
+      return {
+        ...service,
+        slug,
+        shareUrl,
+        isPublic: true // Make all seeded services public by default
+      };
+    });
+    
     // Insert new services
-    const insertedServices = await db.insert(services).values(servicesData).returning();
+    const insertedServices = await db.insert(services).values(servicesWithSharing).returning();
     
     console.log(`✅ Successfully seeded ${insertedServices.length} services:`);
     insertedServices.forEach((service, index) => {

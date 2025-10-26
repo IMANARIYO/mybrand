@@ -6,9 +6,9 @@ import { IoCallOutline } from "react-icons/io5"
 import { MdEmail } from "react-icons/md"
 import { SiFlutter, SiNodedotjs } from "react-icons/si"
 import {
-  HoverCard,
-  HoverCardContent,
-  HoverCardTrigger,
+    HoverCard,
+    HoverCardContent,
+    HoverCardTrigger,
 } from "@/components/ui/hover-card"
 
 const IconSection = ({
@@ -27,9 +27,32 @@ const IconSection = ({
         description?: string;
         strengths?: string[];
         useCases?: string;
+        isEmail?: boolean;
     }>
     isSkills?: boolean
 }) => {
+    const handleEmailClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
+        e.preventDefault()
+        // Extract email from mailto: link
+        const emailMatch = href.match(/mailto:([^?]+)/)
+        const email = emailMatch ? emailMatch[1] : ''
+
+        // Extract subject and body from the mailto link
+        const subjectMatch = href.match(/subject=([^&]+)/)
+        const bodyMatch = href.match(/body=([^&]+)/)
+
+        const subject = subjectMatch ? decodeURIComponent(subjectMatch[1].replace(/\+/g, ' ')) : ''
+        const body = bodyMatch ? decodeURIComponent(bodyMatch[1].replace(/\+/g, ' ')) : ''
+
+        // Build Gmail compose URL
+        let gmailUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=${email}`
+        if (subject) gmailUrl += `&su=${encodeURIComponent(subject)}`
+        if (body) gmailUrl += `&body=${encodeURIComponent(body)}`
+
+        // Open Gmail in new tab
+        window.open(gmailUrl, '_blank')
+    }
+
     return (
         <div>
             <h2 className="text-base uppercase font-semibold mb-4 text-foreground/80">{title}</h2>
@@ -39,19 +62,20 @@ const IconSection = ({
                     const triggerProps = isSkills ? {} : {
                         href: item.href,
                         target: item.target || "_blank",
-                        rel: item.rel || "noopener noreferrer"
+                        rel: item.rel || "noopener noreferrer",
+                        onClick: item.isEmail ? (e: React.MouseEvent<HTMLAnchorElement>) => handleEmailClick(e, item.href || '') : undefined
                     }
 
                     return (
                         <HoverCard key={index} openDelay={200} closeDelay={100}>
                             <HoverCardTrigger asChild>
                                 <TriggerComponent
-                                    {...triggerProps}
+                                    {...(triggerProps as React.HTMLAttributes<HTMLElement> & React.AnchorHTMLAttributes<HTMLAnchorElement>)}
                                     className={`w-14 h-14 rounded-xl bg-gradient-to-br from-primary/10 to-primary/5 hover:from-primary hover:to-primary/80 text-primary hover:text-primary-foreground flex items-center justify-center transition-all duration-500 hover:scale-110 hover:shadow-2xl hover:shadow-primary/25 ${isSkills ? 'cursor-pointer hover:rotate-6' : ''
                                         } border border-primary/20 hover:border-primary/50 shadow-lg hover:shadow-xl relative`}
                                 >
                                     <div className="text-xl hover:scale-125 transition-transform duration-300">{item.icon}</div>
-                                    
+
                                     {/* Subtle indicator */}
                                     <div className="absolute -top-1 -right-1 w-2 h-2 bg-primary rounded-full opacity-70 animate-pulse"></div>
                                 </TriggerComponent>
@@ -134,6 +158,7 @@ const MediaLinks = () => {
             description: "Formal communication for project proposals and documentation",
             useCases:
                 "Best for sharing detailed requirements, reviewing technical architecture, or setting up structured collaboration agreements.",
+            isEmail: true, // Flag to identify email link
         },
     ]
 

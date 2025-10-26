@@ -102,7 +102,7 @@ export const ExperienceSection = () => {
                           {metrics.map((metric, idx) => {
                             const IconComponent = metric.icon
                             return (
-                              <Card key={idx} className="p-4 bg-gradient-to-br from-primary/5 to-primary/10 border-primary/20">
+                              <Card key={idx} className="p-4 bg-primary/5 border-primary/20">
                                 <div className="flex items-center gap-3">
                                   <div className="p-2 rounded-lg bg-primary/20">
                                     <IconComponent className="h-4 w-4 text-primary" />
@@ -144,7 +144,7 @@ export const ExperienceSection = () => {
 
         
         {/* Career Progression Summary */}
-        <Card className="bg-gradient-to-r from-primary/5 via-secondary/5 to-accent/5 border-2 border-dashed border-primary/20 mt-6">
+        <Card className="bg-primary/5 border-2 border-dashed border-primary/20 mt-6">
           <CardContent className="p-6">
             <div className="text-center space-y-4">
               <div className="flex justify-center">

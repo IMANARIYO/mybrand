@@ -13,6 +13,7 @@ import type { Service, ServiceFormData } from "../_types/services-types"
 import type { ServiceBenefit, ServiceProcess, ServiceAction } from "@/db/schema"
 import { createService, updateService } from "../_server-actions/services-server-actions"
 import { useToast } from "@/components/ui/use-toast"
+import { ImageUploadField } from "@/components/Uploading/ImageUploadField"
 
 
 interface ServiceFormProps {
@@ -23,6 +24,7 @@ interface ServiceFormProps {
 
 export function ServiceForm({ service, onSuccess, onCancel }: ServiceFormProps) {
   const [isSubmitting, setIsSubmitting] = useState(false)
+  const [serviceImage, setServiceImage] = useState(service?.imageUrl || "")
   const { toast } = useToast()
 
 
@@ -45,6 +47,8 @@ export function ServiceForm({ service, onSuccess, onCancel }: ServiceFormProps) 
       pricing: formData.get("pricing") as string,
       duration: formData.get("duration") as string,
       featured: formData.get("featured") as string,
+      isPublic: formData.get("isPublic") === "true",
+      imageUrl: serviceImage,
       skills: [],
       benefits: benefitsStr.split(",").map(b => ({ title: b.trim(), description: "" })),
       process: processStr.split(",").map((p, i) => ({ step: i + 1, title: p.trim(), description: "" })),
@@ -115,20 +119,16 @@ export function ServiceForm({ service, onSuccess, onCancel }: ServiceFormProps) 
         </Select>
       </div>
 
-      <div className="space-y-2">
-        <Label htmlFor="imageUrl">
-          Image URL <span className="text-destructive">*</span>
-        </Label>
-        <Input
-          id="imageUrl"
-          name="imageUrl"
-          type="url"
-          placeholder="https://images.unsplash.com/photo-..."
-          defaultValue={service?.imageUrl || ""}
-          required
-        />
-        <p className="text-xs text-muted-foreground">Use Unsplash or other image hosting services</p>
-      </div>
+      {/* Service Image */}
+      <ImageUploadField
+        label="Service Image"
+        value={serviceImage}
+        onChange={(url) => {
+          setServiceImage(url as string)
+        }}
+        required
+        placeholder="Upload or enter service image URL"
+      />
 
       {/* Tagline */}
       <div className="space-y-2">
@@ -259,6 +259,22 @@ export function ServiceForm({ service, onSuccess, onCancel }: ServiceFormProps) 
           <SelectContent>
             <SelectItem value="false">No</SelectItem>
             <SelectItem value="true">Yes</SelectItem>
+          </SelectContent>
+        </Select>
+      </div>
+
+      {/* Public/Private */}
+      <div className="space-y-2">
+        <Label htmlFor="isPublic">
+          Visibility <span className="text-destructive">*</span>
+        </Label>
+        <Select name="isPublic" defaultValue={service?.isPublic ? "true" : "false"} required>
+          <SelectTrigger>
+            <SelectValue placeholder="Select visibility" />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value="false">Private</SelectItem>
+            <SelectItem value="true">Public</SelectItem>
           </SelectContent>
         </Select>
       </div>

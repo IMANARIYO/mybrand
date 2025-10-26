@@ -1,5 +1,6 @@
 import { db } from "../db";
 import { projectsTable } from "./schema";
+import { generateSlug, generateShareUrl } from "@/lib/slug-generator";
 
 const projects = [
   {
@@ -702,7 +703,17 @@ export async function seedProjects() {
     console.log("🌱 Seeding projects...");
     
     for (const project of projects) {
-      await db.insert(projectsTable).values(project)
+      const slug = generateSlug(project.title);
+      const shareUrl = generateShareUrl(slug);
+      
+      const projectWithSharing = {
+        ...project,
+        slug,
+        shareUrl,
+        isPublic: true // Make all seeded projects public by default
+      };
+      
+      await db.insert(projectsTable).values(projectWithSharing)
         .onConflictDoUpdate({
           target: projectsTable.id,
           set: {
@@ -727,7 +738,10 @@ export async function seedProjects() {
             tags: project.tags,
             whyItMatters: project.whyItMatters,
             isFeatured: project.isFeatured,
-            viewCount: project.viewCount
+            viewCount: project.viewCount,
+            slug,
+            shareUrl,
+            isPublic: true
           }
         });
       console.log(`✅ Seeded/Updated project: ${project.title}`);

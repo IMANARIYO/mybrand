@@ -14,6 +14,7 @@ import { X, Plus } from "lucide-react"
 import { ProjectFormData } from "../_types/project.types"
 import { createProject } from "../_server-actions/createProject"
 import { updateProject } from "../_server-actions/updateProject"
+import { ImageUploadField } from "@/components/Uploading/ImageUploadField"
 
 interface ProjectFormProps {
   project?: ProjectFormData & { id?: string }
@@ -29,6 +30,7 @@ export function ProjectForm({ project, onSuccess, onCancel }: ProjectFormProps) 
     database: '',
     infrastructure: ''
   })
+  const [projectImages, setProjectImages] = useState<string[]>(project?.images ? [project.images.main, ...(project.images.others?.map(img => img.url) || [])] : [])
 
   const { register, handleSubmit, setValue, watch, formState: { errors } } = useForm<ProjectFormData>({
     defaultValues: project || {
@@ -48,7 +50,8 @@ export function ProjectForm({ project, onSuccess, onCancel }: ProjectFormProps) 
       status: 'planned',
       startDate: '',
       tags: [],
-      isFeatured: false
+      isFeatured: false,
+      isPublic: false
     }
   })
 
@@ -224,6 +227,13 @@ export function ProjectForm({ project, onSuccess, onCancel }: ProjectFormProps) 
               />
               <Label>Featured Project</Label>
             </div>
+            <div className="flex items-center space-x-2">
+              <Switch 
+                checked={watchedValues.isPublic} 
+                onCheckedChange={(checked) => setValue("isPublic", checked)}
+              />
+              <Label>Public Project</Label>
+            </div>
           </div>
 
           {/* Dates */}
@@ -245,6 +255,18 @@ export function ProjectForm({ project, onSuccess, onCancel }: ProjectFormProps) 
             <Textarea {...register("results", { required: "Results are required" })} />
             {errors.results && <p className="text-sm text-red-500">{errors.results.message}</p>}
           </div>
+
+          {/* Project Images */}
+          <ImageUploadField
+            label="Project Images"
+            value={projectImages}
+            onChange={(urls) => {
+              setProjectImages(urls as string[])
+              setValue("images", urls as string[])
+            }}
+            multiple
+            placeholder="Add project screenshots, diagrams, or demo images"
+          />
 
           {/* Optional Fields */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">

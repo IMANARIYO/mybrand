@@ -1,6 +1,7 @@
+import ProjectsPage from "@/app/projects/page";
 
 
-export default async function ProjectsPage() {
+export default async function ProjectsManagementPage() {
 
 
   return (

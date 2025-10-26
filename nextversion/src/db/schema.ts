@@ -9,6 +9,19 @@ import {
   pgEnum,
   uuid,
 } from "drizzle-orm/pg-core";
+import {
+  TechStack,
+  Architecture,
+  Images,
+  StringArray,
+} from "./types/projectTypes";
+import {
+  ServiceBenefit,
+  ServiceProcess,
+  ServiceAction,
+  SERVICE_STATUS_VALUES,
+  SERVICE_REQUEST_STATUS_VALUES,
+} from "./types/serviceTypes";
 
 export const userRoleEnum = pgEnum("role", ["USER", "ADMIN"]);
 export const users = pgTable("users", {
@@ -38,26 +51,8 @@ export const projectsTable = pgTable("projects", {
   overview: text("overview").notNull(),
   role: text("role").notNull(),
 
-  techStack: json("tech_stack")
-    .$type<{
-      frontend: string[];
-      backend: string[];
-      database: string[];
-      infrastructure: string[];
-      [key: string]: string[]; // allow extra layers in the future
-    }>()
-    .notNull(),
-
-  architecture: json("architecture")
-    .$type<{
-      layers: {
-        name: string; // e.g., "frontend", "backend", "database"
-        description?: string;
-        diagrams?: string[]; // optional multiple images/screenshots per layer
-      }[];
-      notes?: string; // overall architecture notes
-    }>()
-    .notNull(),
+  techStack: json("tech_stack").$type<TechStack>().notNull(),
+  architecture: json("architecture").$type<Architecture>().notNull(),
 
   frontendRendering: text("frontend_rendering", {
     enum: ["CSR", "SSR", "SSG", "ISR"],
@@ -65,20 +60,11 @@ export const projectsTable = pgTable("projects", {
 
   mobileSupport: boolean("mobile_support").notNull().default(false),
 
-  features: json("features").$type<string[]>().notNull(),
-  challenges: json("challenges").$type<string[]>().notNull(),
+  features: json("features").$type<StringArray>().notNull(),
+  challenges: json("challenges").$type<StringArray>().notNull(),
   results: text("results").notNull(),
 
-  images: json("images")
-    .$type<{
-      main: string; // main image
-      others?: {
-        url: string;
-        type?: "screenshot" | "diagram" | "other";
-        caption?: string;
-      }[];
-    }>()
-    .notNull(), // main + additional images/screenshots
+  images: json("images").$type<Images>().notNull(),
 
   liveDemo: text("live_demo"),
   sourceCode: text("source_code"),
@@ -94,52 +80,26 @@ export const projectsTable = pgTable("projects", {
   startDate: text("start_date").notNull(),
   endDate: text("end_date"),
 
-  tags: json("tags").$type<string[]>().notNull(),
+  tags: json("tags").$type<StringArray>().notNull(),
   whyItMatters: text("why_it_matters"),
 
   isFeatured: boolean("is_featured").notNull().default(false),
   viewCount: integer("view_count").notNull().default(0),
+
+  // Sharing fields
+  slug: text("slug").notNull().unique(),
+  isPublic: boolean("is_public").notNull().default(false),
+  shareUrl: text("share_url").notNull(),
 
   createdAt: timestamp("created_at").notNull().defaultNow(),
   updatedAt: timestamp("updated_at").notNull().defaultNow(),
 });
 
 // Service Request Status Enum
-export const serviceRequestStatusEnum = pgEnum("service_request_status", [
-  "pending",
-  "in-progress",
-  "completed",
-  "cancelled",
-]);
-
-// Service Interface Types
-export interface ServiceBenefit {
-  title: string;
-  description: string;
-  icon?: string;
-}
-
-export interface ServiceProcess {
-  step: number;
-  title: string;
-  description: string;
-  icon?: string;
-}
-
-export interface ServiceAction {
-  label: string;
-  actionType: "link" | "modal" | "scroll" | "form";
-  target?: string;
-}
+export const serviceRequestStatusEnum = pgEnum("service_request_status", SERVICE_REQUEST_STATUS_VALUES);
 
 // Service Status Enum
-export const serviceStatusEnum = pgEnum("service_status", [
-  "featured",
-  "new",
-  "completed",
-  "in-progress",
-  "available",
-]);
+export const serviceStatusEnum = pgEnum("service_status", SERVICE_STATUS_VALUES);
 
 // Services Table
 export const services = pgTable("services", {
@@ -154,10 +114,16 @@ export const services = pgTable("services", {
   duration: text("duration").notNull(),
   featured: text("featured").notNull().default("false"),
   status: serviceStatusEnum("status").notNull().default("available"),
-  skills: json("skills").$type<string[]>().notNull(),
+  skills: json("skills").$type<StringArray>().notNull(),
   benefits: json("benefits").$type<ServiceBenefit[]>().notNull(),
   process: json("process").$type<ServiceProcess[]>().notNull(),
   actions: json("actions").$type<ServiceAction[]>().notNull(),
+  
+  // Sharing fields
+  slug: text("slug").notNull().unique(),
+  isPublic: boolean("is_public").notNull().default(false),
+  shareUrl: text("share_url").notNull(),
+  
   createdAt: timestamp("created_at").defaultNow().notNull(),
   updatedAt: timestamp("updated_at").defaultNow().notNull(),
 });
@@ -182,11 +148,11 @@ export const contacts = pgTable("contacts", {
   id: uuid("id").defaultRandom().primaryKey(),
   name: text("name").notNull(),
   email: text("email").notNull(),
-  telephone: text("telephone").notNull(),
+  telephone: text("telephone"),
   subject: text("subject").notNull(),
   message: text("message").notNull(),
   inquiryType: text("inquiry_type", {
-    enum: ["general", "project", "support", "consultation"],
+    enum: ["general", "project", "support", "consultation", "service", "collaboration"],
   })
     .notNull()
     .default("general"),

@@ -619,4 +619,109 @@
   .hover\:text-cta-foreground:hover {
     color: var(--cta-foreground);
   }
+
+
+
+
+  /* CTA Button Styles */
+  .btn-cta {
+    background-color: var(--cta);
+    color: var(--cta-foreground);
+    border: 1px solid var(--cta);
+  }
+
+  .btn-cta:hover {
+    background-color: var(--cta);
+    opacity: 0.9;
+    color: var(--cta-foreground);
+  }
+
+  .btn-cta-outline {
+    background-color: transparent;
+    color: var(--cta);
+    border: 1px solid var(--cta);
+  }
+
+  .btn-cta-outline:hover {
+    background-color: var(--cta);
+    color: var(--cta-foreground);
+  }
+
+  /* Phone Input Dropdown Options */
+  .PhoneInputCountrySelect option {
+    background: hsl(var(--background)) !important;
+    color: hsl(var(--foreground)) !important;
+    padding: 0.5rem !important;
+  }
+
+  .PhoneInputCountrySelect option:hover {
+    background: hsl(var(--accent)) !important;
+    color: hsl(var(--accent-foreground)) !important;
+  }
+
+  /* Country List Dropdown */
+  .PhoneInputCountrySelectDropdown {
+    background: hsl(var(--background)) !important;
+    border: 1px solid hsl(var(--border)) !important;
+    border-radius: 0.375rem !important;
+    box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1) !important;
+    max-height: 200px !important;
+    overflow-y: auto !important;
+    z-index: 50 !important;
+  }
+
+  .PhoneInputCountrySelectDropdown .PhoneInputCountrySelectOption {
+    padding: 0.5rem 0.75rem !important;
+    color: hsl(var(--foreground)) !important;
+    cursor: pointer !important;
+    display: flex !important;
+    align-items: center !important;
+    gap: 0.5rem !important;
+  }
+
+  .PhoneInputCountrySelectDropdown .PhoneInputCountrySelectOption:hover {
+    background: hsl(var(--accent)) !important;
+    color: hsl(var(--accent-foreground)) !important;
+  }
+
+  .PhoneInputCountrySelectDropdown .PhoneInputCountrySelectOption--selected {
+    background: hsl(var(--primary)) !important;
+    color: hsl(var(--primary-foreground)) !important;
+  }
+
+  /* Form Required Field Indicator */
+  .required-field::after {
+    content: " *";
+    color: hsl(var(--destructive));
+    font-weight: 500;
+  }
+
+  /* Form Focus States */
+  .form-input:focus-within {
+    border-color: hsl(var(--primary));
+    box-shadow: 0 0 0 2px hsl(var(--primary) / 0.2);
+  }
+
+  /* Clip Text Effect */
+  .clip {
+    color: var(--primary);
+    -webkit-text-stroke: 7px blue;
+    -webkit-background-clip: text;
+    background-clip: text;
+    font-weight: 900;
+    letter-spacing: -0.02em;
+  }
+
+  /* Responsive clip text stroke */
+  @media (max-width: 640px) {
+    .clip {
+      -webkit-text-stroke: 0.5px hsl(var(--primary));
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .clip {
+      -webkit-text-stroke: 1.5px hsl(var(--primary));
+    }
+  }
 }

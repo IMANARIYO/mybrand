@@ -17,6 +17,7 @@ export interface ServiceFormData {
   duration: string
   featured: string
   status?: string
+  isPublic: boolean
   skills: string[]
   benefits: ServiceBenefit[]
   process: ServiceProcess[]

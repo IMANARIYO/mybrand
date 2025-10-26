@@ -1,6 +1,6 @@
 "use client"
 
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "../ui/card"
+import { Card, CardContent, CardDescription, CardTitle } from "../ui/card"
 import { Button } from "../ui/button"
 import MediaLinks from "./media-links"
 import { Download, Mail } from "lucide-react"
@@ -54,87 +54,100 @@ const HomeHero = () => {
     const t = translations[language]
 
     return (
-        <section className="min-h-screen bg-background py-20 px-4" id="home">
+        <section className="min-h-screen bg-background py-4 sm:py-8 md:py-12 lg:py-16 xl:py-20 px-2 sm:px-4" id="home">
             <div className="container mx-auto max-w-7xl">
-                <Card className="border-2 shadow-2xl bg-gradient-to-br from-primary/5 via-background to-accent/5">
-                    <CardHeader className="text-center pb-6">
-                        <div className="mb-4">
-                            <p className="text-lg font-medium text-primary mb-2">{t.greeting}</p>
-                            <CardTitle className="text-6xl font-bold tracking-tight mb-4">
-                                {t.intro}{" "}
-                                <span className="bg-gradient-to-r from-primary via-secondary to-accent bg-clip-text text-transparent">
-                                    IMANARIYO Baptiste
-                                </span>
-                            </CardTitle>
-                            <CardDescription className="text-2xl font-semibold">
-                                {t.role}{" "}
-                                <span className="text-primary">
-                                    {text}
-                                    <Cursor cursorBlinking={false} cursorStyle="|" cursorColor="hsl(var(--primary))" />
-                                </span>
-                            </CardDescription>
-                        </div>
-                        <CardDescription className="text-xl text-muted-foreground max-w-2xl mx-auto">
-                            {t.subtitle}
-                        </CardDescription>
-                    </CardHeader>
+                <Card className="border border-border sm:border-2 shadow-lg sm:shadow-xl lg:shadow-2xl bg-background">
+                    <CardContent className="p-3 sm:p-4 md:p-6 lg:p-8">
+                        <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-6 md:gap-8 lg:gap-12">
+                            {/* Left Content - Main Focus */}
+                            <div className="lg:col-span-2 space-y-4 sm:space-y-6 md:space-y-8 order-2 lg:order-1">
+                                {/* Header Section */}
+                                <div className="space-y-2 sm:space-y-3 md:space-y-4">
+                                    <p className="text-sm sm:text-base md:text-lg font-medium text-primary">{t.greeting}</p>
+                                    <CardTitle className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold tracking-tight text-foreground">
+                                        {t.intro}{" "}
+                                        <span className="text-primary ">
+                                            IMANARIYO Baptiste
+                                        </span>
+                                    </CardTitle>
+                                    <CardDescription className="text-base sm:text-lg md:text-xl lg:text-2xl font-semibold text-muted-foreground">
+                                        {t.role}{" "}
+                                        <span className="text-primary">
+                                            {text}
+                                            <Cursor cursorBlinking={false} cursorStyle="|" cursorColor="hsl(var(--primary))" />
+                                        </span>
+                                    </CardDescription>
+                                    <CardDescription className="text-sm sm:text-base md:text-lg lg:text-xl text-muted-foreground font-medium">
+                                        {t.subtitle}
+                                    </CardDescription>
+                                </div>
 
-                    <CardContent className="px-8">
-                        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
-                            {/* Left Content */}
-                            <div className="lg:col-span-8 space-y-8 order-2 lg:order-1">
-                                <p className="text-lg text-muted-foreground leading-relaxed">{t.description}</p>
+                                {/* Description */}
+                                <div className="space-y-3 sm:space-y-4">
+                                    <p className="text-sm sm:text-base md:text-lg text-muted-foreground leading-relaxed">
+                                        {t.description}
+                                    </p>
+                                </div>
 
+                                {/* CTA Buttons */}
+                                <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">
+                                    <Button
+                                        asChild
+                                        size="lg"
+                                        className="btn-cta w-full sm:w-auto text-sm sm:text-base font-semibold px-6 py-3 transition-all duration-300 hover:scale-105"
+                                    >
+                                        <a
+                                            href="https://res.cloudinary.com/dorjr1njc/image/upload/v1731425460/fauu76nivqxk5qpniqvy.pdf"
+                                            download
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                            className="flex items-center justify-center gap-2"
+                                        >
+                                            <Download className="w-4 h-4 sm:w-5 sm:h-5" /> {t.viewCV}
+                                        </a>
+                                    </Button>
 
+                                    <Button
+                                        asChild
+                                        variant="outline"
+                                        size="lg"
+                                        className="w-full sm:w-auto text-sm sm:text-base font-semibold px-6 py-3 border-2 border-primary text-primary hover:bg-primary hover:text-primary-foreground transition-all duration-300 hover:scale-105"
+                                    >
+                                        <a href="#contacts" className="flex items-center justify-center gap-2">
+                                            <Mail className="w-4 h-4 sm:w-5 sm:h-5" /> {t.contact}
+                                        </a>
+                                    </Button>
+                                </div>
 
-                                <MediaLinks />
+                                {/* Social Media Links */}
+                                <div className="pt-2 sm:pt-4">
+                                    <MediaLinks />
+                                </div>
+
+                                {/* Bottom Message */}
+                                <div className="pt-2 sm:pt-4 border-t border-border/50">
+                                    <p className="text-xs sm:text-sm md:text-base text-muted-foreground leading-relaxed">
+                                        Ready to bring your next project to life with cutting-edge technology and exceptional user experience.
+                                    </p>
+                                </div>
                             </div>
 
                             {/* Right Content - Image */}
-                            <div className="lg:col-span-4 order-1 lg:order-2">
-                                <Card className="overflow-hidden border-2 shadow-xl">
-                                    <div className="relative aspect-square">
+                            <div className="lg:col-span-1 order-1 lg:order-2 flex justify-center lg:justify-end">
+                                <Card className="overflow-hidden border-2 border-primary/20  w-full max-w-sm lg:max-w-none">
+                                    <div className="relative aspect-[3/4]">
                                         <Image
-                                            src="/images/IMANARIYO_BAPTISTE_PASSPORT.png"
-                                            alt="Imanariyo Baptiste profile picture"
+                                            src="/images/imanariyo_baptiste_picture.png"
+                                            alt="Imanariyo Baptiste full body picture"
                                             fill
-                                            className="object-cover"
+                                            className="object-contain p-1"
                                             priority
                                         />
-                                        <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent" />
                                     </div>
                                 </Card>
                             </div>
                         </div>
                     </CardContent>
-
-                    <CardFooter className="flex flex-col items-center space-y-6 pt-8">
-                        <div className="flex flex-wrap gap-4 justify-center">
-                            <Button asChild size="lg" className="shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300">
-                                <a
-                                    href="https://res.cloudinary.com/dorjr1njc/image/upload/v1731425460/fauu76nivqxk5qpniqvy.pdf"
-                                    download
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    className="flex items-center gap-2"
-                                >
-                                    <Download className="w-5 h-5" /> {t.viewCV}
-                                </a>
-                            </Button>
-
-                            <Button asChild variant="outline" size="lg" className="shadow-md hover:shadow-lg hover:scale-105 transition-all duration-300">
-                                <a href="#contacts" className="flex items-center gap-2">
-                                    <Mail className="w-5 h-5" /> {t.contact}
-                                </a>
-                            </Button>
-                        </div>
-
-                        <div className="text-center max-w-2xl">
-                            <p className="text-muted-foreground">
-                                Ready to bring your next project to life with cutting-edge technology and exceptional user experience.
-                            </p>
-                        </div>
-                    </CardFooter>
                 </Card>
             </div>
         </section>

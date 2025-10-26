@@ -10,10 +10,10 @@ import { eq, desc } from "drizzle-orm"
 const contactFormSchema = z.object({
   name: z.string().min(2, "Name must be at least 2 characters"),
   email: z.string().email("Please enter a valid email address"),
-  telephone: z.string().min(10, "Please enter a valid phone number"),
+  telephone: z.string().optional(),
   subject: z.string().min(5, "Subject must be at least 5 characters"),
   message: z.string().min(10, "Message must be at least 10 characters"),
-  inquiryType: z.enum(["general", "project", "support", "consultation"]),
+  inquiryType: z.enum(["general", "project", "support", "consultation", "service", "collaboration"]),
 })
 
 type ContactFormData = z.infer<typeof contactFormSchema>

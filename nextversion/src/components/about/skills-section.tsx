@@ -59,7 +59,7 @@ export const SkillsSection = ({ activeSkillCategory, onSkillCategoryChange }: Sk
                       return (
                         <Card key={skill.name} className="group p-6 hover:shadow-xl transition-all duration-300 border hover:border-primary/30">
                           <div className="flex items-start gap-4">
-                            <div className="p-3 rounded-xl bg-gradient-to-br from-primary/10 to-primary/5 group-hover:from-primary/20 group-hover:to-primary/10 transition-all duration-300 flex-shrink-0">
+                            <div className="p-3 rounded-xl bg-primary/10 group-hover:bg-primary/20 transition-all duration-300 flex-shrink-0">
                               <skill.icon className="h-7 w-7 text-primary group-hover:scale-110 transition-transform duration-300" />
                             </div>
                             <div className="flex-1 space-y-3">

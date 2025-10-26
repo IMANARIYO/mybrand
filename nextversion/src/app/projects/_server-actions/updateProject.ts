@@ -6,9 +6,13 @@ import { projectsTable } from "@/db/schema";
 import { ProjectFormData } from "../_types/project.types";
 import { eq } from "drizzle-orm";
 import { revalidatePath } from "next/cache";
+import { generateSlug, generateShareUrl } from "@/lib/slug-generator";
 
-export async function updateProject(id: string, data: ProjectFormData) {
+export async function updateProject(id: string, data: ProjectFormData & { isPublic?: boolean }) {
   try {
+    const slug = generateSlug(data.title);
+    const shareUrl = generateShareUrl(slug);
+    
     // Transform form data to match database schema
     const dbData = {
       title: data.title,
@@ -42,7 +46,10 @@ export async function updateProject(id: string, data: ProjectFormData) {
       endDate: data.endDate,
       tags: data.tags,
       whyItMatters: data.whyItMatters,
-      isFeatured: data.isFeatured
+      isFeatured: data.isFeatured,
+      slug,
+      isPublic: data.isPublic || false,
+      shareUrl
     };
 
     await db

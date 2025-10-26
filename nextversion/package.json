@@ -10,8 +10,11 @@
     "db:generate": "drizzle-kit generate",
     "db:migrate": "drizzle-kit migrate",
     "db:studio": "drizzle-kit studio",
-    "db:seed": "tsx src/scripts/seed-services.ts",
-    "db:seed-projects": "tsx scripts/seed.ts"
+    "db:seed": "tsx src/db/seeds/index.ts",
+    "db:seed-projects": "tsx src/db/seeds/projects.ts",
+    "db:seed-services": "tsx src/db/seeds/services.ts",
+    "db:seed-contacts": "tsx src/db/seeds/contacts.ts",
+    "db:seed-requests": "tsx src/db/seeds/serviceRequests.ts"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.2.2",
@@ -32,6 +35,7 @@
     "@vercel/analytics": "^1.5.0",
     "bcryptjs": "^3.0.2",
     "class-variance-authority": "^0.7.1",
+    "cloudinary": "^2.8.0",
     "clsx": "^2.1.1",
     "dotenv": "^17.2.3",
     "drizzle-orm": "^0.44.6",
@@ -45,6 +49,7 @@
     "react-dom": "^19.0.0",
     "react-hook-form": "^7.65.0",
     "react-icons": "^5.5.0",
+    "react-phone-number-input": "^3.4.13",
     "react-simple-typewriter": "^5.0.1",
     "slugify": "^1.6.6",
     "sonner": "^2.0.7",

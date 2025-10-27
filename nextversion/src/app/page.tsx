@@ -5,6 +5,7 @@ import { AboutMe } from "@/components/about"
 import { ProjectsSection } from "@/app/projects/_components/projects-section"
 import ServicesSection from "./services/landing"
 import ContactSection from "./contact/ContactSection"
+import { EducationSection } from "./education"
 
 export default function Home() {
   return (
@@ -18,6 +19,7 @@ export default function Home() {
         <ServicesSection />
         {/* <DesignShowcase /> */}
         <ContactSection />
+        <EducationSection />
       </main>
     </>
   )

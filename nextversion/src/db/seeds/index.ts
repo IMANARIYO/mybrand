@@ -2,6 +2,7 @@ import { seedProjects } from "./projects";
 import { seedServices } from "./services";
 import { seedContacts } from "./contacts";
 import { seedServiceRequests } from "./serviceRequests";
+import { seedEducation } from "./education";
 
 export async function seedAll() {
   try {
@@ -19,6 +20,9 @@ export async function seedAll() {
     console.log("");
     
     await seedServiceRequests();
+    console.log("");
+    
+    await seedEducation();
     console.log("");
     
     console.log("=" .repeat(50));

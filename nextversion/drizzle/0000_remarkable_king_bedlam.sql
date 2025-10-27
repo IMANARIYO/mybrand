@@ -1,3 +1,4 @@
+CREATE TYPE "public"."education_type" AS ENUM('BACHELOR', 'MASTER', 'DOCTORATE', 'BOOTCAMP', 'CERTIFICATE', 'DIPLOMA', 'COURSE');--> statement-breakpoint
 CREATE TYPE "public"."service_request_status" AS ENUM('pending', 'in-progress', 'completed', 'cancelled');--> statement-breakpoint
 CREATE TYPE "public"."service_status" AS ENUM('featured', 'new', 'completed', 'in-progress', 'available');--> statement-breakpoint
 CREATE TYPE "public"."role" AS ENUM('USER', 'ADMIN');--> statement-breakpoint
@@ -12,6 +13,25 @@ CREATE TABLE "contacts" (
 	"status" text DEFAULT 'new' NOT NULL,
 	"created_at" timestamp DEFAULT now() NOT NULL,
 	"updated_at" timestamp DEFAULT now() NOT NULL
+);
+--> statement-breakpoint
+CREATE TABLE "education" (
+	"id" uuid PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
+	"title" text NOT NULL,
+	"institution" text NOT NULL,
+	"institution_image" text,
+	"education_type" "education_type" NOT NULL,
+	"field_of_study" text,
+	"specialization" text,
+	"location" text NOT NULL,
+	"start_date" text NOT NULL,
+	"end_date" text,
+	"is_ongoing" boolean DEFAULT false NOT NULL,
+	"description" text NOT NULL,
+	"slug" text NOT NULL,
+	"created_at" timestamp DEFAULT now() NOT NULL,
+	"updated_at" timestamp DEFAULT now() NOT NULL,
+	CONSTRAINT "education_slug_unique" UNIQUE("slug")
 );
 --> statement-breakpoint
 CREATE TABLE "projects" (

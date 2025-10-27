@@ -1,0 +1,1 @@
+export { EducationSection } from "./_components/EducationSection"

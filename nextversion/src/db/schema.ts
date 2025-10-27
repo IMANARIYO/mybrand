@@ -24,6 +24,15 @@ import {
 } from "./types/serviceTypes";
 
 export const userRoleEnum = pgEnum("role", ["USER", "ADMIN"]);
+export const educationTypeEnum = pgEnum("education_type", [
+  "BACHELOR",
+  "MASTER",
+  "DOCTORATE",
+  "BOOTCAMP",
+  "CERTIFICATE",
+  "DIPLOMA",
+  "COURSE",
+]);
 export const users = pgTable("users", {
   id: varchar("uuid", { length: 255 })
     .primaryKey()
@@ -177,6 +186,26 @@ export const contacts = pgTable("contacts", {
   updatedAt: timestamp("updated_at").defaultNow().notNull(),
 });
 
+// Education Table
+export const education = pgTable("education", {
+  id: uuid("id").defaultRandom().primaryKey(),
+
+  title: text("title").notNull(),
+  institution: text("institution").notNull(),
+  institutionImage: text("institution_image"),
+  educationType: educationTypeEnum("education_type").notNull(),
+  fieldOfStudy: text("field_of_study"),
+  specialization: text("specialization"),
+  location: text("location").notNull(),
+  startDate: text("start_date").notNull(),
+  endDate: text("end_date"),
+  isOngoing: boolean("is_ongoing").notNull().default(false),
+  description: text("description").notNull(),
+  slug: text("slug").notNull().unique(),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+  updatedAt: timestamp("updated_at").defaultNow().notNull(),
+});
+
 // Types
 export type Service = typeof services.$inferSelect;
 export type NewService = typeof services.$inferInsert;
@@ -187,3 +216,5 @@ export type NewContact = typeof contacts.$inferInsert;
 export type Project = typeof projectsTable.$inferSelect;
 export type NewProject = typeof projectsTable.$inferInsert;
 export type User = typeof users.$inferSelect;
+export type Education = typeof education.$inferSelect;
+export type NewEducation = typeof education.$inferInsert;

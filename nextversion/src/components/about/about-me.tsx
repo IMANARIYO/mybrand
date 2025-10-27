@@ -8,13 +8,14 @@ import { Card, CardContent, CardFooter, CardHeader } from "../ui/card";
 import { ImageGallery } from "./image-gallery";
 import { SectionNavigation } from "./section-navigation";
 import { SkillsSection } from "./skills-section";
-import { EducationSection } from "./education-section";
+
 import { ExperienceSection } from "./experience-section";
 import {
   Rocket, Users, Code2, Heart,
   User,
 } from "lucide-react";
 import { SectionHeader } from "../ui/section-header";
+import { EducationSection } from "@/app/education";
 
 const AboutMe = () => {
   const [activeSkillCategory, setActiveSkillCategory] = useState("frontend");

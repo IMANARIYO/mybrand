@@ -8,6 +8,8 @@ import { Analytics } from "@vercel/analytics/next";
 import { Suspense } from "react";
 import "./globals.css";
 
+import { Toaster } from "sonner"
+import { PortfolioFooter } from "@/components/layout/PortfolioFooter";
 export const metadata: Metadata = {
   title: "Imanariyo Baptiste – Full Stack Software Engineer & Mobile Applications Developer | Portfolio",
   description:
@@ -111,6 +113,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           </LanguageProvider>
         </Suspense>
         <Analytics />
+        <PortfolioFooter />
+        <Toaster />
       </body>
     </html>
   )

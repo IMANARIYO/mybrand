@@ -5,11 +5,7 @@ import { FaJava, FaLinkedinIn, FaReact, FaWhatsapp } from "react-icons/fa"
 import { IoCallOutline } from "react-icons/io5"
 import { MdEmail } from "react-icons/md"
 import { SiFlutter, SiNodedotjs } from "react-icons/si"
-import {
-    HoverCard,
-    HoverCardContent,
-    HoverCardTrigger,
-} from "@/components/ui/hover-card"
+import { EnhancedHoverCard, type EnhancedHoverCardItem } from "@/components/ui/enhanced-hover-card"
 
 const IconSection = ({
     title,
@@ -17,21 +13,10 @@ const IconSection = ({
     isSkills = false,
 }: {
     title: string
-    items: Array<{
-        href?: string;
-        icon: React.ReactNode;
-        title: string;
-        subtitle?: string;
-        target?: string;
-        rel?: string;
-        description?: string;
-        strengths?: string[];
-        useCases?: string;
-        isEmail?: boolean;
-    }>
+    items: EnhancedHoverCardItem[]
     isSkills?: boolean
 }) => {
-    const handleEmailClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
+    const handleEmailClick = (e: React.MouseEvent<HTMLAnchorElement | HTMLButtonElement>, href: string) => {
         e.preventDefault()
         // Extract email from mailto: link
         const emailMatch = href.match(/mailto:([^?]+)/)
@@ -53,75 +38,31 @@ const IconSection = ({
         window.open(gmailUrl, '_blank')
     }
 
+    const handleSkillTriggerClick = (skillTitle: string) => {
+        const hireEmailHref = `mailto:imanariyobaptiste@gmail.com?subject=Collaboration%20Opportunity%20-%20${encodeURIComponent(skillTitle)}&body=Hello%20Imanariyo,%0A%0AI%20came%20across%20your%20portfolio%20and%20I'm%20impressed%20by%20your%20expertise%20in%20${encodeURIComponent(skillTitle)}.%20I%20would%20love%20to%20discuss%20how%20your%20technical%20stack%20and%20experience%20could%20contribute%20to%20our%20upcoming%20projects.%0A%0ACould%20we%20schedule%20a%20brief%20conversation%20to%20explore%20potential%20collaboration%20opportunities?%0A%0ALooking%20forward%20to%20hearing%20from%20you.%0A%0ABest%20regards,`
+        
+        // Create a fake event to reuse existing email handler
+        const fakeEvent = { preventDefault: () => {} } as React.MouseEvent<HTMLAnchorElement | HTMLButtonElement>
+        handleEmailClick(fakeEvent, hireEmailHref)
+    }
+
     return (
         <div>
             <h2 className="text-base uppercase font-semibold mb-4 text-foreground/80">{title}</h2>
             <div className="flex gap-4 flex-wrap">
-                {items.map((item, index) => {
-                    const TriggerComponent = isSkills ? 'div' : 'a'
-                    const triggerProps = isSkills ? {} : {
-                        href: item.href,
-                        target: item.target || "_blank",
-                        rel: item.rel || "noopener noreferrer",
-                        onClick: item.isEmail ? (e: React.MouseEvent<HTMLAnchorElement>) => handleEmailClick(e, item.href || '') : undefined
-                    }
-
-                    return (
-                        <HoverCard key={index} openDelay={200} closeDelay={100}>
-                            <HoverCardTrigger asChild>
-                                <TriggerComponent
-                                    {...(triggerProps as React.HTMLAttributes<HTMLElement> & React.AnchorHTMLAttributes<HTMLAnchorElement>)}
-                                    className={`w-14 h-14 rounded-xl bg-gradient-to-br from-primary/10 to-primary/5 hover:from-primary hover:to-primary/80 text-primary hover:text-primary-foreground flex items-center justify-center transition-all duration-500 hover:scale-110 hover:shadow-2xl hover:shadow-primary/25 ${isSkills ? 'cursor-pointer hover:rotate-6' : ''
-                                        } border border-primary/20 hover:border-primary/50 shadow-lg hover:shadow-xl relative`}
-                                >
-                                    <div className="text-xl hover:scale-125 transition-transform duration-300">{item.icon}</div>
-
-                                    {/* Subtle indicator */}
-                                    <div className="absolute -top-1 -right-1 w-2 h-2 bg-primary rounded-full opacity-70 animate-pulse"></div>
-                                </TriggerComponent>
-                            </HoverCardTrigger>
-                            <HoverCardContent className="w-80 p-4" side="top" align="center">
-                                <div className="space-y-3">
-                                    <div className="text-center">
-                                        <h3 className="font-bold text-lg text-foreground">{item.title}</h3>
-                                        {item.subtitle && (
-                                            <p className="text-sm text-muted-foreground">{item.subtitle}</p>
-                                        )}
-                                    </div>
-
-                                    {item.strengths && (
-                                        <div>
-                                            <h4 className="font-semibold text-sm text-foreground mb-2">Core Strengths</h4>
-                                            <div className="flex flex-wrap gap-1">
-                                                {item.strengths.map((strength, i) => (
-                                                    <span key={i} className="text-xs bg-primary/10 text-primary px-2 py-1 rounded-full">
-                                                        {strength}
-                                                    </span>
-                                                ))}
-                                            </div>
-                                        </div>
-                                    )}
-
-                                    {item.useCases && (
-                                        <div>
-                                            <h4 className="font-semibold text-sm text-foreground mb-1">Impact & Applications</h4>
-                                            <p className="text-sm text-muted-foreground leading-relaxed">{item.useCases}</p>
-                                        </div>
-                                    )}
-
-                                    {item.description && (
-                                        <p className="text-sm text-muted-foreground">{item.description}</p>
-                                    )}
-                                </div>
-                            </HoverCardContent>
-                        </HoverCard>
-                    )
-                })}
+                {items.map((item, index) => (
+                    <EnhancedHoverCard
+                        key={index}
+                        item={item}
+                        isSkills={isSkills}
+                        onEmailClick={handleEmailClick}
+                        onSkillTriggerClick={isSkills ? handleSkillTriggerClick : undefined}
+                    />
+                ))}
             </div>
         </div>
     )
 }
-
 const MediaLinks = () => {
     // Professional Contact Channels
     const socialLinks = [

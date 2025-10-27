@@ -15,7 +15,7 @@ import { MessageCircle } from "lucide-react"
 export default function ContactSection() {
   return (
     <section id="contacts" className="min-h-screen bg-background py-8 sm:py-12 md:py-16 lg:py-20 px-2 sm:px-4">
-      <div className="container mx-auto max-w-7xl">
+      <div className=" mx-auto ">
         <Card className="border border-border sm:border-2 shadow-lg sm:shadow-2xl">
           <SectionHeader
             title="Reach Out and Connect"

@@ -13,7 +13,6 @@ import type { Project } from "@/db/schema"
 
 export function ProjectsSection() {
   const [selectedProject, setSelectedProject] = useState<Project | null>(null)
-  const [dialogOpen, setDialogOpen] = useState(false)
   const [activeFilter, setActiveFilter] = useState<string>('all')
   const [projects, setProjects] = useState<Project[]>([])
 
@@ -27,7 +26,6 @@ export function ProjectsSection() {
 
   const handleViewMore = (project: Project) => {
     setSelectedProject(project)
-    setDialogOpen(true)
   }
 
   const categories = ['all', 'fullstack', 'web', 'mobile', 'api']
@@ -37,14 +35,14 @@ export function ProjectsSection() {
 
   return (
     <section id="projects" className="min-h-screen bg-background py-20 px-4">
-      <div className="container mx-auto max-w-7xl">
+      <div className=" mx-auto ">
         <Card className="border-2 shadow-2xl">
           <SectionHeader
             title="My Projects"
             subtitle="Explore my portfolio of full-stack applications, showcasing modern technologies, scalable architectures, and real-world problem-solving capabilities."
             icon={<Code2 className="h-12 w-12 text-primary" />}
           />
-          
+
           <CardContent className="space-y-8">
             {/* Filter Tabs */}
             <Card>
@@ -126,11 +124,11 @@ export function ProjectsSection() {
         </Card>
 
         {/* Project Dialog */}
-        <ProjectDialog
-          project={selectedProject}
-          open={dialogOpen}
-          onOpenChange={setDialogOpen}
-        />
+        {selectedProject && (
+          <ProjectDialog project={selectedProject}>
+            <Button variant="secondary" onClick={() => setSelectedProject(null)}>Close</Button>
+          </ProjectDialog>
+        )}
       </div>
     </section>
   )

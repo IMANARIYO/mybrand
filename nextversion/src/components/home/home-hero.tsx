@@ -55,7 +55,7 @@ const HomeHero = () => {
 
     return (
         <section className="min-h-screen bg-background py-4 sm:py-8 md:py-12 lg:py-16 xl:py-20 px-2 sm:px-4" id="home">
-            <div className="container mx-auto max-w-7xl">
+            <div className="">
                 <Card className="border border-border sm:border-2 shadow-lg sm:shadow-xl lg:shadow-2xl bg-background">
                     <CardContent className="p-3 sm:p-4 md:p-6 lg:p-8">
                         <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-6 md:gap-8 lg:gap-12">

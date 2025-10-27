@@ -1,8 +1,9 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable react/no-unescaped-entities */
 "use client";
 
 import { useState, useEffect } from "react";
-import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "../ui/card";
+import { Card, CardContent, CardFooter, CardHeader } from "../ui/card";
 
 import { ImageGallery } from "./image-gallery";
 import { SectionNavigation } from "./section-navigation";
@@ -70,30 +71,13 @@ const AboutMe = () => {
 
   return (
     <section id="about" className="min-h-screen bg-background py-4 sm:py-8 md:py-12 lg:py-16 xl:py-20 px-2 sm:px-4 relative overflow-hidden">
-      {/* Animated Background Elements */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute top-10 sm:top-20 left-4 sm:left-10 w-12 sm:w-16 md:w-20 h-12 sm:h-16 md:h-20 bg-primary/10 rounded-full animate-bounce" style={{ animationDelay: '0s', animationDuration: '3s' }} />
-        <div className="absolute top-20 sm:top-40 right-8 sm:right-20 w-10 sm:w-12 md:w-16 h-10 sm:h-12 md:h-16 bg-secondary/10 rounded-full animate-bounce" style={{ animationDelay: '1s', animationDuration: '4s' }} />
-        <div className="absolute bottom-20 sm:bottom-40 left-8 sm:left-20 w-8 sm:w-10 md:w-12 h-8 sm:h-10 md:h-12 bg-accent/10 rounded-full animate-bounce" style={{ animationDelay: '2s', animationDuration: '5s' }} />
-        <div className="absolute bottom-10 sm:bottom-20 right-4 sm:right-10 w-16 sm:w-20 md:w-24 h-16 sm:h-20 md:h-24 bg-primary/5 rounded-full animate-pulse" style={{ animationDuration: '6s' }} />
-      </div>
 
-      <div className="container mx-auto max-w-7xl relative z-10">
+
+      <div className=" mx-auto relative z-10">
         <Card className={`border border-border sm:border-2 shadow-lg sm:shadow-xl lg:shadow-2xl bg-background transition-all duration-1000 transform ${isVisible ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'
           }`}>
           <CardHeader className="text-center pb-4 sm:pb-6 md:pb-8 px-3 sm:px-4 md:px-6 lg:px-8 relative">
-            {/* Floating Fun Fact */}
-            <div className="absolute top-2 sm:top-4 right-2 sm:right-4 hidden md:block">
-              <Card className="p-2 sm:p-3 bg-primary/10 border-primary/20 animate-pulse">
-                <div className="flex items-center gap-1 sm:gap-2 text-xs sm:text-sm">
-                  {(() => {
-                    const CurrentIcon = funFacts[currentFactIndex].icon;
-                    return <CurrentIcon className={`h-3 w-3 sm:h-4 sm:w-4 ${funFacts[currentFactIndex].color}`} />;
-                  })()}
-                  <span className="font-medium">{funFacts[currentFactIndex].text}</span>
-                </div>
-              </Card>
-            </div>
+
 
             <div className="space-y-3 sm:space-y-4 md:space-y-6">
               <SectionHeader

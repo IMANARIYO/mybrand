@@ -1,3 +1,4 @@
+/* eslint-disable react/no-unescaped-entities */
 
 
 import { SectionHeader } from "@/components/ui/section-header"
@@ -13,7 +14,7 @@ export default async function ServicesSection() {
 
     return (
         <section id="services" className="min-h-screen bg-background py-20 px-4">
-            <div className="container mx-auto max-w-7xl">
+            <div className="container mx-auto ">
                 <Card className="border-2 shadow-2xl">
                     <SectionHeader
                         title="Services I Deliver"
@@ -58,7 +59,7 @@ export default async function ServicesSection() {
                         </Card>
                     </CardContent>
                 </Card>
-                </div>
-            </section>
+            </div>
+        </section>
     )
 }

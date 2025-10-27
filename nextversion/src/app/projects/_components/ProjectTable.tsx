@@ -147,7 +147,7 @@ export function ProjectTable({ projects, onProjectUpdated }: ProjectTableProps) 
                         </Button>
                       )}
                       <Button asChild variant="ghost" size="sm">
-                        <a href={`/projects/${project.id}`} target="_blank">
+                        <a href={`/projects/${project.slug}`} target="_blank">
                           <Eye className="h-4 w-4" />
                         </a>
                       </Button>
@@ -166,10 +166,10 @@ export function ProjectTable({ projects, onProjectUpdated }: ProjectTableProps) 
                             <ProjectForm
                               project={{
                                 ...editingProject,
-                                architecture: typeof editingProject.architecture === 'string' 
+                                architecture: typeof editingProject.architecture === 'string'
                                   ? { layers: [], notes: editingProject.architecture }
                                   : editingProject.architecture,
-                                images: Array.isArray(editingProject.images) 
+                                images: Array.isArray(editingProject.images)
                                   ? { main: editingProject.images[0] || '', others: editingProject.images.slice(1).map(url => ({ url })) }
                                   : editingProject.images,
                                 liveDemo: editingProject.liveDemo ?? undefined,

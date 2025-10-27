@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useRef } from "react"
+import { useState } from "react"
 import { useForm } from "react-hook-form"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
@@ -9,19 +9,13 @@ import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
 import { Switch } from "@/components/ui/switch"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { Badge } from "@/components/ui/badge"
-
-import { X, Plus, Pencil } from "lucide-react"
 import { toast } from "sonner"
-import { FileUploadDemo } from "@/components/Uploading/file-uploads"
 import { createProject, updateProject } from "../_server-actions/project-server-actions"
-import {
-  FRONTEND_TECHNOLOGIES,
-  BACKEND_TECHNOLOGIES,
-  DATABASE_TECHNOLOGIES,
-  INFRASTRUCTURE_TECHNOLOGIES,
-  type TechStack
-} from "@/db/types/projectTypes"
+import { Images, type TechStack } from "@/db/types/projectTypes"
+import { TechStackSection } from "./form-sections/TechStackSection"
+import { StringArraySection } from "./form-sections/StringArraySection"
+import { ImageSection } from "./form-sections/ImageSection"
+import { ArchitectureSection } from "./form-sections/ArchitectureSection"
 
 type Architecture = {
   layers: {
@@ -30,15 +24,6 @@ type Architecture = {
     diagrams?: string[]
   }[]
   notes?: string
-}
-
-type Images = {
-  main: string
-  others?: {
-    url: string
-    type?: "screenshot" | "diagram" | "other"
-    caption?: string
-  }[]
 }
 
 
@@ -75,34 +60,19 @@ interface ProjectFormProps {
 
 export function ProjectForm({ project, onSuccess, onCancel }: ProjectFormProps) {
   const [isSubmitting, setIsSubmitting] = useState(false)
-
-  const featureInputRef = useRef<HTMLInputElement>(null)
-  const challengeInputRef = useRef<HTMLInputElement>(null)
-  const resultInputRef = useRef<HTMLInputElement>(null)
-  const tagInputRef = useRef<HTMLInputElement>(null)
-  const layerInputRef = useRef<HTMLInputElement>(null)
-
   const [projectImages, setProjectImages] = useState<Images>(() => {
     if (project?.images) {
       return project.images
     }
     return { main: "", others: [] }
   })
-
   const [techStack, setTechStack] = useState<TechStack>({
     frontend: project?.techStack?.frontend || [],
     backend: project?.techStack?.backend || [],
     database: project?.techStack?.database || [],
     infrastructure: project?.techStack?.infrastructure || [],
   })
-
   const [architecture, setArchitecture] = useState<Architecture>(project?.architecture || { layers: [], notes: "" })
-  const [layerInput, setLayerInput] = useState({ name: "", description: "" })
-  const [editingLayer, setEditingLayer] = useState<{
-    index: number
-    value: { name: string; description: string }
-  } | null>(null)
-
   const [formValues, setFormValues] = useState({
     category: project?.category || "web",
     frontendRendering: project?.frontendRendering || "CSR",
@@ -111,21 +81,10 @@ export function ProjectForm({ project, onSuccess, onCancel }: ProjectFormProps) 
     isFeatured: project?.isFeatured || false,
     isPublic: project?.isPublic || false,
   })
-
   const [features, setFeatures] = useState<string[]>(project?.features || [])
   const [challenges, setChallenges] = useState<string[]>(project?.challenges || [])
   const [results, setResults] = useState<string[]>(project?.results || [])
   const [tags, setTags] = useState<string[]>(project?.tags || [])
-  const [featureInput, setFeatureInput] = useState("")
-  const [challengeInput, setChallengeInput] = useState("")
-  const [resultInput, setResultInput] = useState("")
-  const [tagInput, setTagInput] = useState("")
-
-
-  const [editingFeature, setEditingFeature] = useState<{ index: number; value: string } | null>(null)
-  const [editingChallenge, setEditingChallenge] = useState<{ index: number; value: string } | null>(null)
-  const [editingResult, setEditingResult] = useState<{ index: number; value: string } | null>(null)
-  const [editingTag, setEditingTag] = useState<{ index: number; value: string } | null>(null)
 
   const {
     register,
@@ -159,208 +118,39 @@ export function ProjectForm({ project, onSuccess, onCancel }: ProjectFormProps) 
     },
   })
 
-
-
-  const removeTech = (category: keyof TechStack, tech: string) => {
-    const newTechStack = { ...techStack, [category]: techStack[category].filter((t) => t !== tech) }
+  const handleTechStackChange = (newTechStack: TechStack) => {
     setTechStack(newTechStack)
     setValue("techStack", newTechStack)
   }
 
-
-
-  const addLayer = () => {
-    const name = layerInput.name.trim()
-    if (!name) return
-
-    if (editingLayer !== null) {
-      const newLayers = [...architecture.layers]
-      newLayers[editingLayer.index] = { name, description: layerInput.description }
-      const newArchitecture = { ...architecture, layers: newLayers }
-      setArchitecture(newArchitecture)
-      setValue("architecture", newArchitecture)
-      setEditingLayer(null)
-    } else {
-      const newArchitecture = {
-        ...architecture,
-        layers: [...architecture.layers, { name, description: layerInput.description }],
-      }
-      setArchitecture(newArchitecture)
-      setValue("architecture", newArchitecture)
-    }
-    setLayerInput({ name: "", description: "" })
-    setTimeout(() => layerInputRef.current?.focus(), 0)
-  }
-
-  const removeLayer = (index: number) => {
-    const newLayers = architecture.layers.filter((_: Architecture['layers'][0], i: number) => i !== index)
-    const newArchitecture = { ...architecture, layers: newLayers }
+  const handleArchitectureChange = (newArchitecture: Architecture) => {
     setArchitecture(newArchitecture)
     setValue("architecture", newArchitecture)
   }
 
-  const editLayer = (index: number) => {
-    const layer = architecture.layers[index]
-    setLayerInput({ name: layer.name, description: layer.description || "" })
-    setEditingLayer({ index, value: { name: layer.name, description: layer.description || "" } })
-    setTimeout(() => layerInputRef.current?.focus(), 0)
+  const handleImagesChange = (newImages: Images) => {
+    setProjectImages(newImages)
+    setValue("images", newImages)
   }
 
-  const cancelEditLayer = () => {
-    setEditingLayer(null)
-    setLayerInput({ name: "", description: "" })
-  }
-
-  const addFeature = () => {
-    const value = featureInput.trim()
-    if (!value) return
-
-    if (editingFeature !== null) {
-      const newFeatures = [...features]
-      newFeatures[editingFeature.index] = value
-      setFeatures(newFeatures)
-      setValue("features", newFeatures)
-      setEditingFeature(null)
-    } else {
-      if (!features.includes(value)) {
-        const newFeatures = [...features, value]
-        setFeatures(newFeatures)
-        setValue("features", newFeatures)
-      }
-    }
-    setFeatureInput("")
-    setTimeout(() => featureInputRef.current?.focus(), 0)
-  }
-
-  const removeFeature = (feature: string) => {
-    const newFeatures = features.filter((f) => f !== feature)
+  const handleFeaturesChange = (newFeatures: string[]) => {
     setFeatures(newFeatures)
     setValue("features", newFeatures)
   }
 
-  const editFeature = (index: number) => {
-    setFeatureInput(features[index])
-    setEditingFeature({ index, value: features[index] })
-    setTimeout(() => featureInputRef.current?.focus(), 0)
-  }
-
-  const cancelEditFeature = () => {
-    setEditingFeature(null)
-    setFeatureInput("")
-  }
-
-  const addChallenge = () => {
-    const value = challengeInput.trim()
-    if (!value) return
-
-    if (editingChallenge !== null) {
-      const newChallenges = [...challenges]
-      newChallenges[editingChallenge.index] = value
-      setChallenges(newChallenges)
-      setValue("challenges", newChallenges)
-      setEditingChallenge(null)
-    } else {
-      if (!challenges.includes(value)) {
-        const newChallenges = [...challenges, value]
-        setChallenges(newChallenges)
-        setValue("challenges", newChallenges)
-      }
-    }
-    setChallengeInput("")
-    setTimeout(() => challengeInputRef.current?.focus(), 0)
-  }
-
-  const removeChallenge = (challenge: string) => {
-    const newChallenges = challenges.filter((c) => c !== challenge)
+  const handleChallengesChange = (newChallenges: string[]) => {
     setChallenges(newChallenges)
     setValue("challenges", newChallenges)
   }
 
-  const editChallenge = (index: number) => {
-    setChallengeInput(challenges[index])
-    setEditingChallenge({ index, value: challenges[index] })
-    setTimeout(() => challengeInputRef.current?.focus(), 0)
-  }
-
-  const cancelEditChallenge = () => {
-    setEditingChallenge(null)
-    setChallengeInput("")
-  }
-
-  const addResult = () => {
-    const value = resultInput.trim()
-    if (!value) return
-
-    if (editingResult !== null) {
-      const newResults = [...results]
-      newResults[editingResult.index] = value
-      setResults(newResults)
-      setValue("results", newResults)
-      setEditingResult(null)
-    } else {
-      if (!results.includes(value)) {
-        const newResults = [...results, value]
-        setResults(newResults)
-        setValue("results", newResults)
-      }
-    }
-    setResultInput("")
-    setTimeout(() => resultInputRef.current?.focus(), 0)
-  }
-
-  const removeResult = (result: string) => {
-    const newResults = results.filter((r) => r !== result)
+  const handleResultsChange = (newResults: string[]) => {
     setResults(newResults)
     setValue("results", newResults)
   }
 
-  const editResult = (index: number) => {
-    setResultInput(results[index])
-    setEditingResult({ index, value: results[index] })
-    setTimeout(() => resultInputRef.current?.focus(), 0)
-  }
-
-  const cancelEditResult = () => {
-    setEditingResult(null)
-    setResultInput("")
-  }
-
-  const addTag = () => {
-    const value = tagInput.trim()
-    if (!value) return
-
-    if (editingTag !== null) {
-      const newTags = [...tags]
-      newTags[editingTag.index] = value
-      setTags(newTags)
-      setValue("tags", newTags)
-      setEditingTag(null)
-    } else {
-      if (!tags.includes(value)) {
-        const newTags = [...tags, value]
-        setTags(newTags)
-        setValue("tags", newTags)
-      }
-    }
-    setTagInput("")
-    setTimeout(() => tagInputRef.current?.focus(), 0)
-  }
-
-  const removeTag = (tag: string) => {
-    const newTags = tags.filter((t) => t !== tag)
+  const handleTagsChange = (newTags: string[]) => {
     setTags(newTags)
     setValue("tags", newTags)
-  }
-
-  const editTag = (index: number) => {
-    setTagInput(tags[index])
-    setEditingTag({ index, value: tags[index] })
-    setTimeout(() => tagInputRef.current?.focus(), 0)
-  }
-
-  const cancelEditTag = () => {
-    setEditingTag(null)
-    setTagInput("")
   }
 
   const onSubmit = async (data: ProjectFormData) => {
@@ -372,7 +162,7 @@ export function ProjectForm({ project, onSuccess, onCancel }: ProjectFormProps) 
         challenges,
         results,
         tags,
-        images: [projectImages.main, ...(projectImages.others?.map((img) => img.url) || [])].filter(Boolean),
+        images: projectImages,
         techStack,
         architecture,
       }
@@ -444,8 +234,6 @@ export function ProjectForm({ project, onSuccess, onCancel }: ProjectFormProps) 
             </div>
           </div>
 
-
-
           <div className="space-y-2">
             <Label htmlFor="description">Short Description</Label>
             <Textarea {...register("description", { required: "Description is required" })} />
@@ -458,132 +246,9 @@ export function ProjectForm({ project, onSuccess, onCancel }: ProjectFormProps) 
             {errors.overview && <p className="text-sm text-red-500">{errors.overview.message}</p>}
           </div>
 
-          {/* Tech Stack */}
-          <div className="space-y-4">
-            <Label>Tech Stack</Label>
-            {Object.entries({
-              frontend: FRONTEND_TECHNOLOGIES,
-              backend: BACKEND_TECHNOLOGIES,
-              database: DATABASE_TECHNOLOGIES,
-              infrastructure: INFRASTRUCTURE_TECHNOLOGIES
-            }).map(([category, options]) => (
-              <div key={category} className="space-y-2">
-                <Label className="capitalize">{category}</Label>
-                <div className="flex gap-2">
-                  <Select
-                    onValueChange={(value) => {
-                      const categoryKey = category as keyof TechStack
-                      if (!techStack[categoryKey].includes(value as never)) {
-                        const newTechStack = {
-                          ...techStack,
-                          [category]: [...techStack[categoryKey], value]
-                        }
-                        setTechStack(newTechStack)
-                        setValue("techStack", newTechStack)
-                      }
-                    }}
-                  >
-                    <SelectTrigger>
-                      <SelectValue placeholder={`Select ${category} technology`} />
-                    </SelectTrigger>
-                    <SelectContent>
-                      {options.map((tech) => (
-                        <SelectItem key={tech} value={tech}>
-                          {tech}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                </div>
-                <div className="flex flex-wrap gap-2">
-                  {techStack[category as keyof typeof techStack].map((tech, index) => (
-                    <Badge key={`${tech}-${index}`} variant="secondary" className="flex items-center gap-1">
-                      {tech}
-                      <button
-                        type="button"
-                        onClick={(e) => {
-                          e.stopPropagation()
-                          removeTech(category as keyof TechStack, tech)
-                        }}
-                        className="hover:opacity-70"
-                      >
-                        <X className="h-3 w-3" />
-                      </button>
-                    </Badge>
-                  ))}
-                </div>
-              </div>
-            ))}
-          </div>
+          <TechStackSection techStack={techStack} onTechStackChange={handleTechStackChange} />
 
-          <div className="space-y-4">
-            <Label>Architecture Layers</Label>
-            <div className="space-y-2">
-              <div className="flex gap-2">
-                <Input
-                  ref={layerInputRef}
-                  value={layerInput.name}
-                  onChange={(e) => setLayerInput((prev) => ({ ...prev, name: e.target.value }))}
-                  placeholder="Layer name (e.g., Frontend, Backend)"
-                  onKeyPress={(e) => e.key === "Enter" && (e.preventDefault(), addLayer())}
-                />
-                <Input
-                  value={layerInput.description}
-                  onChange={(e) => setLayerInput((prev) => ({ ...prev, description: e.target.value }))}
-                  placeholder="Description (optional)"
-                />
-                <Button type="button" onClick={addLayer}>
-                  {editingLayer !== null ? "Update" : <Plus className="h-4 w-4" />}
-                </Button>
-                {editingLayer !== null && (
-                  <Button type="button" variant="outline" onClick={cancelEditLayer}>
-                    Cancel
-                  </Button>
-                )}
-              </div>
-              <div className="flex flex-wrap gap-2">
-                {architecture.layers.map((layer: Architecture['layers'][0], index: number) => (
-                  <Badge key={`${layer.name}-${index}`} variant="secondary" className="flex items-center gap-1">
-                    {layer.name}
-                    {layer.description && <span className="text-xs opacity-70">: {layer.description}</span>}
-                    <button
-                      type="button"
-                      onClick={(e) => {
-                        e.stopPropagation()
-                        editLayer(index)
-                      }}
-                      className="ml-1 hover:opacity-70"
-                    >
-                      <Pencil className="h-3 w-3" />
-                    </button>
-                    <button
-                      type="button"
-                      onClick={(e) => {
-                        e.stopPropagation()
-                        removeLayer(index)
-                      }}
-                      className="hover:opacity-70"
-                    >
-                      <X className="h-3 w-3" />
-                    </button>
-                  </Badge>
-                ))}
-              </div>
-            </div>
-            <div className="space-y-2">
-              <Label htmlFor="architectureNotes">Architecture Notes</Label>
-              <Textarea
-                value={architecture.notes || ""}
-                onChange={(e) => {
-                  const newArchitecture = { ...architecture, notes: e.target.value }
-                  setArchitecture(newArchitecture)
-                  setValue("architecture", newArchitecture)
-                }}
-                placeholder="Overall architecture notes..."
-                rows={3}
-              />
-            </div>
-          </div>
+          <ArchitectureSection architecture={architecture} onArchitectureChange={handleArchitectureChange} />
 
           {/* Settings */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -686,225 +351,35 @@ export function ProjectForm({ project, onSuccess, onCancel }: ProjectFormProps) 
             {errors.role && <p className="text-sm text-red-500">{errors.role.message}</p>}
           </div>
 
-          {/* Features */}
-          <div className="space-y-4">
-            <Label>Features</Label>
-            <div className="flex gap-2">
-              <Input
-                ref={featureInputRef}
-                value={featureInput}
-                onChange={(e) => setFeatureInput(e.target.value)}
-                placeholder="Add a feature"
-                onKeyPress={(e) => e.key === "Enter" && (e.preventDefault(), addFeature())}
-              />
-              <Button type="button" onClick={addFeature}>
-                {editingFeature !== null ? "Update" : <Plus className="h-4 w-4" />}
-              </Button>
-              {editingFeature !== null && (
-                <Button type="button" variant="outline" onClick={cancelEditFeature}>
-                  Cancel
-                </Button>
-              )}
-            </div>
-            <div className="flex flex-wrap gap-2">
-              {features.map((feature, index) => (
-                <Badge key={`${feature}-${index}`} variant="secondary" className="flex items-center gap-1">
-                  {feature}
-                  <button
-                    type="button"
-                    onClick={(e) => {
-                      e.stopPropagation()
-                      editFeature(index)
-                    }}
-                    className="ml-1 hover:opacity-70"
-                  >
-                    <Pencil className="h-3 w-3" />
-                  </button>
-                  <button
-                    type="button"
-                    onClick={(e) => {
-                      e.stopPropagation()
-                      removeFeature(feature)
-                    }}
-                    className="hover:opacity-70"
-                  >
-                    <X className="h-3 w-3" />
-                  </button>
-                </Badge>
-              ))}
-            </div>
-          </div>
+          <StringArraySection
+            label="Features"
+            items={features}
+            onItemsChange={handleFeaturesChange}
+            placeholder="Add a feature"
+          />
 
-          {/* Challenges */}
-          <div className="space-y-4">
-            <Label>Challenges</Label>
-            <div className="flex gap-2">
-              <Input
-                ref={challengeInputRef}
-                value={challengeInput}
-                onChange={(e) => setChallengeInput(e.target.value)}
-                placeholder="Add a challenge"
-                onKeyPress={(e) => e.key === "Enter" && (e.preventDefault(), addChallenge())}
-              />
-              <Button type="button" onClick={addChallenge}>
-                {editingChallenge !== null ? "Update" : <Plus className="h-4 w-4" />}
-              </Button>
-              {editingChallenge !== null && (
-                <Button type="button" variant="outline" onClick={cancelEditChallenge}>
-                  Cancel
-                </Button>
-              )}
-            </div>
-            <div className="flex flex-wrap gap-2">
-              {challenges.map((challenge, index) => (
-                <Badge key={`${challenge}-${index}`} variant="secondary" className="flex items-center gap-1">
-                  {challenge}
-                  <button
-                    type="button"
-                    onClick={(e) => {
-                      e.stopPropagation()
-                      editChallenge(index)
-                    }}
-                    className="ml-1 hover:opacity-70"
-                  >
-                    <Pencil className="h-3 w-3" />
-                  </button>
-                  <button
-                    type="button"
-                    onClick={(e) => {
-                      e.stopPropagation()
-                      removeChallenge(challenge)
-                    }}
-                    className="hover:opacity-70"
-                  >
-                    <X className="h-3 w-3" />
-                  </button>
-                </Badge>
-              ))}
-            </div>
-          </div>
+          <StringArraySection
+            label="Challenges"
+            items={challenges}
+            onItemsChange={handleChallengesChange}
+            placeholder="Add a challenge"
+          />
 
-          {/* Results */}
-          <div className="space-y-4">
-            <Label>Results & Impact</Label>
-            <div className="flex gap-2">
-              <Input
-                ref={resultInputRef}
-                value={resultInput}
-                onChange={(e) => setResultInput(e.target.value)}
-                placeholder="Add a result or impact"
-                onKeyPress={(e) => e.key === "Enter" && (e.preventDefault(), addResult())}
-              />
-              <Button type="button" onClick={addResult}>
-                {editingResult !== null ? "Update" : <Plus className="h-4 w-4" />}
-              </Button>
-              {editingResult !== null && (
-                <Button type="button" variant="outline" onClick={cancelEditResult}>
-                  Cancel
-                </Button>
-              )}
-            </div>
-            <div className="flex flex-wrap gap-2">
-              {results.map((result, index) => (
-                <Badge key={`${result}-${index}`} variant="secondary" className="flex items-center gap-1">
-                  {result}
-                  <button
-                    type="button"
-                    onClick={(e) => {
-                      e.stopPropagation()
-                      editResult(index)
-                    }}
-                    className="ml-1 hover:opacity-70"
-                  >
-                    <Pencil className="h-3 w-3" />
-                  </button>
-                  <button
-                    type="button"
-                    onClick={(e) => {
-                      e.stopPropagation()
-                      removeResult(result)
-                    }}
-                    className="hover:opacity-70"
-                  >
-                    <X className="h-3 w-3" />
-                  </button>
-                </Badge>
-              ))}
-            </div>
-          </div>
+          <StringArraySection
+            label="Results & Impact"
+            items={results}
+            onItemsChange={handleResultsChange}
+            placeholder="Add a result or impact"
+          />
 
-          {/* Tags */}
-          <div className="space-y-4">
-            <Label>Tags</Label>
-            <div className="flex gap-2">
-              <Input
-                ref={tagInputRef}
-                value={tagInput}
-                onChange={(e) => setTagInput(e.target.value)}
-                placeholder="Add a tag"
-                onKeyPress={(e) => e.key === "Enter" && (e.preventDefault(), addTag())}
-              />
-              <Button type="button" onClick={addTag}>
-                {editingTag !== null ? "Update" : <Plus className="h-4 w-4" />}
-              </Button>
-              {editingTag !== null && (
-                <Button type="button" variant="outline" onClick={cancelEditTag}>
-                  Cancel
-                </Button>
-              )}
-            </div>
-            <div className="flex flex-wrap gap-2">
-              {tags.map((tag, index) => (
-                <Badge key={`${tag}-${index}`} variant="outline" className="flex items-center gap-1">
-                  {tag}
-                  <button
-                    type="button"
-                    onClick={(e) => {
-                      e.stopPropagation()
-                      editTag(index)
-                    }}
-                    className="ml-1 hover:opacity-70"
-                  >
-                    <Pencil className="h-3 w-3" />
-                  </button>
-                  <button
-                    type="button"
-                    onClick={(e) => {
-                      e.stopPropagation()
-                      removeTag(tag)
-                    }}
-                    className="hover:opacity-70"
-                  >
-                    <X className="h-3 w-3" />
-                  </button>
-                </Badge>
-              ))}
-            </div>
-          </div>
+          <StringArraySection
+            label="Tags"
+            items={tags}
+            onItemsChange={handleTagsChange}
+            placeholder="Add a tag"
+          />
 
-          <div className="space-y-4">
-            <div className="space-y-2">
-              <Label>Main Image (required)</Label>
-              <FileUploadDemo
-                onChange={(images) => {
-                  const newImages = { ...projectImages, main: images[0]?.url || "" }
-                  setProjectImages(newImages)
-                  setValue("images", newImages)
-                }}
-              />
-            </div>
-
-            <div className="space-y-2">
-              <Label>Additional Images (optional)</Label>
-              <FileUploadDemo
-                onChange={(images) => {
-                  const newImages = { ...projectImages, others: images }
-                  setProjectImages(newImages)
-                  setValue("images", newImages)
-                }}
-              />
-            </div>
-          </div>
+          <ImageSection images={projectImages} onImagesChange={handleImagesChange} />
 
           {/* Optional Fields */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">

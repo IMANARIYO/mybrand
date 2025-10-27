@@ -62,8 +62,7 @@ export const projectsTable = pgTable("projects", {
 
   features: json("features").$type<StringArray>().notNull(),
   challenges: json("challenges").$type<StringArray>().notNull(),
-  results: text("results").notNull(),
-
+  results: json("results").$type<StringArray>().notNull(),
   images: json("images").$type<Images>().notNull(),
 
   liveDemo: text("live_demo"),
@@ -96,10 +95,16 @@ export const projectsTable = pgTable("projects", {
 });
 
 // Service Request Status Enum
-export const serviceRequestStatusEnum = pgEnum("service_request_status", SERVICE_REQUEST_STATUS_VALUES);
+export const serviceRequestStatusEnum = pgEnum(
+  "service_request_status",
+  SERVICE_REQUEST_STATUS_VALUES
+);
 
 // Service Status Enum
-export const serviceStatusEnum = pgEnum("service_status", SERVICE_STATUS_VALUES);
+export const serviceStatusEnum = pgEnum(
+  "service_status",
+  SERVICE_STATUS_VALUES
+);
 
 // Services Table
 export const services = pgTable("services", {
@@ -118,12 +123,12 @@ export const services = pgTable("services", {
   benefits: json("benefits").$type<ServiceBenefit[]>().notNull(),
   process: json("process").$type<ServiceProcess[]>().notNull(),
   actions: json("actions").$type<ServiceAction[]>().notNull(),
-  
+
   // Sharing fields
   slug: text("slug").notNull().unique(),
   isPublic: boolean("is_public").notNull().default(false),
   shareUrl: text("share_url").notNull(),
-  
+
   createdAt: timestamp("created_at").defaultNow().notNull(),
   updatedAt: timestamp("updated_at").defaultNow().notNull(),
 });
@@ -152,7 +157,14 @@ export const contacts = pgTable("contacts", {
   subject: text("subject").notNull(),
   message: text("message").notNull(),
   inquiryType: text("inquiry_type", {
-    enum: ["general", "project", "support", "consultation", "service", "collaboration"],
+    enum: [
+      "general",
+      "project",
+      "support",
+      "consultation",
+      "service",
+      "collaboration",
+    ],
   })
     .notNull()
     .default("general"),

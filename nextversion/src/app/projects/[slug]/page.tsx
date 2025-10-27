@@ -8,11 +8,12 @@ import { Github, Globe, Calendar, Eye } from "lucide-react"
 import Image from "next/image"
 
 interface ProjectPageProps {
-  params: { slug: string }
+  params: Promise<{ slug: string }>
 }
 
 export default async function ProjectPage({ params }: ProjectPageProps) {
-  const project = await getProjectBySlug(params.slug)
+  const { slug } = await params
+  const project = await getProjectBySlug(slug)
 
   if (!project) {
     notFound()

@@ -166,8 +166,12 @@ export function ProjectTable({ projects, onProjectUpdated }: ProjectTableProps) 
                             <ProjectForm
                               project={{
                                 ...editingProject,
-                                architecture: (editingProject.architecture as unknown) as 'monolithic' | 'microservices',
-                                images: Array.isArray(editingProject.images) ? editingProject.images : [],
+                                architecture: typeof editingProject.architecture === 'string' 
+                                  ? { layers: [], notes: editingProject.architecture }
+                                  : editingProject.architecture,
+                                images: Array.isArray(editingProject.images) 
+                                  ? { main: editingProject.images[0] || '', others: editingProject.images.slice(1).map(url => ({ url })) }
+                                  : editingProject.images,
                                 liveDemo: editingProject.liveDemo ?? undefined,
                                 sourceCode: editingProject.sourceCode ?? undefined,
                                 endDate: editingProject.endDate ?? undefined,

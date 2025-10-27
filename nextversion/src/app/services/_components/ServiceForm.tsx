@@ -10,10 +10,9 @@ import { Textarea } from "@/components/ui/textarea"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Loader2 } from "lucide-react"
 import type { Service, ServiceFormData } from "../_types/services-types"
-import type { ServiceBenefit, ServiceProcess, ServiceAction } from "@/db/schema"
 import { createService, updateService } from "../_server-actions/services-server-actions"
 import { useToast } from "@/components/ui/use-toast"
-import { ImageUploadField } from "@/components/Uploading/ImageUploadField"
+import UploadWidget, { type UploadedFileInfo } from "@/components/Uploading/UploadWidget"
 
 
 interface ServiceFormProps {
@@ -41,14 +40,13 @@ export function ServiceForm({ service, onSuccess, onCancel }: ServiceFormProps) 
       title: formData.get("title") as string,
       tagline: formData.get("tagline") as string,
       description: formData.get("description") as string,
-      imageUrl: formData.get("imageUrl") as string,
+      imageUrl: serviceImage,
       icon: formData.get("icon") as string,
       category: formData.get("category") as string,
       pricing: formData.get("pricing") as string,
       duration: formData.get("duration") as string,
       featured: formData.get("featured") as string,
       isPublic: formData.get("isPublic") === "true",
-      imageUrl: serviceImage,
       skills: [],
       benefits: benefitsStr.split(",").map(b => ({ title: b.trim(), description: "" })),
       process: processStr.split(",").map((p, i) => ({ step: i + 1, title: p.trim(), description: "" })),
@@ -120,15 +118,22 @@ export function ServiceForm({ service, onSuccess, onCancel }: ServiceFormProps) 
       </div>
 
       {/* Service Image */}
-      <ImageUploadField
-        label="Service Image"
-        value={serviceImage}
-        onChange={(url) => {
-          setServiceImage(url as string)
-        }}
-        required
-        placeholder="Upload or enter service image URL"
-      />
+      <div className="space-y-2">
+        <Label>Service Image</Label>
+        <UploadWidget
+          multiple={false}
+          onUpload={(files: UploadedFileInfo[]) => {
+            if (files.length > 0) {
+              setServiceImage(files[0].url)
+            }
+          }}
+        />
+        {serviceImage && (
+          <div className="mt-2">
+            <img src={serviceImage} alt="Service preview" className="w-32 h-32 object-cover rounded" />
+          </div>
+        )}
+      </div>
 
       {/* Tagline */}
       <div className="space-y-2">
@@ -273,20 +278,20 @@ export function ServiceForm({ service, onSuccess, onCancel }: ServiceFormProps) 
             <SelectValue placeholder="Select visibility" />
           </SelectTrigger>
           <SelectContent>
-            <SelectItem value="false">Private</SelectItem>
             <SelectItem value="true">Public</SelectItem>
+            <SelectItem value="false">Private</SelectItem>
           </SelectContent>
         </Select>
       </div>
 
       {/* Form Actions */}
-      <div className="flex gap-3 pt-4">
-        <Button type="submit" className="flex-1" disabled={isSubmitting}>
+      <div className="flex gap-4 pt-4">
+        <Button type="submit" disabled={isSubmitting} className="flex-1">
           {isSubmitting && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-          {service ? "Update Service" : "Create Service"}
+          {isSubmitting ? 'Saving...' : (service?.id ? 'Update Service' : 'Create Service')}
         </Button>
         {onCancel && (
-          <Button type="button" variant="outline" onClick={onCancel} disabled={isSubmitting}>
+          <Button type="button" variant="outline" onClick={onCancel}>
             Cancel
           </Button>
         )}

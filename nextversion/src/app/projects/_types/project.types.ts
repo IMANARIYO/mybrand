@@ -15,7 +15,7 @@ export interface ProjectFormData {
   mobileSupport: boolean;
   features: string[];
   challenges: string[];
-  results: string;
+  results: string[];
   images: string[];
   liveDemo?: string;
   sourceCode?: string;

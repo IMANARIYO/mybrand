@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/ban-ts-comment */
+
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use client"
 
@@ -27,29 +27,37 @@ export default function UploadWidget({ multiple = false, onUpload, trigger }: Up
   useEffect(() => {
     const loadCloudinaryScript = () => {
       return new Promise<void>((resolve, reject) => {
-        // Check if Cloudinary is already loaded
-        if (typeof window !== 'undefined' && window.cloudinary) {
+        if (typeof window !== 'undefined' && (window as any).cloudinary) {
           resolve()
           return
         }
 
-        // Check if script is already being loaded
-        if (document.querySelector('script[src*="cloudinary.com/js/upload-widget"]')) {
-          // Wait for it to load
+        if (document.querySelector('script[src*="upload-widget.cloudinary.com"]')) {
           const checkLoaded = setInterval(() => {
-            if (window.cloudinary) {
+            if ((window as any).cloudinary) {
               clearInterval(checkLoaded)
               resolve()
             }
           }, 100)
+          setTimeout(() => {
+            clearInterval(checkLoaded)
+            reject(new Error('Script loading timeout'))
+          }, 10000)
           return
         }
 
-        // Load the script
         const script = document.createElement('script')
         script.src = 'https://upload-widget.cloudinary.com/global/all.js'
         script.async = true
-        script.onload = () => resolve()
+        script.onload = () => {
+          setTimeout(() => {
+            if ((window as any).cloudinary) {
+              resolve()
+            } else {
+              reject(new Error('Cloudinary not available after script load'))
+            }
+          }, 100)
+        }
         script.onerror = () => reject(new Error('Failed to load Cloudinary script'))
         document.head.appendChild(script)
       })
@@ -57,31 +65,17 @@ export default function UploadWidget({ multiple = false, onUpload, trigger }: Up
 
     const initWidget = async () => {
       try {
-        // Load Cloudinary script first
         await loadCloudinaryScript()
 
-        const res = await fetch("/api/cloudinary-signature")
-        const { signature, timestamp } = await res.json()
-
-        // @ts-expect-error
-        widgetRef.current = window.cloudinary.createUploadWidget(
+        widgetRef.current = (window as any).cloudinary.createUploadWidget(
           {
             cloudName: process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME,
-            uploadSignature: signature,
-            uploadSignatureTimestamp: timestamp,
-            apiKey: process.env.NEXT_PUBLIC_CLOUDINARY_API_KEY,
-            folder: process.env.NEXT_PUBLIC_CLOUDINARY_FOLDER || "portfolio",
+            uploadPreset: process.env.NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET,
+            folder: "my_portfolio_files",
             multiple,
             sources: ["local", "url", "camera"],
             maxFileSize: 10 * 1024 * 1024,
-            cropping: true,
-            croppingAspectRatio: 16/9,
-            resourceType: "auto",
-            clientAllowedFormats: ["jpg", "jpeg", "png", "gif", "webp"],
-            transformation: [
-              { width: 1200, height: 675, crop: "fill", quality: "auto" },
-              { fetch_format: "auto" }
-            ],
+            cropping: false,
           },
           (error: any, result: { event: string; info: any }) => {
             if (error) {
@@ -162,8 +156,6 @@ export default function UploadWidget({ multiple = false, onUpload, trigger }: Up
 
     if (widgetRef.current) {
       widgetRef.current.open()
-    } else {
-      toast.error("Upload widget is not ready. Please try again in a moment.")
     }
   }
 

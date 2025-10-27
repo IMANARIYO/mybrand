@@ -1,3 +1,5 @@
+
+
 import { Suspense } from "react"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { ProjectTable } from "./_components/ProjectTable"
@@ -72,7 +74,7 @@ async function ProjectsPage() {
                 <div>
                   <p className="text-sm font-medium text-muted-foreground">Technologies</p>
                   <p className="text-3xl font-bold text-primary">
-                    {Object.values(analytics.techUsageStats).reduce((total, category) => 
+                    {Object.values(analytics.techUsageStats).reduce((total, category) =>
                       total + Object.keys(category).length, 0
                     )}
                   </p>

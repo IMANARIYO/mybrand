@@ -71,7 +71,7 @@ export function ProjectCard({ project, onViewMore }: ProjectCardProps) {
   return (
     <Card className="group relative overflow-hidden hover:shadow-2xl transition-all duration-500 hover:scale-[1.03] border-2 hover:border-primary/50 bg-gradient-to-br from-card via-card to-primary/5">
       {/* Share Button */}
-      <div className="absolute top-4 right-4 z-10">
+      <div className="absolute top-2 right-2 sm:top-3 sm:right-3 md:top-4 md:right-4 z-10">
         <ShareButton
           shareUrl={`${typeof window !== 'undefined' ? window.location.origin : ''}/projects/${project.slug}`}
           title={project.title}
@@ -91,13 +91,13 @@ export function ProjectCard({ project, onViewMore }: ProjectCardProps) {
         </div>
       )} */}
 
-      <CardHeader className="pb-4 relative">
-        <div className="space-y-3">
-          <div className="flex items-center gap-2 flex-wrap">
-            <Badge className={`${getCategoryColor(project.category)} font-semibold animate-pulse`}>
+      <CardHeader className="pb-2 sm:pb-3 md:pb-4 relative p-3 sm:p-4 md:p-6">
+        <div className="space-y-2 sm:space-y-3">
+          <div className="flex items-center gap-1 sm:gap-2 flex-wrap">
+            <Badge className={`${getCategoryColor(project.category)} font-semibold animate-pulse text-xs sm:text-sm`}>
               {project.category.toUpperCase()}
             </Badge>
-            <Badge className={`${getStatusColor(project.status)} font-medium`}>
+            <Badge className={`${getStatusColor(project.status)} font-medium text-xs sm:text-sm`}>
               {project.status}
             </Badge>
             <div className="flex items-center gap-1 text-xs text-muted-foreground ml-auto">
@@ -105,24 +105,24 @@ export function ProjectCard({ project, onViewMore }: ProjectCardProps) {
               <span>{project.viewCount}</span>
             </div>
           </div>
-          <CardTitle className="text-xl font-bold group-hover:text-primary transition-colors duration-300 leading-tight">
+          <CardTitle className="text-lg sm:text-xl md:text-2xl font-bold group-hover:text-primary transition-colors duration-300 leading-tight">
             {project.title}
           </CardTitle>
         </div>
-        <CardDescription className="text-base leading-relaxed text-muted-foreground group-hover:text-foreground/80 transition-colors">
+        <CardDescription className="text-sm sm:text-base leading-relaxed text-muted-foreground group-hover:text-foreground/80 transition-colors">
           {project.description}
         </CardDescription>
 
         {/* Engineering Hook */}
-        <div className="mt-3 p-3 bg-gradient-to-r from-primary/5 to-secondary/5 rounded-lg border border-primary/10">
-          <p className="text-sm text-foreground/80 leading-relaxed">
-            <Code2 className="w-4 h-4 inline mr-2 text-primary" />
+        <div className="mt-2 sm:mt-3 p-2 sm:p-3 bg-gradient-to-r from-primary/5 to-secondary/5 rounded-lg border border-primary/10">
+          <p className="text-xs sm:text-sm text-foreground/80 leading-relaxed">
+            <Code2 className="w-3 h-3 sm:w-4 sm:h-4 inline mr-1 sm:mr-2 text-primary" />
             {getEngineeringHook()}
           </p>
         </div>
       </CardHeader>
 
-      <CardContent className="space-y-4">
+      <CardContent className="space-y-2 sm:space-y-3 md:space-y-4 p-3 sm:p-4 md:p-6">
         {/* Interactive Image Slider */}
         {allImages.length > 0 && (
           <div className="relative aspect-video overflow-hidden rounded-xl border-2 border-border group-hover:border-primary/30 transition-colors">
@@ -183,30 +183,30 @@ export function ProjectCard({ project, onViewMore }: ProjectCardProps) {
           </div>
         )}
 
-        <div className="space-y-3">
-          <div className="flex items-center gap-2 text-sm text-muted-foreground">
-            <Calendar className="h-4 w-4 text-primary" />
+        <div className="space-y-2 sm:space-y-3">
+          <div className="flex items-center gap-1 sm:gap-2 text-xs sm:text-sm text-muted-foreground">
+            <Calendar className="h-3 w-3 sm:h-4 sm:w-4 text-primary" />
             <span className="font-medium">{project.startDate} - {project.endDate || 'Present'}</span>
           </div>
 
           {/* Bold Tech Stack Switcher */}
-          <div className="bg-card border-2 border-border rounded-xl p-3 shadow-sm">
-            <div className="flex items-center gap-1 mb-3">
-              <Layers className="w-4 h-4 text-primary" />
-              <span className="text-sm font-bold text-foreground">Tech Stack</span>
+          <div className="bg-card border-2 border-border rounded-xl p-2 sm:p-3 shadow-sm">
+            <div className="flex items-center gap-1 mb-2 sm:mb-3">
+              <Layers className="w-3 h-3 sm:w-4 sm:h-4 text-primary" />
+              <span className="text-xs sm:text-sm font-bold text-foreground">Tech Stack</span>
             </div>
 
-            <div className="grid grid-cols-4 gap-2">
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-1 sm:gap-2">
               <button
                 onClick={() => setSelectedTechCategory('frontend')}
-                className={`flex flex-col items-center gap-1 p-3 rounded-lg border-2 transition-all duration-200 transform ${selectedTechCategory === 'frontend'
+                className={`flex flex-col items-center gap-0.5 sm:gap-1 p-1.5 sm:p-2 md:p-3 rounded-lg border-2 transition-all duration-200 transform ${selectedTechCategory === 'frontend'
                   ? 'bg-blue-500 border-blue-600 text-white shadow-lg scale-105'
                   : 'bg-blue-50 border-blue-200 text-blue-700 hover:bg-blue-100 hover:border-blue-300 hover:scale-102'
                   }`}
               >
-                <Monitor className="w-5 h-5" />
-                <span className="font-bold text-xs">Frontend</span>
-                <div className={`text-xs px-2 py-0.5 rounded-full ${selectedTechCategory === 'frontend' ? 'bg-white/20 text-white' : 'bg-blue-200 text-blue-800'
+                <Monitor className="w-3 h-3 sm:w-4 sm:h-4 md:w-5 md:h-5" />
+                <span className="font-bold text-[10px] sm:text-xs">Frontend</span>
+                <div className={`text-[10px] sm:text-xs px-1 sm:px-2 py-0.5 rounded-full ${selectedTechCategory === 'frontend' ? 'bg-white/20 text-white' : 'bg-blue-200 text-blue-800'
                   }`}>
                   {project.techStack.frontend.length}
                 </div>
@@ -214,14 +214,14 @@ export function ProjectCard({ project, onViewMore }: ProjectCardProps) {
 
               <button
                 onClick={() => setSelectedTechCategory('backend')}
-                className={`flex flex-col items-center gap-1 p-3 rounded-lg border-2 transition-all duration-200 transform ${selectedTechCategory === 'backend'
+                className={`flex flex-col items-center gap-0.5 sm:gap-1 p-1.5 sm:p-2 md:p-3 rounded-lg border-2 transition-all duration-200 transform ${selectedTechCategory === 'backend'
                   ? 'bg-green-500 border-green-600 text-white shadow-lg scale-105'
                   : 'bg-green-50 border-green-200 text-green-700 hover:bg-green-100 hover:border-green-300 hover:scale-102'
                   }`}
               >
-                <Server className="w-5 h-5" />
-                <span className="font-bold text-xs">Backend</span>
-                <div className={`text-xs px-2 py-0.5 rounded-full ${selectedTechCategory === 'backend' ? 'bg-white/20 text-white' : 'bg-green-200 text-green-800'
+                <Server className="w-3 h-3 sm:w-4 sm:h-4 md:w-5 md:h-5" />
+                <span className="font-bold text-[10px] sm:text-xs">Backend</span>
+                <div className={`text-[10px] sm:text-xs px-1 sm:px-2 py-0.5 rounded-full ${selectedTechCategory === 'backend' ? 'bg-white/20 text-white' : 'bg-green-200 text-green-800'
                   }`}>
                   {project.techStack.backend.length}
                 </div>
@@ -229,14 +229,14 @@ export function ProjectCard({ project, onViewMore }: ProjectCardProps) {
 
               <button
                 onClick={() => setSelectedTechCategory('database')}
-                className={`flex flex-col items-center gap-1 p-3 rounded-lg border-2 transition-all duration-200 transform ${selectedTechCategory === 'database'
+                className={`flex flex-col items-center gap-0.5 sm:gap-1 p-1.5 sm:p-2 md:p-3 rounded-lg border-2 transition-all duration-200 transform ${selectedTechCategory === 'database'
                   ? 'bg-purple-500 border-purple-600 text-white shadow-lg scale-105'
                   : 'bg-purple-50 border-purple-200 text-purple-700 hover:bg-purple-100 hover:border-purple-300 hover:scale-102'
                   }`}
               >
-                <Database className="w-5 h-5" />
-                <span className="font-bold text-xs">Database</span>
-                <div className={`text-xs px-2 py-0.5 rounded-full ${selectedTechCategory === 'database' ? 'bg-white/20 text-white' : 'bg-purple-200 text-purple-800'
+                <Database className="w-3 h-3 sm:w-4 sm:h-4 md:w-5 md:h-5" />
+                <span className="font-bold text-[10px] sm:text-xs">Database</span>
+                <div className={`text-[10px] sm:text-xs px-1 sm:px-2 py-0.5 rounded-full ${selectedTechCategory === 'database' ? 'bg-white/20 text-white' : 'bg-purple-200 text-purple-800'
                   }`}>
                   {project.techStack.database.length}
                 </div>
@@ -244,14 +244,14 @@ export function ProjectCard({ project, onViewMore }: ProjectCardProps) {
 
               <button
                 onClick={() => setSelectedTechCategory('infrastructure')}
-                className={`flex flex-col items-center gap-1 p-3 rounded-lg border-2 transition-all duration-200 transform ${selectedTechCategory === 'infrastructure'
+                className={`flex flex-col items-center gap-0.5 sm:gap-1 p-1.5 sm:p-2 md:p-3 rounded-lg border-2 transition-all duration-200 transform ${selectedTechCategory === 'infrastructure'
                   ? 'bg-orange-500 border-orange-600 text-white shadow-lg scale-105'
                   : 'bg-orange-50 border-orange-200 text-orange-700 hover:bg-orange-100 hover:border-orange-300 hover:scale-102'
                   }`}
               >
-                <Cloud className="w-5 h-5" />
-                <span className="font-bold text-xs">DevOps</span>
-                <div className={`text-xs px-2 py-0.5 rounded-full ${selectedTechCategory === 'infrastructure' ? 'bg-white/20 text-white' : 'bg-orange-200 text-orange-800'
+                <Cloud className="w-3 h-3 sm:w-4 sm:h-4 md:w-5 md:h-5" />
+                <span className="font-bold text-[10px] sm:text-xs">DevOps</span>
+                <div className={`text-[10px] sm:text-xs px-1 sm:px-2 py-0.5 rounded-full ${selectedTechCategory === 'infrastructure' ? 'bg-white/20 text-white' : 'bg-orange-200 text-orange-800'
                   }`}>
                   {project.techStack.infrastructure.length}
                 </div>
@@ -260,111 +260,111 @@ export function ProjectCard({ project, onViewMore }: ProjectCardProps) {
           </div>
 
           {/* Dynamic Tech Display */}
-          <div className="bg-card border-2 border-border rounded-xl p-4 shadow-sm min-h-[4rem]">
+          <div className="bg-card border-2 border-border rounded-xl p-2 sm:p-3 md:p-4 shadow-sm min-h-[3rem] sm:min-h-[4rem]">
             {selectedTechCategory === 'frontend' && (
               <div className="space-y-2">
-                <div className="flex items-center gap-2">
-                  <div className="w-8 h-8 bg-blue-500 rounded-lg flex items-center justify-center">
-                    <Monitor className="w-4 h-4 text-white" />
+                <div className="flex items-center gap-1 sm:gap-2">
+                  <div className="w-6 h-6 sm:w-8 sm:h-8 bg-blue-500 rounded-lg flex items-center justify-center">
+                    <Monitor className="w-3 h-3 sm:w-4 sm:h-4 text-white" />
                   </div>
-                  <span className="text-sm font-bold text-blue-700">Frontend Stack</span>
+                  <span className="text-xs sm:text-sm font-bold text-blue-700">Frontend Stack</span>
                 </div>
                 {project.techStack.frontend.length > 0 ? (
-                  <div className="flex flex-wrap gap-2">
+                  <div className="flex flex-wrap gap-1 sm:gap-2">
                     {project.techStack.frontend.map((tech: string) => (
-                      <Badge key={tech} className="bg-blue-100 border-blue-300 text-blue-800 hover:bg-blue-200 transition-colors cursor-pointer font-medium">
+                      <Badge key={tech} className="bg-blue-100 border-blue-300 text-blue-800 hover:bg-blue-200 transition-colors cursor-pointer font-medium text-xs sm:text-sm">
                         {tech}
                       </Badge>
                     ))}
                   </div>
                 ) : (
-                  <p className="text-sm text-muted-foreground bg-muted/50 p-2 rounded italic">No frontend technologies</p>
+                  <p className="text-xs sm:text-sm text-muted-foreground bg-muted/50 p-1.5 sm:p-2 rounded italic">No frontend technologies</p>
                 )}
               </div>
             )}
 
             {selectedTechCategory === 'backend' && (
               <div className="space-y-2">
-                <div className="flex items-center gap-2">
-                  <div className="w-8 h-8 bg-green-500 rounded-lg flex items-center justify-center">
-                    <Server className="w-4 h-4 text-white" />
+                <div className="flex items-center gap-1 sm:gap-2">
+                  <div className="w-6 h-6 sm:w-8 sm:h-8 bg-green-500 rounded-lg flex items-center justify-center">
+                    <Server className="w-3 h-3 sm:w-4 sm:h-4 text-white" />
                   </div>
-                  <span className="text-sm font-bold text-green-700">Backend Stack</span>
+                  <span className="text-xs sm:text-sm font-bold text-green-700">Backend Stack</span>
                 </div>
                 {project.techStack.backend.length > 0 ? (
-                  <div className="flex flex-wrap gap-2">
+                  <div className="flex flex-wrap gap-1 sm:gap-2">
                     {project.techStack.backend.map((tech: string) => (
-                      <Badge key={tech} className="bg-green-100 border-green-300 text-green-800 hover:bg-green-200 transition-colors cursor-pointer font-medium">
+                      <Badge key={tech} className="bg-green-100 border-green-300 text-green-800 hover:bg-green-200 transition-colors cursor-pointer font-medium text-xs sm:text-sm">
                         {tech}
                       </Badge>
                     ))}
                   </div>
                 ) : (
-                  <p className="text-sm text-muted-foreground bg-muted/50 p-2 rounded italic">No backend technologies</p>
+                  <p className="text-xs sm:text-sm text-muted-foreground bg-muted/50 p-1.5 sm:p-2 rounded italic">No backend technologies</p>
                 )}
               </div>
             )}
 
             {selectedTechCategory === 'database' && (
               <div className="space-y-2">
-                <div className="flex items-center gap-2">
-                  <div className="w-8 h-8 bg-purple-500 rounded-lg flex items-center justify-center">
-                    <Database className="w-4 h-4 text-white" />
+                <div className="flex items-center gap-1 sm:gap-2">
+                  <div className="w-6 h-6 sm:w-8 sm:h-8 bg-purple-500 rounded-lg flex items-center justify-center">
+                    <Database className="w-3 h-3 sm:w-4 sm:h-4 text-white" />
                   </div>
-                  <span className="text-sm font-bold text-purple-700">Database Stack</span>
+                  <span className="text-xs sm:text-sm font-bold text-purple-700">Database Stack</span>
                 </div>
                 {project.techStack.database.length > 0 ? (
-                  <div className="flex flex-wrap gap-2">
+                  <div className="flex flex-wrap gap-1 sm:gap-2">
                     {project.techStack.database.map((tech: string) => (
-                      <Badge key={tech} className="bg-purple-100 border-purple-300 text-purple-800 hover:bg-purple-200 transition-colors cursor-pointer font-medium">
+                      <Badge key={tech} className="bg-purple-100 border-purple-300 text-purple-800 hover:bg-purple-200 transition-colors cursor-pointer font-medium text-xs sm:text-sm">
                         {tech}
                       </Badge>
                     ))}
                   </div>
                 ) : (
-                  <p className="text-sm text-muted-foreground bg-muted/50 p-2 rounded italic">No database technologies</p>
+                  <p className="text-xs sm:text-sm text-muted-foreground bg-muted/50 p-1.5 sm:p-2 rounded italic">No database technologies</p>
                 )}
               </div>
             )}
 
             {selectedTechCategory === 'infrastructure' && (
               <div className="space-y-2">
-                <div className="flex items-center gap-2">
-                  <div className="w-8 h-8 bg-orange-500 rounded-lg flex items-center justify-center">
-                    <Cloud className="w-4 h-4 text-white" />
+                <div className="flex items-center gap-1 sm:gap-2">
+                  <div className="w-6 h-6 sm:w-8 sm:h-8 bg-orange-500 rounded-lg flex items-center justify-center">
+                    <Cloud className="w-3 h-3 sm:w-4 sm:h-4 text-white" />
                   </div>
-                  <span className="text-sm font-bold text-orange-700">DevOps Stack</span>
+                  <span className="text-xs sm:text-sm font-bold text-orange-700">DevOps Stack</span>
                 </div>
                 {project.techStack.infrastructure.length > 0 ? (
-                  <div className="flex flex-wrap gap-2">
+                  <div className="flex flex-wrap gap-1 sm:gap-2">
                     {project.techStack.infrastructure.map((tech: string) => (
-                      <Badge key={tech} className="bg-orange-100 border-orange-300 text-orange-800 hover:bg-orange-200 transition-colors cursor-pointer font-medium">
+                      <Badge key={tech} className="bg-orange-100 border-orange-300 text-orange-800 hover:bg-orange-200 transition-colors cursor-pointer font-medium text-xs sm:text-sm">
                         {tech}
                       </Badge>
                     ))}
                   </div>
                 ) : (
-                  <p className="text-sm text-muted-foreground bg-muted/50 p-2 rounded italic">No infrastructure technologies</p>
+                  <p className="text-xs sm:text-sm text-muted-foreground bg-muted/50 p-1.5 sm:p-2 rounded italic">No infrastructure technologies</p>
                 )}
               </div>
             )}
 
             {selectedTechCategory === 'all' && (
               <div className="space-y-2">
-                <div className="flex items-center gap-2">
-                  <div className="w-8 h-8 bg-gradient-to-r from-primary to-secondary rounded-lg flex items-center justify-center">
-                    <Layers className="w-4 h-4 text-white" />
+                <div className="flex items-center gap-1 sm:gap-2">
+                  <div className="w-6 h-6 sm:w-8 sm:h-8 bg-gradient-to-r from-primary to-secondary rounded-lg flex items-center justify-center">
+                    <Layers className="w-3 h-3 sm:w-4 sm:h-4 text-white" />
                   </div>
-                  <span className="text-sm font-bold text-foreground">Complete Tech Stack</span>
+                  <span className="text-xs sm:text-sm font-bold text-foreground">Complete Tech Stack</span>
                 </div>
-                <div className="flex flex-wrap gap-2">
+                <div className="flex flex-wrap gap-1 sm:gap-2">
                   {Object.values(project.techStack).flat().slice(0, 10).map((tech: string) => (
-                    <Badge key={tech} variant="outline" className="hover:bg-primary/10 hover:border-primary/50 transition-colors cursor-pointer font-medium">
+                    <Badge key={tech} variant="outline" className="hover:bg-primary/10 hover:border-primary/50 transition-colors cursor-pointer font-medium text-xs sm:text-sm">
                       {tech}
                     </Badge>
                   ))}
                   {Object.values(project.techStack).flat().length > 10 && (
-                    <Badge className="bg-accent/20 text-accent border-accent/30 font-bold">
+                    <Badge className="bg-accent/20 text-accent border-accent/30 font-bold text-xs sm:text-sm">
                       +{Object.values(project.techStack).flat().length - 10} more
                     </Badge>
                   )}
@@ -376,48 +376,48 @@ export function ProjectCard({ project, onViewMore }: ProjectCardProps) {
       </CardContent>
 
       <CardFooter
-        className="relative pt-4 bg-gradient-to-r from-transparent via-primary/5 to-transparent"
+        className="relative pt-2 sm:pt-3 md:pt-4 bg-gradient-to-r from-transparent via-primary/5 to-transparent p-3 sm:p-4 md:p-6"
         onMouseEnter={() => setShowActions(true)}
         onMouseLeave={() => setShowActions(false)}
       >
         <Button
           onClick={() => onViewMore(project)}
-          className="w-full bg-gradient-to-r from-primary to-secondary hover:from-primary/90 hover:to-secondary/90 text-primary-foreground font-semibold shadow-lg hover:shadow-xl transition-all duration-300 group-hover:scale-105"
+          className="w-full bg-gradient-to-r from-primary to-secondary hover:from-primary/90 hover:to-secondary/90 text-primary-foreground font-semibold shadow-lg hover:shadow-xl transition-all duration-300 group-hover:scale-105 text-xs sm:text-sm md:text-base py-2 sm:py-3"
         >
-          <Code2 className="h-4 w-4 mr-2" />
+          <Code2 className="h-3 w-3 sm:h-4 sm:w-4 mr-1 sm:mr-2" />
           See How It's Built
         </Button>
 
         {/* Hover Actions */}
         <div className={`absolute inset-0 bg-card/95 backdrop-blur-sm rounded-lg transition-all duration-300 ${showActions ? 'opacity-100 visible' : 'opacity-0 invisible'
           }`}>
-          <div className="flex items-center justify-center h-full gap-2 p-4">
+          <div className="flex items-center justify-center h-full gap-1 sm:gap-2 p-2 sm:p-3 md:p-4">
             {project.liveDemo && (
-              <Button asChild variant="outline" size="sm" className="hover:bg-accent/10 hover:border-accent hover:text-accent transition-all duration-300">
+              <Button asChild variant="outline" size="sm" className="hover:bg-accent/10 hover:border-accent hover:text-accent transition-all duration-300 text-xs sm:text-sm px-2 sm:px-3">
                 <a href={project.liveDemo} target="_blank" rel="noopener noreferrer">
-                  <ExternalLink className="h-4 w-4 mr-1" />
-                  Demo
+                  <ExternalLink className="h-3 w-3 sm:h-4 sm:w-4 mr-1" />
+                  <span className="hidden sm:inline">Demo</span>
                 </a>
               </Button>
             )}
 
             {project.sourceCode && (
-              <Button asChild variant="outline" size="sm" className="hover:bg-muted hover:border-foreground hover:text-foreground transition-all duration-300">
+              <Button asChild variant="outline" size="sm" className="hover:bg-muted hover:border-foreground hover:text-foreground transition-all duration-300 text-xs sm:text-sm px-2 sm:px-3">
                 <a href={project.sourceCode} target="_blank" rel="noopener noreferrer">
-                  <Github className="h-4 w-4 mr-1" />
-                  Code
+                  <Github className="h-3 w-3 sm:h-4 sm:w-4 mr-1" />
+                  <span className="hidden sm:inline">Code</span>
                 </a>
               </Button>
             )}
             <ProjectDialog project={project}>
               <Button
-                // onClick={() => onViewMore(project)}
                 variant="default"
                 size="sm"
-                className="bg-gradient-to-r from-primary to-secondary hover:from-primary/90 hover:to-secondary/90"
+                className="bg-gradient-to-r from-primary to-secondary hover:from-primary/90 hover:to-secondary/90 text-xs sm:text-sm px-2 sm:px-3"
               >
-                <Code2 className="h-4 w-4 mr-1" />
-                Architecture
+                <Code2 className="h-3 w-3 sm:h-4 sm:w-4 mr-1" />
+                <span className="hidden sm:inline">Architecture</span>
+                <span className="sm:hidden">Arch</span>
               </Button>
             </ProjectDialog>
 

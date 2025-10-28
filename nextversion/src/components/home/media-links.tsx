@@ -40,9 +40,9 @@ const IconSection = ({
 
     const handleSkillTriggerClick = (skillTitle: string) => {
         const hireEmailHref = `mailto:imanariyobaptiste@gmail.com?subject=Collaboration%20Opportunity%20-%20${encodeURIComponent(skillTitle)}&body=Hello%20Imanariyo,%0A%0AI%20came%20across%20your%20portfolio%20and%20I'm%20impressed%20by%20your%20expertise%20in%20${encodeURIComponent(skillTitle)}.%20I%20would%20love%20to%20discuss%20how%20your%20technical%20stack%20and%20experience%20could%20contribute%20to%20our%20upcoming%20projects.%0A%0ACould%20we%20schedule%20a%20brief%20conversation%20to%20explore%20potential%20collaboration%20opportunities?%0A%0ALooking%20forward%20to%20hearing%20from%20you.%0A%0ABest%20regards,`
-        
+
         // Create a fake event to reuse existing email handler
-        const fakeEvent = { preventDefault: () => {} } as React.MouseEvent<HTMLAnchorElement | HTMLButtonElement>
+        const fakeEvent = { preventDefault: () => { } } as React.MouseEvent<HTMLAnchorElement | HTMLButtonElement>
         handleEmailClick(fakeEvent, hireEmailHref)
     }
 

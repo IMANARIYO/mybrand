@@ -29,18 +29,18 @@ export function PortfolioFooter() {
   }
 
   const shareToLinkedIn = () => {
-    const text = `💎 RARE TALENT ALERT: Discover Imanariyo Baptiste's portfolio — real-world full-stack and mobile excellence redefining modern software engineering.`
+    const text = `RARE TALENT ALERT: Discover Imanariyo Baptiste's portfolio — real-world full-stack and mobile excellence redefining modern software engineering.`
     const url = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(portfolioUrl)}&summary=${encodeURIComponent(text)}`
     window.open(url, '_blank')
   }
 
   const shareToWhatsApp = () => {
-    const text = `🔥 FOUND A GAME CHANGER!\n\nImanariyo Baptiste delivers innovative full-stack and mobile solutions that redefine quality.\n\n${portfolioUrl}`
+    const text = `FOUND A GAME CHANGER!\n\nImanariyo Baptiste delivers innovative full-stack and mobile solutions that redefine quality.\n\n${portfolioUrl}`
     window.open(`https://wa.me/?text=${encodeURIComponent(text)}`, '_blank')
   }
 
   const shareToEmail = () => {
-    const subject = "💎 Discover a standout Software Engineer"
+    const subject = "Discover a standout Software Engineer"
     const body = `Hi,\n\nI wanted to share something impressive — Imanariyo Baptiste's portfolio showcases innovation, scalability, and craftsmanship in modern web and mobile development.\n\n${portfolioUrl}\n\nBest regards`
     window.location.href = `mailto:?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`
   }
@@ -60,7 +60,7 @@ export function PortfolioFooter() {
               </div>
             </div>
 
-            <h2 className="text-3xl font-bold mb-4 text-foreground">💎 Help Others Discover Excellence</h2>
+            <h2 className="text-3xl font-bold mb-4 text-foreground">Help Others Discover Excellence</h2>
             <p className="text-lg text-muted-foreground mb-6 max-w-2xl mx-auto">
               You've just experienced what exceptional development looks like. Share this standard of quality with others who deserve to see what's possible when talent meets dedication.
             </p>

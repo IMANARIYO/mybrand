@@ -35,9 +35,26 @@ export function PortfolioFooter() {
   }
 
   const shareToWhatsApp = () => {
-    const text = `FOUND A GAME CHANGER!\n\nImanariyo Baptiste delivers innovative full-stack and mobile solutions that redefine quality.\n\n${portfolioUrl}`
+    const text = `
+FOUND A GAME CHANGER!
+
+This developer's work is exactly what separates good from EXCEPTIONAL:
+
+- Solves real business problems
+- Scales without breaking
+- Actually delivers results
+- Sets new industry standards
+
+Imanariyo Baptiste - this is the quality we all need to see more of!
+
+${portfolioUrl}
+
+Your team will thank you for this find!
+  `.trim()
+
     window.open(`https://wa.me/?text=${encodeURIComponent(text)}`, '_blank')
   }
+
 
   const shareToEmail = () => {
     const subject = "Discover a standout Software Engineer"

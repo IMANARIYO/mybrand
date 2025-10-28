@@ -642,9 +642,6 @@
     color: var(--cta-foreground);
   }
 
-
-
-
   /* CTA Button Styles */
   .btn-cta {
     background-color: var(--cta);

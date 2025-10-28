@@ -1,12 +1,18 @@
 "use server"
 
-import { z } from "zod"
 import { revalidatePath } from "next/cache"
 import { db } from "@/db"
 import { serviceRequests, services } from "@/db/schema"
 import { eq, desc } from "drizzle-orm"
 
-export async function createServiceRequest(data: any) {
+interface ServiceRequestData {
+  clientName: string
+  clientEmail: string
+  clientPhone?: string
+  description: string
+}
+
+export async function createServiceRequest(data: ServiceRequestData) {
   try {
     // Get first service as default
     const firstService = await db.select().from(services).limit(1)
@@ -16,14 +22,14 @@ export async function createServiceRequest(data: any) {
       serviceId,
       name: data.clientName,
       email: data.clientEmail,
-      phone: data.clientPhone,
+      phone: data.clientPhone || "",
       message: data.description,
       status: "pending"
     }).returning()
     
     revalidatePath("/dashboard/service-requests")
     return { success: true, request }
-  } catch (error) {
+  } catch {
     return { success: false, message: "Failed to create service request" }
   }
 }
@@ -37,7 +43,7 @@ export async function updateServiceRequestStatus(id: string, status: "pending" |
     await db.update(serviceRequests).set({ status, updatedAt: new Date() }).where(eq(serviceRequests.id, id))
     revalidatePath("/dashboard/service-requests")
     return { success: true }
-  } catch (error) {
+  } catch {
     return { success: false, message: "Service request not found" }
   }
 }
@@ -47,7 +53,7 @@ export async function deleteServiceRequest(id: string) {
     await db.delete(serviceRequests).where(eq(serviceRequests.id, id))
     revalidatePath("/dashboard/service-requests")
     return { success: true }
-  } catch (error) {
+  } catch {
     return { success: false, message: "Service request not found" }
   }
 }

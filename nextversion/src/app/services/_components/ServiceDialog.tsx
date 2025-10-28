@@ -20,10 +20,14 @@ import {
 } from "lucide-react"
 import { BadgeInfo } from 'lucide-react';
 import type { Service, ServiceRequestFormData } from "../_types/services-types"
-import type { ServiceBenefit, ServiceProcess, ServiceAction } from "@/db/schema"
+
 import { createServiceRequest } from "../_server-actions/services-server-actions"
-import { useToast } from "@/components/ui/use-toast"
+
 import { MdNumbers } from "react-icons/md"
+import { ServiceBenefit } from "@/db/types/projectTypes"
+import { ServiceAction, ServiceProcess } from "@/db/types/serviceTypes"
+import { toast } from "sonner"
+
 
 interface ServiceDialogProps {
   service: Service
@@ -34,7 +38,7 @@ interface ServiceDialogProps {
 export function ServiceDialog({ service, open, onOpenChange }: ServiceDialogProps) {
   const [showRequestForm, setShowRequestForm] = useState(false)
   const [isSubmitting, setIsSubmitting] = useState(false)
-  const { toast } = useToast()
+
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
@@ -52,19 +56,12 @@ export function ServiceDialog({ service, open, onOpenChange }: ServiceDialogProp
     const result = await createServiceRequest(requestData)
 
     if (result.status === "success") {
-      toast({
-        title: "Success!",
-        description: result.message,
-      })
+      toast.success(result.message)
       setShowRequestForm(false)
       onOpenChange(false)
         ; (e.target as HTMLFormElement).reset()
     } else {
-      toast({
-        title: "Error",
-        description: result.message,
-        variant: "destructive",
-      })
+      toast.error(result.message)
     }
 
     setIsSubmitting(false)

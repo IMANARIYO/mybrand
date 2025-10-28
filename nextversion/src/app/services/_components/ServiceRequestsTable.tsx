@@ -7,10 +7,11 @@ import { Button } from "@/components/ui/button"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Input } from "@/components/ui/input"
 import { Trash2, Mail, Phone, Search, Filter, ChevronLeft, ChevronRight } from "lucide-react"
-import type { ServiceRequestWithService, Meta } from "../_types/services-types"
+import type { ServiceRequestWithService } from "../_types/services-types"
 import { updateServiceRequestStatus, deleteServiceRequest } from "../_server-actions/services-server-actions"
 import { toast } from "sonner"
 import { useRouter } from "next/navigation"
+import { Meta } from "@/lib/app-response"
 
 interface ServiceRequestsTableProps {
   requests: ServiceRequestWithService[]

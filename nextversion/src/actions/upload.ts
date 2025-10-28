@@ -69,7 +69,7 @@ export async function uploadToCloudinary(
 
     return uploadResult;
   } catch (error) {
-    throw new Error("Failed to upload file to Cloudinary");
+    throw new Error("Failed to upload file to Cloudinary", { cause: error });
   }
 }
 

@@ -28,6 +28,7 @@ export default function EducationManagementPage() {
       setEducationList(data as Education[])
     } catch (error) {
       toast.error("Failed to load education records")
+      console.error("Error loading education records:", error)
     } finally {
       setLoading(false)
     }
@@ -132,7 +133,7 @@ export default function EducationManagementPage() {
         ) : (
           filteredEducation.map((edu) => {
             const colorClass = getEducationColor(edu.educationType)
-            
+
             return (
               <Card key={edu.id} className="overflow-hidden">
                 <CardContent className="p-0">

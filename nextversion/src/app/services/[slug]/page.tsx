@@ -8,11 +8,12 @@ import { Clock, DollarSign, CheckCircle } from "lucide-react"
 import Image from "next/image"
 
 interface ServicePageProps {
-  params: { slug: string }
+  params: Promise<{ slug: string }>
 }
 
 export default async function ServicePage({ params }: ServicePageProps) {
-  const service = await getServiceBySlug(params.slug)
+  const { slug } = await params
+  const service = await getServiceBySlug(slug)
 
   if (!service) {
     notFound()

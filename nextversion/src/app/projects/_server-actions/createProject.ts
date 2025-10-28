@@ -4,6 +4,7 @@ import { db } from "@/db";
 import { projectsTable } from "@/db/schema";
 
 import { ProjectFormData } from "../_types/project.types";
+import { TechStack, FrontendTechnology, BackendTechnology, DatabaseTechnology, InfrastructureTechnology } from "@/db/types/projectTypes";
 import { nanoid } from "nanoid";
 import { revalidatePath } from "next/cache";
 import { generateSlug, generateShareUrl } from "@/lib/slug-generator";
@@ -21,7 +22,12 @@ export async function createProject(data: ProjectFormData & { isPublic?: boolean
       description: data.description,
       overview: data.overview,
       role: data.role,
-      techStack: data.techStack,
+      techStack: {
+        frontend: data.techStack.frontend as FrontendTechnology[],
+        backend: data.techStack.backend as BackendTechnology[],
+        database: data.techStack.database as DatabaseTechnology[],
+        infrastructure: data.techStack.infrastructure as InfrastructureTechnology[]
+      } as TechStack,
       architecture: {
         layers: [
           {

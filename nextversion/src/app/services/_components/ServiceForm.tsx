@@ -11,8 +11,10 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Loader2 } from "lucide-react"
 import type { Service, ServiceFormData } from "../_types/services-types"
 import { createService, updateService } from "../_server-actions/services-server-actions"
-import { useToast } from "@/components/ui/use-toast"
+
 import UploadWidget, { type UploadedFileInfo } from "@/components/Uploading/UploadWidget"
+import Image from "next/image"
+import { toast } from "sonner"
 
 
 interface ServiceFormProps {
@@ -24,7 +26,7 @@ interface ServiceFormProps {
 export function ServiceForm({ service, onSuccess, onCancel }: ServiceFormProps) {
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [serviceImage, setServiceImage] = useState(service?.imageUrl || "")
-  const { toast } = useToast()
+
 
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -57,25 +59,14 @@ export function ServiceForm({ service, onSuccess, onCancel }: ServiceFormProps) 
       const result = service ? await updateService(service.id, serviceData) : await createService(serviceData)
 
       if (result.status === "success") {
-        toast({
-          title: "Success",
-          description: result.message,
-        })
+        toast.success(result.message)
         onSuccess?.()
       } else {
-        toast({
-          title: "Error",
-          description: result.message,
-          variant: "destructive",
-        })
+        toast.error(result.message)
       }
     } catch (error) {
       console.error(error)
-      toast({
-        title: "Error",
-        description: "An unexpected error occurred",
-        variant: "destructive",
-      })
+      toast.error("An unexpected error occurred")
     } finally {
       setIsSubmitting(false)
     }
@@ -130,7 +121,7 @@ export function ServiceForm({ service, onSuccess, onCancel }: ServiceFormProps) 
         />
         {serviceImage && (
           <div className="mt-2">
-            <img src={serviceImage} alt="Service preview" className="w-32 h-32 object-cover rounded" />
+            <Image src={serviceImage} alt="Service preview" width={128} height={128} className="w-32 h-32 object-cover rounded" />
           </div>
         )}
       </div>

@@ -3,11 +3,10 @@ import { NextResponse } from "next/server"
 
 export async function POST() {
   try {
-    const adminUser = await createAdminUser()
+    const result = await createAdminUser()
     return NextResponse.json({ 
       success: true, 
-      message: "Admin user created successfully",
-      email: adminUser.email 
+      message: result.message
     })
   } catch (error) {
     console.error("Error in create-admin API:", error)

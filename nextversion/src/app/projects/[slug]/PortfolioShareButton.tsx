@@ -1,11 +1,12 @@
+
 'use client'
 
 import { useState } from 'react'
 import { Button } from '@/components/ui/button'
-import { 
-  DropdownMenu, 
-  DropdownMenuContent, 
-  DropdownMenuItem, 
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
   DropdownMenuTrigger,
   DropdownMenuSeparator
 } from '@/components/ui/dropdown-menu'
@@ -24,7 +25,7 @@ export function PortfolioShareButton() {
       setCopied(true)
       toast.success("Portfolio link copied! 🚀 Share it with your network!")
       setTimeout(() => setCopied(false), 3000)
-    } catch (error) {
+    } catch {
       toast.error("Failed to copy link")
     }
   }
@@ -73,7 +74,7 @@ See for yourself: ${portfolioUrl}
 You'll thank me later!
 
 Cheers`
-    
+
     const mailtoLink = `mailto:?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`
     window.location.href = mailtoLink
   }
@@ -99,7 +100,7 @@ Cheers`
           </div>
           <p className="text-xs text-muted-foreground mt-1">Share what great development looks like!</p>
         </div>
-        
+
         <DropdownMenuItem onClick={copyPortfolioLink} className="cursor-pointer">
           {copied ? <Check className="h-4 w-4 mr-2 text-green-600" /> : <Copy className="h-4 w-4 mr-2" />}
           <div>
@@ -107,7 +108,7 @@ Cheers`
             <div className="text-xs text-muted-foreground">Instant access to excellence</div>
           </div>
         </DropdownMenuItem>
-        
+
         <DropdownMenuItem onClick={shareToLinkedIn} className="cursor-pointer">
           <FaLinkedinIn className="h-4 w-4 mr-2 text-blue-600" />
           <div>
@@ -115,7 +116,7 @@ Cheers`
             <div className="text-xs text-muted-foreground">Show your network what quality looks like</div>
           </div>
         </DropdownMenuItem>
-        
+
         <DropdownMenuItem onClick={shareToWhatsApp} className="cursor-pointer">
           <FaWhatsapp className="h-4 w-4 mr-2 text-green-600" />
           <div>
@@ -123,7 +124,7 @@ Cheers`
             <div className="text-xs text-muted-foreground">Help friends discover talent</div>
           </div>
         </DropdownMenuItem>
-        
+
         <DropdownMenuItem onClick={shareToEmail} className="cursor-pointer">
           <MdEmail className="h-4 w-4 mr-2 text-orange-600" />
           <div>
@@ -131,7 +132,7 @@ Cheers`
             <div className="text-xs text-muted-foreground">Recommend exceptional work</div>
           </div>
         </DropdownMenuItem>
-        
+
         <DropdownMenuItem onClick={callDirect} className="cursor-pointer">
           <PhoneCall className="h-4 w-4 mr-2 text-red-600" />
           <div>
@@ -139,13 +140,13 @@ Cheers`
             <div className="text-xs text-muted-foreground">Instant connection</div>
           </div>
         </DropdownMenuItem>
-        
+
         <DropdownMenuSeparator />
-        
+
         <div className="px-3 py-2 text-xs text-center text-muted-foreground">
           <div className="flex items-center justify-center gap-2">
             <Users className="w-3 h-3" />
-            <span>You're helping others find excellence! 🙏</span>
+            <span>You&apos;re helping others find excellence! 🙏</span>
           </div>
         </div>
       </DropdownMenuContent>

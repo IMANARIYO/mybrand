@@ -5,7 +5,7 @@ import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { Trash2, Eye, Reply, Archive } from "lucide-react"
+import { Trash2, Eye } from "lucide-react"
 import { updateContactStatus, deleteContact } from "@/app/contact/_server-actions/contact-server-actions"
 import { toast } from "sonner"
 
@@ -13,7 +13,7 @@ interface Contact {
   id: string
   name: string
   email: string
-  telephone: string
+  telephone: string | null
   subject: string
   message: string
   inquiryType: string
@@ -75,7 +75,7 @@ export function ContactsTable({ contacts }: ContactsTableProps) {
                 <div className="flex items-center justify-between">
                   <div>
                     <CardTitle className="text-lg">{contact.name}</CardTitle>
-                    <CardDescription>{contact.email} • {contact.telephone}</CardDescription>
+                    <CardDescription>{contact.email} • {contact.telephone || 'No phone'}</CardDescription>
                   </div>
                   <div className="flex items-center gap-2">
                     {getStatusBadge(contact.status)}
@@ -88,21 +88,21 @@ export function ContactsTable({ contacts }: ContactsTableProps) {
                   <div>
                     <h4 className="font-semibold">{contact.subject}</h4>
                     <p className="text-sm text-muted-foreground mt-1">
-                      {contact.message.length > 150 
-                        ? `${contact.message.substring(0, 150)}...` 
+                      {contact.message.length > 150
+                        ? `${contact.message.substring(0, 150)}...`
                         : contact.message}
                     </p>
                   </div>
-                  
+
                   <div className="flex items-center justify-between">
                     <span className="text-sm text-muted-foreground">
                       {contact.createdAt.toLocaleDateString()} at {contact.createdAt.toLocaleTimeString()}
                     </span>
-                    
+
                     <div className="flex items-center gap-2">
                       <Select
                         value={contact.status}
-                        onValueChange={(value) => handleStatusChange(contact.id, value as any)}
+                        onValueChange={(value) => handleStatusChange(contact.id, value as "new" | "read" | "replied" | "archived")}
                         disabled={isPending}
                       >
                         <SelectTrigger className="w-32">
@@ -115,7 +115,7 @@ export function ContactsTable({ contacts }: ContactsTableProps) {
                           <SelectItem value="archived">Archived</SelectItem>
                         </SelectContent>
                       </Select>
-                      
+
                       <Button
                         variant="outline"
                         size="sm"
@@ -123,7 +123,7 @@ export function ContactsTable({ contacts }: ContactsTableProps) {
                       >
                         <Eye className="h-4 w-4" />
                       </Button>
-                      
+
                       <Button
                         variant="outline"
                         size="sm"
@@ -140,7 +140,7 @@ export function ContactsTable({ contacts }: ContactsTableProps) {
           ))}
         </div>
       )}
-      
+
       {selectedContact && (
         <ContactDetailModal
           contact={selectedContact}
@@ -159,7 +159,7 @@ function ContactDetailModal({ contact, onClose }: { contact: Contact; onClose: (
           <div className="flex items-center justify-between">
             <div>
               <CardTitle>{contact.name}</CardTitle>
-              <CardDescription>{contact.email} • {contact.telephone}</CardDescription>
+              <CardDescription>{contact.email} • {contact.telephone || 'No phone'}</CardDescription>
             </div>
             <Button variant="outline" onClick={onClose}>
               Close
@@ -171,12 +171,12 @@ function ContactDetailModal({ contact, onClose }: { contact: Contact; onClose: (
             <h4 className="font-semibold mb-2">Subject</h4>
             <p>{contact.subject}</p>
           </div>
-          
+
           <div>
             <h4 className="font-semibold mb-2">Message</h4>
             <p className="whitespace-pre-wrap">{contact.message}</p>
           </div>
-          
+
           <div className="flex items-center gap-4 text-sm text-muted-foreground">
             <span>Type: {contact.inquiryType}</span>
             <span>Status: {contact.status}</span>

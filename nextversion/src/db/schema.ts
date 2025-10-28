@@ -218,3 +218,5 @@ export type NewProject = typeof projectsTable.$inferInsert;
 export type User = typeof users.$inferSelect;
 export type Education = typeof education.$inferSelect;
 export type NewEducation = typeof education.$inferInsert;
+
+

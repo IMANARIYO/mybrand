@@ -12,6 +12,8 @@ export const softwareEngineerServices: NewService[] = [
     duration: "4-8 weeks",
     featured: "true",
     status: "featured",
+    slug: "full-stack-web-development",
+    shareUrl: "/services/full-stack-web-development",
     skills: ["React", "Next.js", "TypeScript", "Node.js", "PostgreSQL"],
     benefits: [
       { title: "Responsive Design", description: "Mobile-first approach ensuring perfect display on all devices", icon: "Smartphone" },
@@ -41,6 +43,8 @@ export const softwareEngineerServices: NewService[] = [
     duration: "6-12 weeks",
     featured: "true",
     status: "new",
+    slug: "mobile-app-development",
+    shareUrl: "/services/mobile-app-development",
     skills: ["React Native", "Flutter", "iOS", "Android", "Firebase"],
     benefits: [
       { title: "Cross-Platform", description: "Single codebase for both iOS and Android platforms", icon: "Smartphone" },
@@ -70,6 +74,8 @@ export const softwareEngineerServices: NewService[] = [
     duration: "3-6 weeks",
     featured: "false",
     status: "in-progress",
+    slug: "api-development-integration",
+    shareUrl: "/services/api-development-integration",
     skills: ["REST API", "GraphQL", "Node.js", "Express", "API Documentation"],
     benefits: [
       { title: "RESTful & GraphQL", description: "Modern API architectures for flexible data access", icon: "Database" },
@@ -99,6 +105,8 @@ export const softwareEngineerServices: NewService[] = [
     duration: "Project-based",
     featured: "true",
     status: "featured",
+    slug: "project-management-coordination",
+    shareUrl: "/services/project-management-coordination",
     skills: ["Agile", "Scrum", "Jira", "Project Planning", "Risk Management"],
     benefits: [
       { title: "Sprint Planning", description: "Organized development cycles with clear deliverables", icon: "Calendar" },
@@ -128,6 +136,8 @@ export const softwareEngineerServices: NewService[] = [
     duration: "2-6 weeks",
     featured: "true",
     status: "featured",
+    slug: "cybersecurity-consulting",
+    shareUrl: "/services/cybersecurity-consulting",
     skills: ["Penetration Testing", "Security Auditing", "OWASP", "Compliance", "Risk Assessment"],
     benefits: [
       { title: "Security Audit", description: "Comprehensive assessment of your security posture", icon: "Search" },

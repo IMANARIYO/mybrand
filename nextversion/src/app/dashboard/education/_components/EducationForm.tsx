@@ -69,17 +69,18 @@ export function EducationForm({ education, mode }: EducationFormProps) {
       const formData = new FormData()
       formData.append('file', file)
       formData.append('upload_preset', 'your_upload_preset')
-      
+
       const response = await fetch('https://api.cloudinary.com/v1_1/your_cloud_name/image/upload', {
         method: 'POST',
         body: formData
       })
-      
+
       const data = await response.json()
       setValue('institutionImage', data.secure_url)
       toast.success("Image uploaded successfully")
     } catch (error) {
       toast.error("Failed to upload image")
+      console.error("Error uploading image:", error)
     } finally {
       setImageUploading(false)
     }
@@ -88,9 +89,20 @@ export function EducationForm({ education, mode }: EducationFormProps) {
   const onSubmit = async (data: FormData) => {
     setLoading(true)
     try {
-      const result = mode === 'create' 
-        ? await createEducation(data)
-        : await updateEducation(education!.id, data)
+      // Transform form data to match expected types
+      const transformedData = {
+        ...data,
+        educationType: data.educationType as "BACHELOR" | "MASTER" | "DOCTORATE" | "BOOTCAMP" | "CERTIFICATE" | "DIPLOMA" | "COURSE",
+        institutionImage: data.institutionImage || null,
+        fieldOfStudy: data.fieldOfStudy || null,
+        specialization: data.specialization || null,
+        endDate: data.isOngoing ? null : data.endDate || null,
+        slug: data.title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, ''),
+      }
+
+      const result = mode === 'create'
+        ? await createEducation(transformedData)
+        : await updateEducation(education!.id, transformedData)
 
       if (result.success) {
         toast.success(`Education ${mode === 'create' ? 'created' : 'updated'} successfully`)
@@ -100,6 +112,7 @@ export function EducationForm({ education, mode }: EducationFormProps) {
       }
     } catch (error) {
       toast.error(`Failed to ${mode} education`)
+      console.error(`Error during education ${mode}:`, error)
     } finally {
       setLoading(false)
     }

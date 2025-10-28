@@ -107,6 +107,9 @@ export async function getServiceById(id: string) {
 
 export async function createService(data: ServiceFormData) {
   try {
+    const slug = data.title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '')
+    const shareUrl = `/services/${slug}`
+
     const [newService] = await db
       .insert(servicesTable)
       .values({
@@ -130,6 +133,8 @@ export async function createService(data: ServiceFormData) {
         benefits: data.benefits,
         process: data.process,
         actions: data.actions,
+        slug,
+        shareUrl,
       })
       .returning();
 
@@ -231,10 +236,14 @@ export async function duplicateService(id: string) {
 
     const service = result.data;
 
+    const duplicatedTitle = `${service.title} (Copy)`
+    const duplicatedSlug = duplicatedTitle.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '')
+    const duplicatedShareUrl = `/services/${duplicatedSlug}`
+
     const [duplicated] = await db
       .insert(servicesTable)
       .values({
-        title: `${service.title} (Copy)`,
+        title: duplicatedTitle,
         tagline: service.tagline,
         description: service.description,
         imageUrl: service.imageUrl,
@@ -248,6 +257,8 @@ export async function duplicateService(id: string) {
         benefits: service.benefits,
         process: service.process,
         actions: service.actions,
+        slug: duplicatedSlug,
+        shareUrl: duplicatedShareUrl,
       })
       .returning();
 

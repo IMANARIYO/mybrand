@@ -1,4 +1,3 @@
-
 import type { Metadata } from "next";
 import { GeistSans } from "geist/font/sans";
 import { GeistMono } from "geist/font/mono";
@@ -8,16 +7,15 @@ import { Analytics } from "@vercel/analytics/next";
 import { Suspense } from "react";
 import "./globals.css";
 
-import { Toaster } from "sonner"
+import { Toaster } from "sonner";
 import { PortfolioFooter } from "@/components/layout/PortfolioFooter";
+import { siteMetadata } from "@/config/site-metadata";
+
 export const metadata: Metadata = {
-  title: "Imanariyo Baptiste – Full Stack Software Engineer & Mobile Applications Developer | Portfolio",
-  description:
-    "Discover Imanariyo Baptiste's portfolio featuring Next.js, React, Flutter, Dart, Spring Boot, and interactive design systems. Educated at University of Rwanda – College of Science and Technology, STEM, ICT, Computer Engineering, Kigali, Rwanda. Let's create innovative solutions together!",
+  title: siteMetadata.title,
+  description: siteMetadata.description,
   generator: "Next.js",
-  authors: [
-    { name: "Imanariyo Baptiste", url: "https://imanariyo-brand-portfolio-website.vercel.app" }
-  ],
+  authors: [{ name: siteMetadata.name, url: siteMetadata.url }],
   keywords: [
     "Full Stack Developer",
     "Mobile Developer",
@@ -27,61 +25,25 @@ export const metadata: Metadata = {
     "TypeScript",
     "Flutter",
     "Dart",
-    "React Native",
     "Spring Boot",
-    "Java",
-    "Tailwind CSS",
-    "Chakra UI",
-    "Framer Motion",
-    "Figma",
-    "Design Systems",
-    "Web Development",
-    "Mobile Development",
-    "Frontend",
-    "Backend",
-    "DevOps",
-    "Agile",
-    "Scrum",
-    "Git",
-    "GitHub",
-    "CI/CD",
-    "AWS",
-    "Docker",
-    "Kubernetes",
-    "Firebase",
-    "SQL",
-    "NoSQL",
-    "MongoDB",
-    "PostgreSQL",
-    "MySQL",
     "Node.js",
-    "Express.js",
-    "Spring Framework",
-    "Microservices",
-    "REST API",
-    "GraphQL",
+    "PostgreSQL",
+    "Java",
     "UI/UX",
     "Portfolio",
-    "University of Rwanda",
-    "College of Science and Technology",
-    "STEM",
-    "ICT",
-    "Computer Engineering",
-    "Kigali developers",
-    "Norrnsken Rwanda developers",
-    "Nyarugenge District developers",
-    "Rwanda developers"
+    "Web Development",
+    "Mobile Development",
+    "Rwanda developers",
   ],
   openGraph: {
-    title: "Imanariyo Baptiste – Full Stack Software Engineer & Mobile Applications Developer | Portfolio",
-    description:
-      "Check out Imanariyo Baptiste's portfolio: Next.js, React, Flutter, Dart, Spring Boot, and interactive design systems. Educated at University of Rwanda – College of Science and Technology, STEM, ICT, Computer Engineering, Kigali, Rwanda.",
-    url: "https://imanariyo-brand-portfolio-website.vercel.app",
+    title: siteMetadata.title,
+    description: siteMetadata.description,
+    url: siteMetadata.url,
     type: "website",
-    siteName: "Imanariyo Baptiste – Portfolio",
+    siteName: siteMetadata.title,
     images: [
       {
-        url: "https://imanariyo-brand-portfolio-website.vercel.app/images/image.png",
+        url: siteMetadata.image,
         width: 1200,
         height: 630,
       },
@@ -89,25 +51,32 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Imanariyo Baptiste – Full Stack Software Engineer & Mobile Applications Developer | Portfolio",
-    description:
-      "Explore the portfolio of Imanariyo Baptiste featuring web & mobile projects built with modern frameworks and design systems. University of Rwanda – College of Science and Technology, STEM, ICT, Computer Engineering, Kigali, Rwanda.",
-    images: ["https://imanariyo-brand-portfolio-website.vercel.app/images/image.png"],
-    creator: "@imanariyo",
-    site: "@imanariyo",
+    title: siteMetadata.title,
+    description: siteMetadata.description,
+    images: [siteMetadata.image],
+    creator: siteMetadata.twitterHandle,
+    site: siteMetadata.twitterHandle,
   },
   alternates: {
-    canonical: "https://imanariyo-brand-portfolio-website.vercel.app",
+    canonical: siteMetadata.url,
   },
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={`font-sans antialiased ${GeistSans.variable} ${GeistMono.variable}`}>
+      <body
+        className={`font-sans antialiased ${GeistSans.variable} ${GeistMono.variable}`}
+      >
         <Suspense fallback={null}>
-          <LanguageProvider defaultLanguage="en" storageKey="design-system-language">
-            <ThemeProvider defaultTheme="light" storageKey="design-system-theme">
+          <LanguageProvider
+            defaultLanguage="en"
+            storageKey="design-system-language"
+          >
+            <ThemeProvider
+              defaultTheme="light"
+              storageKey="design-system-theme"
+            >
               {children}
             </ThemeProvider>
           </LanguageProvider>
@@ -117,5 +86,5 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <Toaster />
       </body>
     </html>
-  )
-};
+  );
+}
